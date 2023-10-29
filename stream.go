@@ -17,6 +17,7 @@ import (
 
 // 定回调函数指针的类型
 type HandlerFn func(ctx context.Context, input []byte) (out []byte, err error)
+type HandlerErrorFn func(ctx context.Context, err error) (out []byte)
 
 // 任务节点结构定义
 type Stream struct {
@@ -25,7 +26,8 @@ type Stream struct {
 	//任务链表下一个节点，为空表示任务结束
 	nextStream *Stream
 	//当前任务对应的执行处理函数，首节点没有可执行任务，处理函数指针为空
-	handlerFn HandlerFn
+	handlerFn      HandlerFn
+	handlerErrorFn HandlerErrorFn
 }
 
 /*
@@ -33,15 +35,17 @@ type Stream struct {
 创建新的流
 *
 */
-func NewStream(handlerFns ...HandlerFn) *Stream {
+func NewStream(handlerErrorFn HandlerErrorFn, handlerFns ...HandlerFn) *Stream {
 	//生成新的节点
-	stream := &Stream{}
+	stream := &Stream{
+		handlerErrorFn: handlerErrorFn,
+	}
 	//设置第一个首节点，为自己
 	//其他节点会调用run方法将从firs指针开始执行，直到next为空
 	stream.firstStream = stream
 	//fmt.Println("new first", stream)
 	for _, handlerFn := range handlerFns {
-		stream = stream.Next(handlerFn)
+		stream = stream.next(handlerFn)
 	}
 	return stream
 }
@@ -69,21 +73,25 @@ func (stream *Stream) run(ctx context.Context, input []byte) (out []byte, err er
 	//fmt.Println("run,args=", args)
 	//执行本节点函数指针
 	out, err = stream.handlerFn(ctx, input)
-	//然后调用下一个节点的Run方法
-	if stream.nextStream != nil && err == nil {
-		return stream.nextStream.run(ctx, out)
-	} else {
-		//任务链终端，流式任务执行完毕
+	if err != nil {
+		if stream.handlerErrorFn != nil {
+			return stream.handlerErrorFn(ctx, err), nil
+		}
 		return out, err
 	}
+	//然后调用下一个节点的Run方法
+	if stream.nextStream != nil {
+		return stream.nextStream.run(ctx, out)
+	}
+	//任务链终端，流式任务执行完毕
+	return out, err
 }
-func (stream *Stream) Next(handlerFn HandlerFn) *Stream {
+func (stream *Stream) next(handlerFn HandlerFn) *Stream {
 	//创建新的Stream，将新的任务节点Stream连接在后面
-	stream.nextStream = &Stream{}
-	//设置流式任务链的首节点
-	stream.nextStream.firstStream = stream.firstStream
-	//设置本任务的回调函数指针
-	stream.nextStream.handlerFn = handlerFn
-	//fmt.Println("next=", this.nextStream)
+	stream.nextStream = &Stream{
+		firstStream:    stream.firstStream,    //设置流式任务链的首节点
+		handlerFn:      handlerFn,             //设置本任务的回调函数指针
+		handlerErrorFn: stream.handlerErrorFn, //设置错误处理函数
+	}
 	return stream.nextStream
 }
