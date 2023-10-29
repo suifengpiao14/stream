@@ -40,7 +40,7 @@ func (w StreamLog) Error() (err error) {
 	return nil
 }
 
-func DefaultPrintWatchFileLog(logInfo logchan.LogInforInterface, typeName logchan.LogName, err error) {
+func DefaultPrintStreamLog(logInfo logchan.LogInforInterface, typeName logchan.LogName, err error) {
 	if typeName != StreamLogName {
 		return
 	}
