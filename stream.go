@@ -2,7 +2,8 @@ package stream
 
 import (
 	"context"
-	"errors"
+
+	"github.com/pkg/errors"
 )
 
 /**
