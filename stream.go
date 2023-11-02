@@ -19,6 +19,10 @@ import (
 type HandlerFn func(ctx context.Context, input []byte) (out []byte, err error)
 type HandlerErrorFn func(ctx context.Context, err error) (out []byte)
 
+type StreamInterface interface {
+	Run(ctx context.Context, input []byte) (out []byte, err error)
+}
+
 // 任务节点结构定义
 type Stream struct {
 	//任务链表首节点,其他非首节点此指针永远指向首节点
@@ -56,7 +60,7 @@ func NewStream(handlerErrorFn HandlerErrorFn, handlerFns ...HandlerFn) *Stream {
 arg为流初始参数，初始参数放在End方法中是考虑到初始参数不需在任务链中传递
 *
 */
-func (stream *Stream) Go(ctx context.Context, input []byte) (out []byte, err error) {
+func (stream *Stream) Run(ctx context.Context, input []byte) (out []byte, err error) {
 	//设置为任务链结束
 	stream.nextStream = nil
 	//fmt.Println("first=", this.firstStream, "second=", this.firstStream.nextStream)
