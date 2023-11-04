@@ -2,8 +2,6 @@ package stream
 
 import (
 	"context"
-
-	"github.com/pkg/errors"
 )
 
 /**
@@ -20,7 +18,7 @@ type HandlerFn func(ctx context.Context, input []byte) (out []byte, err error)
 type HandlerErrorFn func(ctx context.Context, err error) (out []byte)
 
 type StreamInterface interface {
-	Run(ctx context.Context, input []byte) (out []byte, err error)
+	Run(ctx context.Context, input []byte) (out []byte)
 }
 
 // 任务节点结构定义
@@ -60,7 +58,7 @@ func NewStream(handlerErrorFn HandlerErrorFn, handlerFns ...HandlerFn) *Stream {
 arg为流初始参数，初始参数放在End方法中是考虑到初始参数不需在任务链中传递
 *
 */
-func (stream *Stream) Run(ctx context.Context, input []byte) (out []byte, err error) {
+func (stream *Stream) Run(ctx context.Context, input []byte) (out []byte) {
 	//设置为任务链结束
 	stream.nextStream = nil
 	//fmt.Println("first=", this.firstStream, "second=", this.firstStream.nextStream)
@@ -70,25 +68,25 @@ func (stream *Stream) Run(ctx context.Context, input []byte) (out []byte, err er
 		return stream.firstStream.nextStream.run(ctx, input)
 	} else {
 		//流式任务终止
-		return nil, errors.New("not found execute node")
+		return nil
 	}
 }
-func (stream *Stream) run(ctx context.Context, input []byte) (out []byte, err error) {
+func (stream *Stream) run(ctx context.Context, input []byte) (out []byte) {
 	//fmt.Println("run,args=", args)
 	//执行本节点函数指针
-	out, err = stream.handlerFn(ctx, input)
+	out, err := stream.handlerFn(ctx, input)
 	if err != nil {
 		if stream.handlerErrorFn != nil {
-			return stream.handlerErrorFn(ctx, err), nil
+			return stream.handlerErrorFn(ctx, err)
 		}
-		return out, err
+		return out
 	}
 	//然后调用下一个节点的Run方法
 	if stream.nextStream != nil {
 		return stream.nextStream.run(ctx, out)
 	}
 	//任务链终端，流式任务执行完毕
-	return out, err
+	return out
 }
 func (stream *Stream) next(handlerFn HandlerFn) *Stream {
 	//创建新的Stream，将新的任务节点Stream连接在后面
