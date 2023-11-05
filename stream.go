@@ -18,7 +18,7 @@ type HandlerFn func(ctx context.Context, input []byte) (out []byte, err error)
 type HandlerErrorFn func(ctx context.Context, err error) (out []byte)
 
 type StreamInterface interface {
-	Run(ctx context.Context, input []byte) (out []byte)
+	Run(ctx context.Context, input []byte) (out []byte, err error)
 }
 
 // 任务节点结构定义
@@ -58,7 +58,7 @@ func NewStream(handlerErrorFn HandlerErrorFn, handlerFns ...HandlerFn) *Stream {
 arg为流初始参数，初始参数放在End方法中是考虑到初始参数不需在任务链中传递
 *
 */
-func (stream *Stream) Run(ctx context.Context, input []byte) (out []byte) {
+func (stream *Stream) Run(ctx context.Context, input []byte) (out []byte, err error) {
 	//设置为任务链结束
 	stream.nextStream = nil
 	//fmt.Println("first=", this.firstStream, "second=", this.firstStream.nextStream)
@@ -68,25 +68,25 @@ func (stream *Stream) Run(ctx context.Context, input []byte) (out []byte) {
 		return stream.firstStream.nextStream.run(ctx, input)
 	} else {
 		//流式任务终止
-		return nil
+		return nil, nil
 	}
 }
-func (stream *Stream) run(ctx context.Context, input []byte) (out []byte) {
+func (stream *Stream) run(ctx context.Context, input []byte) (out []byte, err error) {
 	//fmt.Println("run,args=", args)
 	//执行本节点函数指针
-	out, err := stream.handlerFn(ctx, input)
+	out, err = stream.handlerFn(ctx, input)
 	if err != nil {
 		if stream.handlerErrorFn != nil {
-			return stream.handlerErrorFn(ctx, err)
+			return stream.handlerErrorFn(ctx, err), nil
 		}
-		return out
+		return out, err
 	}
 	//然后调用下一个节点的Run方法
 	if stream.nextStream != nil {
 		return stream.nextStream.run(ctx, out)
 	}
 	//任务链终端，流式任务执行完毕
-	return out
+	return out, err
 }
 func (stream *Stream) next(handlerFn HandlerFn) *Stream {
 	//创建新的Stream，将新的任务节点Stream连接在后面
