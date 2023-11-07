@@ -3,7 +3,7 @@ module github.com/suifengpiao14/stream
 go 1.21.0
 
 require (
-	github.com/suifengpiao14/funcs v0.0.13
+	github.com/suifengpiao14/funcs v0.0.14
 	github.com/suifengpiao14/logchan/v2 v2.0.22
 )
 

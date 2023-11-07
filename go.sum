@@ -35,6 +35,8 @@ github.com/stretchr/testify v1.8.4 h1:CcVxjf3Q8PM0mHUKJCdn+eZZtm5yQwehR5yeSVQQcU
 github.com/stretchr/testify v1.8.4/go.mod h1:sz/lmYIOXD/1dqDmKjjqLyZ2RngseejIcXlSw2iwfAo=
 github.com/suifengpiao14/funcs v0.0.13 h1:5OVl0w/QV5GWmYK/suD6KceMI7Uk7wicUvGza8oElRk=
 github.com/suifengpiao14/funcs v0.0.13/go.mod h1:g95inzlUrS2Vtyvv5SjVFOnOeX7ZBPWwyKuEMMW+g7U=
+github.com/suifengpiao14/funcs v0.0.14 h1:zFfMR3Hfbx/CdMyjQyHDRA467ISuV++SuLTDH2tjg6Y=
+github.com/suifengpiao14/funcs v0.0.14/go.mod h1:g95inzlUrS2Vtyvv5SjVFOnOeX7ZBPWwyKuEMMW+g7U=
 github.com/suifengpiao14/logchan/v2 v2.0.22 h1:LhpV9E0ofNRQFEvR9MOF4hSHJes8s/aXn9Z4qdLVPck=
 github.com/suifengpiao14/logchan/v2 v2.0.22/go.mod h1:6o0naTqWDkgYMR4vQetJn1zVGMLD9YZ8TrNzQ9OjAFY=
 golang.org/x/text v0.14.0 h1:ScX5w1eTa3QqT8oi6+ziP7dTV1S2+ALU0bI+0zXKWiQ=
