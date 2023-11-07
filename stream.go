@@ -15,85 +15,73 @@ import (
 
 // 定回调函数指针的类型
 type HandlerFn func(ctx context.Context, input []byte) (out []byte, err error)
-type HandlerErrorFn func(ctx context.Context, err error) (out []byte)
+type ErrorHandler func(ctx context.Context, err error) (out []byte)
 
-type StreamInterface interface {
+type PackHandler struct {
+	Befor HandlerFn
+	After HandlerFn
+}
+
+type _PackHandlers []PackHandler
+
+type StreamI interface {
 	Run(ctx context.Context, input []byte) (out []byte, err error)
+	AddPack(handlerPacks ...PackHandler) // 包裹更多处理函数
 }
 
 // 任务节点结构定义
 type Stream struct {
-	//任务链表首节点,其他非首节点此指针永远指向首节点
-	firstStream *Stream
-	//任务链表下一个节点，为空表示任务结束
-	nextStream *Stream
-	//当前任务对应的执行处理函数，首节点没有可执行任务，处理函数指针为空
-	handlerFn      HandlerFn
-	handlerErrorFn HandlerErrorFn
+	packHandlers _PackHandlers // 处理链条集合
+	errorHandler ErrorHandler  //错误处理
 }
 
-/*
-*
-创建新的流
-*
-*/
-func NewStream(handlerErrorFn HandlerErrorFn, handlerFns ...HandlerFn) *Stream {
-	//生成新的节点
+func NewStream(errorHandelr ErrorHandler, packHandlers ...PackHandler) *Stream {
 	stream := &Stream{
-		handlerErrorFn: handlerErrorFn,
-	}
-	//设置第一个首节点，为自己
-	//其他节点会调用run方法将从firs指针开始执行，直到next为空
-	stream.firstStream = stream
-	//fmt.Println("new first", stream)
-	for _, handlerFn := range handlerFns {
-		stream = stream.next(handlerFn)
+		packHandlers: packHandlers,
+		errorHandler: errorHandelr,
 	}
 	return stream
 }
 
-/*
-*
-流结束
-arg为流初始参数，初始参数放在End方法中是考虑到初始参数不需在任务链中传递
-*
-*/
-func (stream *Stream) Run(ctx context.Context, input []byte) (out []byte, err error) {
-	//设置为任务链结束
-	stream.nextStream = nil
-	//fmt.Println("first=", this.firstStream, "second=", this.firstStream.nextStream)
-	//检查是否有任务节点存在，存在则调用run方法
-	//run方法是首先执行本任务回调函数指针，然后查找下一个任务节点，并调用run方法
-	if stream.firstStream.nextStream != nil {
-		return stream.firstStream.nextStream.run(ctx, input)
-	} else {
-		//流式任务终止
-		return nil, nil
-	}
+//AddPack 增加打包
+func (s *Stream) AddPack(handlerPacks ...PackHandler) {
+	s.packHandlers = append(s.packHandlers, handlerPacks...)
 }
-func (stream *Stream) run(ctx context.Context, input []byte) (out []byte, err error) {
-	//fmt.Println("run,args=", args)
-	//执行本节点函数指针
-	out, err = stream.handlerFn(ctx, input)
+
+func (s *Stream) Run(ctx context.Context, input []byte) (out []byte, err error) {
+	out, err = s.run(ctx, input)
+	if err != nil && s.errorHandler != nil {
+		out = s.errorHandler(ctx, err)
+		err = nil
+	}
+
 	if err != nil {
-		if stream.handlerErrorFn != nil {
-			return stream.handlerErrorFn(ctx, err), nil
-		}
-		return out, err
+		return nil, err
 	}
-	//然后调用下一个节点的Run方法
-	if stream.nextStream != nil {
-		return stream.nextStream.run(ctx, out)
-	}
-	//任务链终端，流式任务执行完毕
-	return out, err
+	return out, nil
+
 }
-func (stream *Stream) next(handlerFn HandlerFn) *Stream {
-	//创建新的Stream，将新的任务节点Stream连接在后面
-	stream.nextStream = &Stream{
-		firstStream:    stream.firstStream,    //设置流式任务链的首节点
-		handlerFn:      handlerFn,             //设置本任务的回调函数指针
-		handlerErrorFn: stream.handlerErrorFn, //设置错误处理函数
+func (s *Stream) run(ctx context.Context, input []byte) (out []byte, err error) {
+	data := input
+	l := len(s.packHandlers)
+	for i := l - 1; i > -1; i-- { // 先执行最后的before，直到最早的before
+		pack := s.packHandlers[i]
+		if pack.Befor != nil {
+			data, err = pack.Befor(ctx, data)
+			if err != nil {
+				return nil, err
+			}
+		}
 	}
-	return stream.nextStream
+
+	for i := 0; i < l; i++ { // 先执行最后的after，直到最早的after
+		pack := s.packHandlers[i]
+		if pack.After != nil {
+			data, err = pack.After(ctx, data)
+			if err != nil {
+				return nil, err
+			}
+		}
+	}
+	return data, err
 }
