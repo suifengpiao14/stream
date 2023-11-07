@@ -2,6 +2,11 @@ package stream
 
 import (
 	"context"
+	"fmt"
+	"strings"
+
+	"github.com/suifengpiao14/funcs"
+	"github.com/suifengpiao14/logchan/v2"
 )
 
 /**
@@ -18,11 +23,47 @@ type HandlerFn func(ctx context.Context, input []byte) (out []byte, err error)
 type ErrorHandler func(ctx context.Context, err error) (out []byte)
 
 type PackHandler struct {
-	Befor HandlerFn
-	After HandlerFn
+	Name   string
+	Before HandlerFn
+	After  HandlerFn
 }
 
-type _PackHandlers []PackHandler
+func NewPackHandler(before HandlerFn, after HandlerFn) PackHandler {
+	return PackHandler{
+		Name:   fmt.Sprintf("%s-%s", funcs.GetFuncname(before), funcs.GetFuncname(after)),
+		Before: before,
+		After:  after,
+	}
+}
+
+//Reverse 反向执行顺序
+func (p PackHandler) Reverse() (rp PackHandler) {
+	rp = PackHandler{
+		Before: p.After,
+		After:  p.Before,
+	}
+
+	nameArr := strings.SplitN(p.Name, "-", 2)
+	nameArr = append(nameArr, "", "")                      // 至少2个元素
+	rp.Name = fmt.Sprintf("%s-%s", nameArr[1], nameArr[0]) //反转名称
+	return rp
+}
+
+type PackHandlers []PackHandler
+
+func (ps PackHandlers) Reverse() (rps PackHandlers) {
+	rps = make(PackHandlers, len(ps))
+	for i, p := range ps {
+		rps[i] = p.Reverse()
+	}
+	return rps
+}
+func (ps *PackHandlers) Add(packHandlers ...PackHandler) {
+	if *ps == nil {
+		*ps = make(PackHandlers, 0)
+	}
+	*ps = append(*ps, packHandlers...)
+}
 
 type StreamI interface {
 	Run(ctx context.Context, input []byte) (out []byte, err error)
@@ -31,8 +72,8 @@ type StreamI interface {
 
 // 任务节点结构定义
 type Stream struct {
-	packHandlers _PackHandlers // 处理链条集合
-	errorHandler ErrorHandler  //错误处理
+	packHandlers PackHandlers // 处理链条集合
+	errorHandler ErrorHandler //错误处理
 }
 
 func NewStream(errorHandelr ErrorHandler, packHandlers ...PackHandler) *Stream {
@@ -64,10 +105,25 @@ func (s *Stream) Run(ctx context.Context, input []byte) (out []byte, err error) 
 func (s *Stream) run(ctx context.Context, input []byte) (out []byte, err error) {
 	data := input
 	l := len(s.packHandlers)
+	streamLog := StreamLog{
+		HandlerLogs: make([]HandlerLog, 0),
+	}
+	defer func() {
+		logchan.SendLogInfo(&streamLog)
+	}()
 	for i := l - 1; i > -1; i-- { // 先执行最后的before，直到最早的before
 		pack := s.packHandlers[i]
-		if pack.Befor != nil {
-			data, err = pack.Befor(ctx, data)
+		if pack.Before != nil {
+			handlerLog := HandlerLog{
+				Input:    data,
+				PackName: pack.Name,
+				Type:     HandlerLog_Type_Before,
+			}
+			data, err = pack.Before(ctx, data)
+			//handlerLog.Output = data
+			handlerLog.Err = err
+			streamLog.HandlerLogs = append(streamLog.HandlerLogs, handlerLog)
+
 			if err != nil {
 				return nil, err
 			}
@@ -77,7 +133,16 @@ func (s *Stream) run(ctx context.Context, input []byte) (out []byte, err error) 
 	for i := 0; i < l; i++ { // 先执行最后的after，直到最早的after
 		pack := s.packHandlers[i]
 		if pack.After != nil {
+			handlerLog := HandlerLog{
+				Input:    data,
+				PackName: pack.Name,
+				Type:     HandlerLog_Type_Before,
+			}
+			handlerLog.Input = data
 			data, err = pack.After(ctx, data)
+			//handlerLog.Output = data
+			handlerLog.Err = err
+			streamLog.HandlerLogs = append(streamLog.HandlerLogs, handlerLog)
 			if err != nil {
 				return nil, err
 			}

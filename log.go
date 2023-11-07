@@ -16,10 +16,18 @@ func (l LogName) String() string {
 	return string(l)
 }
 
+const (
+	HandlerLog_Type_Before = "before"
+	HandlerLog_Type_After  = "after"
+)
+
 type HandlerLog struct {
-	Input  []byte `json:"input"`
-	Output []byte `json:"output"`
-	Err    error
+	PackName string
+	Order       int
+	Type        string // before |after
+	Input       []byte `json:"input"`
+	Output      []byte `json:"output"`
+	Err         error
 }
 
 type StreamLog struct {
@@ -32,9 +40,9 @@ func (w StreamLog) GetName() (logName logchan.LogName) {
 }
 
 func (w StreamLog) Error() (err error) {
-	for _, handlerLog := range w.HandlerLogs {
-		if handlerLog.Err != nil {
-			return err
+	for _, packHandlerLog := range w.HandlerLogs {
+		if packHandlerLog.Err != nil {
+			return packHandlerLog.Err
 		}
 	}
 	return nil
@@ -56,9 +64,11 @@ func DefaultPrintStreamLog(logInfo logchan.LogInforInterface, typeName logchan.L
 
 	for i, handlerLog := range streamLog.HandlerLogs {
 		fmt.Fprintf(logchan.LogWriter,
-			"processSessionID:%s|serialNumber:%d|input:%s|output:%s|err:%s\n",
+			"processSessionID:%s|name:%s|serialNumber:%d|type:%s|input:%s|output:%s|err:%s\n",
 			processSessionID,
+			handlerLog.PackName,
 			i,
+			handlerLog.Type,
 			string(handlerLog.Input),
 			string(handlerLog.Output),
 			handlerLog.Err.Error(),

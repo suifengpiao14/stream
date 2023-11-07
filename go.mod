@@ -11,6 +11,6 @@ require (
 	github.com/leodido/go-urn v1.2.4 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/spf13/cast v1.5.1 // indirect
-	github.com/suifengpiao14/funcs v0.0.9 // indirect
-	golang.org/x/text v0.9.0 // indirect
+	github.com/suifengpiao14/funcs v0.0.13 // indirect
+	golang.org/x/text v0.14.0 // indirect
 )
