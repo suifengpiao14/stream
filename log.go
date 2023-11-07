@@ -23,11 +23,11 @@ const (
 
 type HandlerLog struct {
 	PackName string
-	Order       int
-	Type        string // before |after
-	Input       []byte `json:"input"`
-	Output      []byte `json:"output"`
-	Err         error
+	Order    int
+	Type     string // before |after
+	Input    []byte `json:"input"`
+	Output   []byte `json:"output"`
+	Err      error
 }
 
 type StreamLog struct {
@@ -57,12 +57,17 @@ func DefaultPrintStreamLog(logInfo logchan.LogInforInterface, typeName logchan.L
 		return
 	}
 	processSessionID := logchan.GetSessionID(logInfo)
-	if err != nil {
-		fmt.Fprintf(logchan.LogWriter, "processSessionID:%s|loginInfo:%s|error:%s\n", processSessionID, streamLog.GetName(), err.Error())
-		return
-	}
+	// 把没有出错的步骤日志输出，方便定位问题
+	// if err != nil {
+	// 	fmt.Fprintf(logchan.LogWriter, "processSessionID:%s|loginInfo:%s|error:%s\n", processSessionID, streamLog.GetName(), err.Error())
+	// 	return
+	// }
 
 	for i, handlerLog := range streamLog.HandlerLogs {
+		errStr := ""
+		if handlerLog.Err != nil {
+			errStr = handlerLog.Err.Error()
+		}
 		fmt.Fprintf(logchan.LogWriter,
 			"processSessionID:%s|name:%s|serialNumber:%d|type:%s|input:%s|output:%s|err:%s\n",
 			processSessionID,
@@ -71,7 +76,7 @@ func DefaultPrintStreamLog(logInfo logchan.LogInforInterface, typeName logchan.L
 			handlerLog.Type,
 			string(handlerLog.Input),
 			string(handlerLog.Output),
-			handlerLog.Err.Error(),
+			errStr,
 		)
 	}
 }

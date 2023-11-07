@@ -3,7 +3,6 @@ package stream
 import (
 	"context"
 	"fmt"
-	"strings"
 
 	"github.com/suifengpiao14/funcs"
 	"github.com/suifengpiao14/logchan/v2"
@@ -28,12 +27,14 @@ type PackHandler struct {
 	After  HandlerFn
 }
 
-func NewPackHandler(before HandlerFn, after HandlerFn) PackHandler {
-	return PackHandler{
+func NewPackHandler(before HandlerFn, after HandlerFn) (p PackHandler) {
+	p = PackHandler{
 		Name:   fmt.Sprintf("%s-%s", funcs.GetFuncname(before), funcs.GetFuncname(after)),
 		Before: before,
 		After:  after,
 	}
+	p.Name = fmt.Sprintf("%s-%s", funcs.GetFuncname(p.Before), funcs.GetFuncname(p.After))
+	return p
 }
 
 //Reverse 反向执行顺序
@@ -42,10 +43,8 @@ func (p PackHandler) Reverse() (rp PackHandler) {
 		Before: p.After,
 		After:  p.Before,
 	}
-
-	nameArr := strings.SplitN(p.Name, "-", 2)
-	nameArr = append(nameArr, "", "")                      // 至少2个元素
-	rp.Name = fmt.Sprintf("%s-%s", nameArr[1], nameArr[0]) //反转名称
+	fullName := funcs.GetCallFuncname(1)
+	rp.Name = fmt.Sprintf("%s.before-%s.after", fullName, fullName)
 	return rp
 }
 
@@ -111,7 +110,7 @@ func (s *Stream) run(ctx context.Context, input []byte) (out []byte, err error) 
 	defer func() {
 		logchan.SendLogInfo(&streamLog)
 	}()
-	for i := l - 1; i > -1; i-- { // 先执行最后的before，直到最早的before
+	for i := 0; i < l; i++ { // 先执行最后的before，直到最早的before
 		pack := s.packHandlers[i]
 		if pack.Before != nil {
 			handlerLog := HandlerLog{
@@ -130,7 +129,7 @@ func (s *Stream) run(ctx context.Context, input []byte) (out []byte, err error) 
 		}
 	}
 
-	for i := 0; i < l; i++ { // 先执行最后的after，直到最早的after
+	for i := l - 1; i > -1; i-- { // 先执行最后的after，直到最早的after
 		pack := s.packHandlers[i]
 		if pack.After != nil {
 			handlerLog := HandlerLog{
