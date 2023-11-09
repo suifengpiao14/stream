@@ -33,10 +33,8 @@ func NewPackHandler(before HandlerFn, after HandlerFn) (p PackHandler) {
 		Before: before,
 		After:  after,
 	}
-	p.Name = fmt.Sprintf("%s-%s", funcs.GetFuncname(p.Before), funcs.GetFuncname(p.After))
 	return p
 }
-
 
 type PackHandlers []PackHandler
 
