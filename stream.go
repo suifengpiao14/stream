@@ -116,7 +116,7 @@ func (s *Stream) run(ctx context.Context, input []byte) (out []byte, err error) 
 			handlerLog := HandlerLog{
 				Input:    data,
 				PackName: pack.Name,
-				Type:     HandlerLog_Type_Before,
+				Type:     HandlerLog_Type_After,
 			}
 			handlerLog.Input = data
 			data, err = pack.After(ctx, data)
