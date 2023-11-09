@@ -43,8 +43,7 @@ func (p PackHandler) Reverse() (rp PackHandler) {
 		Before: p.After,
 		After:  p.Before,
 	}
-	fullName := funcs.GetCallFuncname(1)
-	rp.Name = fmt.Sprintf("%s.before-%s.after", fullName, fullName)
+	rp.Name = fmt.Sprintf("reverse-%s", p.Name)
 	return rp
 }
 
