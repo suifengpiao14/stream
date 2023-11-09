@@ -37,25 +37,9 @@ func NewPackHandler(before HandlerFn, after HandlerFn) (p PackHandler) {
 	return p
 }
 
-//Reverse 反向执行顺序
-func (p PackHandler) Reverse() (rp PackHandler) {
-	rp = PackHandler{
-		Before: p.After,
-		After:  p.Before,
-	}
-	rp.Name = fmt.Sprintf("reverse-%s", p.Name)
-	return rp
-}
 
 type PackHandlers []PackHandler
 
-func (ps PackHandlers) Reverse() (rps PackHandlers) {
-	rps = make(PackHandlers, len(ps))
-	for i, p := range ps {
-		rps[i] = p.Reverse()
-	}
-	return rps
-}
 func (ps *PackHandlers) Add(packHandlers ...PackHandler) {
 	if *ps == nil {
 		*ps = make(PackHandlers, 0)
