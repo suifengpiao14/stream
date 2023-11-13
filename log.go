@@ -17,8 +17,9 @@ func (l LogName) String() string {
 }
 
 const (
-	HandlerLog_Type_Before = "before"
-	HandlerLog_Type_After  = "after"
+	HandlerLog_Type_SetContext = "setContext"
+	HandlerLog_Type_Before     = "before"
+	HandlerLog_Type_After      = "after"
 )
 
 type HandlerLog struct {

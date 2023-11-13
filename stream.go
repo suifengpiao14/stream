@@ -21,7 +21,7 @@ import (
 type HandlerFn func(ctx context.Context, input []byte) (out []byte, err error)
 type ErrorHandler func(ctx context.Context, err error) (out []byte)
 
-type SetContextFn func(ctx context.Context) (newCtx context.Context, err error)
+type SetContextFn func(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error)
 
 type PackHandler struct {
 	Name       string
@@ -102,10 +102,17 @@ func (s *Stream) run(ctx context.Context, input []byte) (out []byte, err error) 
 	for i := 0; i < l; i++ { // 先执行最后的before，直到最早的before
 		pack := s.packHandlers[i]
 		if pack.SetContext != nil {
-			ctx, err = pack.SetContext(ctx)
+			handlerLog := HandlerLog{
+				Input:    data,
+				PackName: pack.Name,
+				Type:     HandlerLog_Type_SetContext,
+			}
+			ctx, input, err = pack.SetContext(ctx, input)
 			if err != nil {
 				return nil, err
 			}
+			handlerLog.Err = err
+			streamLog.HandlerLogs = append(streamLog.HandlerLogs, handlerLog)
 		}
 		if pack.Before != nil {
 			handlerLog := HandlerLog{
