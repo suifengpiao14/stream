@@ -30,7 +30,11 @@ type PackHandler struct {
 	After      HandlerFn
 }
 
-func NewPackHandler(before HandlerFn, after HandlerFn, setContextFn SetContextFn) (p PackHandler) {
+func NewPackHandler(before HandlerFn, after HandlerFn) (p PackHandler) {
+	p = NewPackHandlerWithSetContext(nil, before, after)
+	return p
+}
+func NewPackHandlerWithSetContext(setContextFn SetContextFn, before HandlerFn, after HandlerFn) (p PackHandler) {
 	p = PackHandler{
 		SetContext: setContextFn,
 		Name:       fmt.Sprintf("%s-%s", funcs.GetFuncname(before), funcs.GetFuncname(after)),

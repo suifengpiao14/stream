@@ -14,7 +14,6 @@ func Struct2Bytes2StructJsonPacket(dataProvider interface{}, dataReceiver interf
 		func(ctx context.Context, input []byte) (out []byte, err error) {
 			return nil, json.Unmarshal(input, dataReceiver)
 		},
-		nil,
 	)
 }
 
@@ -27,6 +26,5 @@ func Bytes2Stuct2BytesJsonPacket(dataReceiver interface{}, dataProvider interfac
 		func(ctx context.Context, input []byte) (out []byte, err error) {
 			return json.Marshal(dataProvider)
 		},
-		nil,
 	)
 }
