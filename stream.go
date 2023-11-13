@@ -22,9 +22,10 @@ type HandlerFn func(ctx context.Context, input []byte) (out []byte, err error)
 type ErrorHandler func(ctx context.Context, err error) (out []byte)
 
 type PackHandler struct {
-	Name   string
-	Before HandlerFn
-	After  HandlerFn
+	Name       string
+	SetContext func(ctx context.Context) (newCtx context.Context, err error)
+	Before     HandlerFn
+	After      HandlerFn
 }
 
 func NewPackHandler(before HandlerFn, after HandlerFn) (p PackHandler) {
@@ -93,6 +94,12 @@ func (s *Stream) run(ctx context.Context, input []byte) (out []byte, err error) 
 	}()
 	for i := 0; i < l; i++ { // 先执行最后的before，直到最早的before
 		pack := s.packHandlers[i]
+		if pack.SetContext != nil {
+			ctx, err = pack.SetContext(ctx)
+			if err != nil {
+				return nil, err
+			}
+		}
 		if pack.Before != nil {
 			handlerLog := HandlerLog{
 				Input:    data,
