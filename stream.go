@@ -21,18 +21,21 @@ import (
 type HandlerFn func(ctx context.Context, input []byte) (out []byte, err error)
 type ErrorHandler func(ctx context.Context, err error) (out []byte)
 
+type SetContextFn func(ctx context.Context) (newCtx context.Context, err error)
+
 type PackHandler struct {
 	Name       string
-	SetContext func(ctx context.Context) (newCtx context.Context, err error)
+	SetContext SetContextFn
 	Before     HandlerFn
 	After      HandlerFn
 }
 
-func NewPackHandler(before HandlerFn, after HandlerFn) (p PackHandler) {
+func NewPackHandler(before HandlerFn, after HandlerFn, setContextFn SetContextFn) (p PackHandler) {
 	p = PackHandler{
-		Name:   fmt.Sprintf("%s-%s", funcs.GetFuncname(before), funcs.GetFuncname(after)),
-		Before: before,
-		After:  after,
+		SetContext: setContextFn,
+		Name:       fmt.Sprintf("%s-%s", funcs.GetFuncname(before), funcs.GetFuncname(after)),
+		Before:     before,
+		After:      after,
 	}
 	return p
 }
