@@ -72,7 +72,7 @@ func NewStream(errorHandelr ErrorHandler, packHandlers ...PackHandler) *Stream {
 	return stream
 }
 
-//AddPack 增加打包
+// AddPack 增加打包
 func (s *Stream) AddPack(handlerPacks ...PackHandler) {
 	s.packHandlers = append(s.packHandlers, handlerPacks...)
 }
@@ -121,6 +121,9 @@ func (s *Stream) run(ctx context.Context, input []byte) (out []byte, err error) 
 				Type:     HandlerLog_Type_Before,
 			}
 			data, err = pack.Before(ctx, data)
+			if err != nil {
+				return nil, err
+			}
 			//handlerLog.Output = data
 			handlerLog.Err = err
 			streamLog.HandlerLogs = append(streamLog.HandlerLogs, handlerLog)
@@ -141,6 +144,9 @@ func (s *Stream) run(ctx context.Context, input []byte) (out []byte, err error) 
 			}
 			handlerLog.Input = data
 			data, err = pack.After(ctx, data)
+			if err != nil {
+				return nil, err
+			}
 			//handlerLog.Output = data
 			handlerLog.Err = err
 			streamLog.HandlerLogs = append(streamLog.HandlerLogs, handlerLog)
