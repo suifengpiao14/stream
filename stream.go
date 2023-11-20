@@ -72,7 +72,7 @@ func NewStream(errorHandelr ErrorHandler, packHandlers ...PackHandler) *Stream {
 	return stream
 }
 
-//AddPack 增加打包
+// AddPack 增加打包
 func (s *Stream) AddPack(handlerPacks ...PackHandler) {
 	s.packHandlers = append(s.packHandlers, handlerPacks...)
 }
