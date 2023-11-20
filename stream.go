@@ -108,11 +108,11 @@ func (s *Stream) run(ctx context.Context, input []byte) (out []byte, err error) 
 				Type:     HandlerLog_Type_SetContext,
 			}
 			ctx, input, err = pack.SetContext(ctx, input)
+			handlerLog.Err = err
+			streamLog.HandlerLogs = append(streamLog.HandlerLogs, handlerLog)
 			if err != nil {
 				return nil, err
 			}
-			handlerLog.Err = err
-			streamLog.HandlerLogs = append(streamLog.HandlerLogs, handlerLog)
 		}
 		if pack.Before != nil {
 			handlerLog := HandlerLog{
@@ -121,10 +121,8 @@ func (s *Stream) run(ctx context.Context, input []byte) (out []byte, err error) 
 				Type:     HandlerLog_Type_Before,
 			}
 			data, err = pack.Before(ctx, data)
-			//handlerLog.Output = data
 			handlerLog.Err = err
 			streamLog.HandlerLogs = append(streamLog.HandlerLogs, handlerLog)
-
 			if err != nil {
 				return nil, err
 			}
@@ -141,7 +139,6 @@ func (s *Stream) run(ctx context.Context, input []byte) (out []byte, err error) 
 			}
 			handlerLog.Input = data
 			data, err = pack.After(ctx, data)
-			//handlerLog.Output = data
 			handlerLog.Err = err
 			streamLog.HandlerLogs = append(streamLog.HandlerLogs, handlerLog)
 			if err != nil {
