@@ -49,6 +49,9 @@ func (w StreamLog) Error() (err error) {
 	return nil
 }
 
+const ColorRed = "\033[0;31m"
+const ColorNone = "\033[0m"
+
 func DefaultPrintStreamLog(logInfo logchan.LogInforInterface, typeName logchan.LogName, err error) {
 	if typeName != StreamLogName {
 		return
@@ -70,14 +73,16 @@ func DefaultPrintStreamLog(logInfo logchan.LogInforInterface, typeName logchan.L
 			errStr = handlerLog.Err.Error()
 		}
 		fmt.Fprintf(logchan.LogWriter,
-			"processSessionID:%s|name:%s|serialNumber:%d|type:%s|input:%s|output:%s|err:%s\n",
+			"processSessionID:%s|name:%s|serialNumber:%d|type:%s|input:%s|output:%s|err:%s%s%s\n",
 			processSessionID,
 			handlerLog.PackName,
 			i,
 			handlerLog.Type,
 			string(handlerLog.Input),
 			string(handlerLog.Output),
+			ColorRed,
 			errStr,
+			ColorNone,
 		)
 	}
 }
