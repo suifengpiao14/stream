@@ -1,6 +1,7 @@
 package stream
 
 import (
+	"encoding/json"
 	"fmt"
 
 	"github.com/suifengpiao14/logchan/v2"
@@ -23,12 +24,13 @@ const (
 )
 
 type HandlerLog struct {
-	PackName string
-	Order    int
-	Type     string // before |after
-	Input    []byte `json:"input"`
-	Output   []byte `json:"output"`
-	Err      error
+	PackName  string
+	Order     int
+	Type      string         // before |after
+	Input     []byte         `json:"input"`
+	Output    []byte         `json:"output"`
+	CurryData map[string]any `json:"curryData"`
+	Err       error
 }
 
 type StreamLog struct {
@@ -72,14 +74,16 @@ func DefaultPrintStreamLog(logInfo logchan.LogInforInterface, typeName logchan.L
 		if handlerLog.Err != nil {
 			errStr = handlerLog.Err.Error()
 		}
+		curryData, _ := json.Marshal(handlerLog.CurryData)
 		fmt.Fprintf(logchan.LogWriter,
-			"processSessionID:%s|name:%s|serialNumber:%d|type:%s|input:%s|output:%s|err:%s%s%s\n",
+			"processSessionID:%s|name:%s|serialNumber:%d|type:%s|input:%s|output:%s,curryData:%s|err:%s%s%s\n",
 			processSessionID,
 			handlerLog.PackName,
 			i,
 			handlerLog.Type,
 			string(handlerLog.Input),
 			string(handlerLog.Output),
+			string(curryData),
 			ColorRed,
 			errStr,
 			ColorNone,

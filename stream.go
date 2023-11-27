@@ -28,6 +28,7 @@ type PackHandler struct {
 	SetContext SetContextFn
 	Before     HandlerFn
 	After      HandlerFn
+	CurryData  map[string]any // 柯里化存储的数据，方便在日志内展示
 }
 
 func NewPackHandler(before HandlerFn, after HandlerFn) (p PackHandler) {
@@ -103,9 +104,10 @@ func (s *Stream) run(ctx context.Context, input []byte) (out []byte, err error) 
 		pack := s.packHandlers[i]
 		if pack.SetContext != nil {
 			handlerLog := HandlerLog{
-				Input:    data,
-				PackName: pack.Name,
-				Type:     HandlerLog_Type_SetContext,
+				Input:     data,
+				PackName:  pack.Name,
+				Type:      HandlerLog_Type_SetContext,
+				CurryData: pack.CurryData,
 			}
 			ctx, input, err = pack.SetContext(ctx, input)
 			handlerLog.Err = err
@@ -116,9 +118,10 @@ func (s *Stream) run(ctx context.Context, input []byte) (out []byte, err error) 
 		}
 		if pack.Before != nil {
 			handlerLog := HandlerLog{
-				Input:    data,
-				PackName: pack.Name,
-				Type:     HandlerLog_Type_Before,
+				Input:     data,
+				PackName:  pack.Name,
+				Type:      HandlerLog_Type_Before,
+				CurryData: pack.CurryData,
 			}
 			data, err = pack.Before(ctx, data)
 			handlerLog.Err = err
@@ -133,9 +136,10 @@ func (s *Stream) run(ctx context.Context, input []byte) (out []byte, err error) 
 		pack := s.packHandlers[i]
 		if pack.After != nil {
 			handlerLog := HandlerLog{
-				Input:    data,
-				PackName: pack.Name,
-				Type:     HandlerLog_Type_After,
+				Input:     data,
+				PackName:  pack.Name,
+				Type:      HandlerLog_Type_After,
+				CurryData: pack.CurryData,
 			}
 			handlerLog.Input = data
 			data, err = pack.After(ctx, data)
