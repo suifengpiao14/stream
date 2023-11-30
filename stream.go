@@ -2,9 +2,7 @@ package stream
 
 import (
 	"context"
-	"fmt"
 
-	"github.com/suifengpiao14/funcs"
 	"github.com/suifengpiao14/logchan/v2"
 )
 
@@ -18,36 +16,20 @@ import (
 **/
 
 // 定回调函数指针的类型
-type HandlerFn func(ctx context.Context, input []byte) (out []byte, err error)
+type HandlerFn func(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error)
 type ErrorHandler func(ctx context.Context, err error) (out []byte)
 
-type SetContextFn func(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error)
-
-type PackHandler struct {
-	Name       string
-	SetContext SetContextFn
-	Before     HandlerFn
-	After      HandlerFn
-	CurryData  map[string]any // 柯里化存储的数据，方便在日志内展示
+type PacketHandlerI interface {
+	Name() string
+	Description() string
+	Before(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error)
+	After(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error)
+	String() string
 }
 
-func NewPackHandler(before HandlerFn, after HandlerFn) (p PackHandler) {
-	p = NewPackHandlerWithSetContext(nil, before, after)
-	return p
-}
-func NewPackHandlerWithSetContext(setContextFn SetContextFn, before HandlerFn, after HandlerFn) (p PackHandler) {
-	p = PackHandler{
-		SetContext: setContextFn,
-		Name:       fmt.Sprintf("%s-%s", funcs.GetFuncname(before), funcs.GetFuncname(after)),
-		Before:     before,
-		After:      after,
-	}
-	return p
-}
+type PackHandlers []PacketHandlerI
 
-type PackHandlers []PackHandler
-
-func (ps *PackHandlers) Add(packHandlers ...PackHandler) {
+func (ps *PackHandlers) Add(packHandlers ...PacketHandlerI) {
 	if *ps == nil {
 		*ps = make(PackHandlers, 0)
 	}
@@ -56,7 +38,7 @@ func (ps *PackHandlers) Add(packHandlers ...PackHandler) {
 
 type StreamI interface {
 	Run(ctx context.Context, input []byte) (out []byte, err error)
-	AddPack(handlerPacks ...PackHandler) // 包裹更多处理函数
+	AddPack(handlerPacks ...PacketHandlerI) // 包裹更多处理函数
 }
 
 // 任务节点结构定义
@@ -65,7 +47,7 @@ type Stream struct {
 	errorHandler ErrorHandler //错误处理
 }
 
-func NewStream(errorHandelr ErrorHandler, packHandlers ...PackHandler) *Stream {
+func NewStream(errorHandelr ErrorHandler, packHandlers ...PacketHandlerI) *Stream {
 	stream := &Stream{
 		packHandlers: packHandlers,
 		errorHandler: errorHandelr,
@@ -74,7 +56,7 @@ func NewStream(errorHandelr ErrorHandler, packHandlers ...PackHandler) *Stream {
 }
 
 // AddPack 增加打包
-func (s *Stream) AddPack(handlerPacks ...PackHandler) {
+func (s *Stream) AddPack(handlerPacks ...PacketHandlerI) {
 	s.packHandlers = append(s.packHandlers, handlerPacks...)
 }
 
@@ -98,56 +80,39 @@ func (s *Stream) run(ctx context.Context, input []byte) (out []byte, err error) 
 		HandlerLogs: make([]HandlerLog, 0),
 	}
 	defer func() {
+		streamLog.SetContext(ctx)
 		logchan.SendLogInfo(&streamLog)
 	}()
 	for i := 0; i < l; i++ { // 先执行最后的before，直到最早的before
 		pack := s.packHandlers[i]
-		if pack.SetContext != nil {
-			handlerLog := HandlerLog{
-				Input:     data,
-				PackName:  pack.Name,
-				Type:      HandlerLog_Type_SetContext,
-				CurryData: pack.CurryData,
-			}
-			ctx, input, err = pack.SetContext(ctx, input)
-			handlerLog.Err = err
-			streamLog.HandlerLogs = append(streamLog.HandlerLogs, handlerLog)
-			if err != nil {
-				return nil, err
-			}
+		handlerLog := HandlerLog{
+			Input:     data,
+			PackName:  pack.Name(),
+			Type:      HandlerLog_Type_Before,
+			Serialize: pack.String(),
 		}
-		if pack.Before != nil {
-			handlerLog := HandlerLog{
-				Input:     data,
-				PackName:  pack.Name,
-				Type:      HandlerLog_Type_Before,
-				CurryData: pack.CurryData,
-			}
-			data, err = pack.Before(ctx, data)
-			handlerLog.Err = err
-			streamLog.HandlerLogs = append(streamLog.HandlerLogs, handlerLog)
-			if err != nil {
-				return nil, err
-			}
+		ctx, data, err = pack.Before(ctx, data)
+		handlerLog.Err = err
+		streamLog.HandlerLogs = append(streamLog.HandlerLogs, handlerLog)
+		if err != nil {
+			return nil, err
 		}
 	}
 
 	for i := l - 1; i > -1; i-- { // 先执行最后的after，直到最早的after
 		pack := s.packHandlers[i]
-		if pack.After != nil {
-			handlerLog := HandlerLog{
-				Input:     data,
-				PackName:  pack.Name,
-				Type:      HandlerLog_Type_After,
-				CurryData: pack.CurryData,
-			}
-			handlerLog.Input = data
-			data, err = pack.After(ctx, data)
-			handlerLog.Err = err
-			streamLog.HandlerLogs = append(streamLog.HandlerLogs, handlerLog)
-			if err != nil {
-				return nil, err
-			}
+		handlerLog := HandlerLog{
+			Input:     data,
+			PackName:  pack.Name(),
+			Type:      HandlerLog_Type_After,
+			Serialize: pack.String(),
+		}
+		handlerLog.Input = data
+		ctx, data, err = pack.After(ctx, data)
+		handlerLog.Err = err
+		streamLog.HandlerLogs = append(streamLog.HandlerLogs, handlerLog)
+		if err != nil {
+			return nil, err
 		}
 	}
 	return data, err
