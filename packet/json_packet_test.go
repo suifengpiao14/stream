@@ -1,10 +1,10 @@
-package stream_test
+package packet_test
 
 import (
 	"fmt"
 	"testing"
 
-	"github.com/suifengpiao14/stream"
+	"github.com/suifengpiao14/stream/packet"
 )
 
 type User struct {
@@ -12,6 +12,6 @@ type User struct {
 }
 
 func TestNewJsonMarshalUnMarshalPacket(t *testing.T) {
-	packetHander := stream.NewJsonMarshalUnMarshalPacket(nil, nil)
+	packetHander := packet.NewJsonMarshalUnMarshalPacket(nil, nil)
 	fmt.Println(packetHander.Name())
 }

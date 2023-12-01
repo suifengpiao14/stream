@@ -1,4 +1,4 @@
-package stream
+package packet
 
 import (
 	"context"
@@ -6,6 +6,7 @@ import (
 
 	"github.com/pkg/errors"
 	"github.com/spf13/cast"
+	"github.com/suifengpiao14/stream"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -75,7 +76,7 @@ type SetContext struct {
 }
 
 // NewSetContextPacketHandler 设置上下文处理器
-func NewSetContextPacketHandler(setContexts ...SetContext) (packHandler PacketHandlerI) {
+func NewSetContextPacketHandler(setContexts ...SetContext) (packHandler stream.PacketHandlerI) {
 	return &SetContextPacketHandler{
 		SetContexts: setContexts,
 	}
@@ -86,7 +87,7 @@ type SetContextPacketHandler struct {
 }
 
 func (packetSetContent SetContextPacketHandler) Name() string {
-	return GeneratePacketHandlerName(packetSetContent)
+	return stream.GeneratePacketHandlerName(packetSetContent)
 }
 
 func (packetSetContent SetContextPacketHandler) Description() string {
