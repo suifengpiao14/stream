@@ -95,7 +95,7 @@ type SetContextOperatorPackHandler struct {
 	packet.SetContextPacketHandler
 }
 
-// OperatorPackHandlerSetContent 从输入流中提取operatorId 到ctx中，在输出流中自动添加operatorId
+// OperatorpacketHandlersetContent 从输入流中提取operatorId 到ctx中，在输出流中自动添加operatorId
 func NewSetContextOperatorPackHandler(getOperatorFn GetOperatorValueFn, setOperatorFn SetOperatorValueFn) (packHandler stream.PacketHandlerI) {
 	setContext := packet.SetContext{
 		ContextKey: operatorContextKey,
@@ -139,8 +139,8 @@ func NewSetContextOperatorPackHandler(getOperatorFn GetOperatorValueFn, setOpera
 	}
 }
 
-// NewSetContentOperatorPackHandlerSetContent 从输入流中提取operatorId 到ctx中，在输出流中自动添加operatorId
-func NewSetContentOperatorPackHandlerSetContent(getOperatorFn GetOperatorValueFn, setOperatorFn SetOperatorValueFn) (packHandler stream.PacketHandlerI) {
+// NewSetContentOperatorpacketHandlersetContent 从输入流中提取operatorId 到ctx中，在输出流中自动添加operatorId
+func NewSetContentOperatorpacketHandlersetContent(getOperatorFn GetOperatorValueFn, setOperatorFn SetOperatorValueFn) (packHandler stream.PacketHandlerI) {
 	setContext := packet.SetContext{
 		ContextKey: operatorContextKey,
 		JsonKey:    "",

@@ -37,7 +37,7 @@ func RegisterLineschemaPacket(pack LineschemaPacketI) (err error) {
 	return err
 }
 
-func ServerPackHandlers(api LineschemaPacketI) (packHandlers stream.PackHandlers, err error) {
+func ServerpacketHandlers(api LineschemaPacketI) (packetHandlers stream.PacketHandlers, err error) {
 	method, path := api.GetRoute()
 	unpackId, packId := makeLineschemaPacketKey(method, path)
 	unpackLineschema, err := GetClineschema(unpackId)
@@ -49,16 +49,16 @@ func ServerPackHandlers(api LineschemaPacketI) (packHandlers stream.PackHandlers
 	if err != nil {
 		return nil, err
 	}
-	packHandlers = make(stream.PackHandlers, 0)
-	packHandlers.Add(
+	packetHandlers = make(stream.PacketHandlers, 0)
+	packetHandlers.Add(
 		NewValidatePacketHandler(string(unpackLineschema.Jsonschema), string(packLineschema.Jsonschema), unpackLineschema.validateLoader, packLineschema.validateLoader),
 		NewMergeDefaultHandler(string(unpackLineschema.DefaultJson), string(packLineschema.DefaultJson)),
 		NewTransferPacketHandler(unpackLineschema.transferToFormatGjsonPath, packLineschema.transferToTypeGjsonPath),
 	)
-	return packHandlers, nil
+	return packetHandlers, nil
 }
 
-func SDKPackHandlers(api LineschemaPacketI) (packHandlers stream.PackHandlers, err error) {
+func SDKpacketHandlers(api LineschemaPacketI) (packetHandlers stream.PacketHandlers, err error) {
 	method, path := api.GetRoute()
 	unpackId, packId := makeLineschemaPacketKey(method, path)
 	unpackLineschema, err := GetClineschema(unpackId)
@@ -70,13 +70,13 @@ func SDKPackHandlers(api LineschemaPacketI) (packHandlers stream.PackHandlers, e
 	if err != nil {
 		return nil, err
 	}
-	packHandlers = make(stream.PackHandlers, 0)
-	packHandlers.Add(
+	packetHandlers = make(stream.PacketHandlers, 0)
+	packetHandlers.Add(
 		NewTransferPacketHandler(packLineschema.transferToTypeGjsonPath, unpackLineschema.transferToFormatGjsonPath),
 		NewMergeDefaultHandler(string(packLineschema.DefaultJson), string(unpackLineschema.DefaultJson)),
 		NewValidatePacketHandler(string(packLineschema.Jsonschema), string(unpackLineschema.Jsonschema), packLineschema.validateLoader, unpackLineschema.validateLoader),
 	)
-	return packHandlers, nil
+	return packetHandlers, nil
 }
 
 func makeLineschemaPacketKey(method string, path string) (unpackId string, packId string) {

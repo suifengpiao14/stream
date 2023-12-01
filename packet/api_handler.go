@@ -41,11 +41,11 @@ func (packet *_ApiPackHandler) After(ctx context.Context, input []byte) (newCtx 
 	return ctx, input, nil
 }
 
-func ApiPackHandlers(api apihandler.ApiInterface) (packHandlers stream.PackHandlers) {
-	packHandlers = make(stream.PackHandlers, 0)
-	packHandlers.Add(
+func ApipacketHandlers(api apihandler.ApiInterface) (packetHandlers stream.PacketHandlers) {
+	packetHandlers = make(stream.PacketHandlers, 0)
+	packetHandlers.Add(
 		NewJsonUnmarshalMarshalPacket(api, api.GetOutRef()),
 		NewApiPackHandler(api),
 	)
-	return packHandlers
+	return packetHandlers
 }

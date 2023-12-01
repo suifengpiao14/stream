@@ -35,13 +35,13 @@ func JsonString(packet PacketHandlerI) string {
 	return s
 }
 
-type PackHandlers []PacketHandlerI
+type PacketHandlers []PacketHandlerI
 
-func (ps *PackHandlers) Add(packHandlers ...PacketHandlerI) {
+func (ps *PacketHandlers) Add(packetHandlers ...PacketHandlerI) {
 	if *ps == nil {
-		*ps = make(PackHandlers, 0)
+		*ps = make(PacketHandlers, 0)
 	}
-	*ps = append(*ps, packHandlers...)
+	*ps = append(*ps, packetHandlers...)
 }
 
 type StreamI interface {
@@ -51,13 +51,13 @@ type StreamI interface {
 
 // 任务节点结构定义
 type Stream struct {
-	packHandlers PackHandlers // 处理链条集合
+	packetHandlers PacketHandlers // 处理链条集合
 	errorHandler ErrorHandler //错误处理
 }
 
-func NewStream(errorHandelr ErrorHandler, packHandlers ...PacketHandlerI) *Stream {
+func NewStream(errorHandelr ErrorHandler, packetHandlers ...PacketHandlerI) *Stream {
 	stream := &Stream{
-		packHandlers: packHandlers,
+		packetHandlers: packetHandlers,
 		errorHandler: errorHandelr,
 	}
 	return stream
@@ -65,7 +65,7 @@ func NewStream(errorHandelr ErrorHandler, packHandlers ...PacketHandlerI) *Strea
 
 // AddPack 增加打包
 func (s *Stream) AddPack(handlerPacks ...PacketHandlerI) {
-	s.packHandlers = append(s.packHandlers, handlerPacks...)
+	s.packetHandlers = append(s.packetHandlers, handlerPacks...)
 }
 
 func (s *Stream) Run(ctx context.Context, input []byte) (out []byte, err error) {
@@ -83,7 +83,7 @@ func (s *Stream) Run(ctx context.Context, input []byte) (out []byte, err error) 
 }
 func (s *Stream) run(ctx context.Context, input []byte) (out []byte, err error) {
 	data := input
-	l := len(s.packHandlers)
+	l := len(s.packetHandlers)
 	streamLog := StreamLog{
 		HandlerLogs: make([]HandlerLog, 0),
 	}
@@ -92,7 +92,7 @@ func (s *Stream) run(ctx context.Context, input []byte) (out []byte, err error) 
 		logchan.SendLogInfo(&streamLog)
 	}()
 	for i := 0; i < l; i++ { // 先执行最后的before，直到最早的before
-		pack := s.packHandlers[i]
+		pack := s.packetHandlers[i]
 		handlerLog := HandlerLog{
 			BeforeCtx: ctx,
 			Input:     data,
@@ -111,7 +111,7 @@ func (s *Stream) run(ctx context.Context, input []byte) (out []byte, err error) 
 	}
 
 	for i := l - 1; i > -1; i-- { // 先执行最后的after，直到最早的after
-		pack := s.packHandlers[i]
+		pack := s.packetHandlers[i]
 		handlerLog := HandlerLog{
 			BeforeCtx: ctx,
 			Input:     data,
