@@ -2,6 +2,7 @@ package stream
 
 import (
 	"context"
+	"encoding/json"
 
 	"github.com/suifengpiao14/logchan/v2"
 )
@@ -25,6 +26,13 @@ type PacketHandlerI interface {
 	Before(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error)
 	After(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error)
 	String() string
+}
+
+//JsonString 用户实现PacketHandlerI.String()
+func JsonString(packet PacketHandlerI) string {
+	b, _ := json.Marshal(packet)
+	s := string(b)
+	return s
 }
 
 type PackHandlers []PacketHandlerI
