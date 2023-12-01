@@ -16,6 +16,12 @@ type _CUDEventPackHandler struct {
 	sqlRawEvent *cudeventimpl.SQLRawEvent
 }
 
+func NewCUDEventPackHandler(db *sql.DB) (packHandler stream.PacketHandlerI) {
+	return &_CUDEventPackHandler{
+		db: db,
+	}
+}
+
 func (packet *_CUDEventPackHandler) Name() string {
 	return stream.GeneratePacketHandlerName(packet)
 }
@@ -62,10 +68,4 @@ func (packet *_CUDEventPackHandler) After(ctx context.Context, input []byte) (ne
 		return ctx, nil, err
 	}
 	return ctx, input, nil
-}
-
-func NewCUDEventPackHandler(db *sql.DB) (packHandler stream.PacketHandlerI) {
-	return &_CUDEventPackHandler{
-		db: db,
-	}
 }

@@ -8,10 +8,6 @@ import (
 	"github.com/suifengpiao14/stream"
 )
 
-type GetDBI interface {
-	GetDB() *sql.DB
-}
-
 type _MysqlPacketHandler struct {
 	db *sql.DB
 }

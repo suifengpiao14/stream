@@ -13,8 +13,8 @@ require (
 	github.com/suifengpiao14/funcs v0.0.17
 	github.com/suifengpiao14/lineschema v0.0.19
 	github.com/suifengpiao14/logchan/v2 v2.0.22
-	github.com/suifengpiao14/sdkgolib v0.0.14
-	github.com/suifengpiao14/sqlexec v0.0.8
+	github.com/suifengpiao14/sdkgolib v0.0.15
+	github.com/suifengpiao14/sqlexec v0.0.9
 	github.com/suifengpiao14/sqlplus v0.0.7
 	github.com/suifengpiao14/torm v0.0.22
 	github.com/tidwall/gjson v1.17.0
