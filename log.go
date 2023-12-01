@@ -1,6 +1,8 @@
 package stream
 
 import (
+	"bytes"
+	"context"
 	"fmt"
 
 	"github.com/suifengpiao14/logchan/v2"
@@ -23,6 +25,8 @@ const (
 )
 
 type HandlerLog struct {
+	BeforeCtx context.Context
+	AfterCtx  context.Context
 	PackName  string
 	Order     int
 	Type      string // before |after
@@ -67,24 +71,30 @@ func DefaultPrintStreamLog(logInfo logchan.LogInforInterface, typeName logchan.L
 	// 	fmt.Fprintf(logchan.LogWriter, "processSessionID:%s|loginInfo:%s|error:%s\n", processSessionID, streamLog.GetName(), err.Error())
 	// 	return
 	// }
-
+	fmt.Fprintf(logchan.LogWriter, "---------------------------begin------------------------\n")
 	for i, handlerLog := range streamLog.HandlerLogs {
 		errStr := ""
 		if handlerLog.Err != nil {
 			errStr = handlerLog.Err.Error()
 		}
+
+		if len(handlerLog.Input) > 0 && bytes.Equal(handlerLog.Input, handlerLog.Output) && handlerLog.BeforeCtx == handlerLog.AfterCtx { // 输入输出完全一致,上下文变量地址没改变,说明没有对数据处理，只是因为流程流过而已，则不输出日志
+			continue
+		}
+
 		fmt.Fprintf(logchan.LogWriter,
-			"processSessionID:%s|name:%s|serialNumber:%d|type:%s|input:%s|output:%s,curryData:%s|err:%s%s%s\n",
+			"processSessionID:%s|name:%s|serialNumber:%d|type:%s|input:%s|curryData:%s|err:%s%s%s\n",
 			processSessionID,
 			handlerLog.PackName,
 			i,
 			handlerLog.Type,
 			string(handlerLog.Input),
-			string(handlerLog.Output),
+			//string(handlerLog.Output),
 			handlerLog.Serialize,
 			ColorRed,
 			errStr,
 			ColorNone,
 		)
 	}
+	fmt.Fprintf(logchan.LogWriter, "---------------------------end------------------------\n")
 }

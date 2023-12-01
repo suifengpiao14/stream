@@ -94,6 +94,7 @@ func (s *Stream) run(ctx context.Context, input []byte) (out []byte, err error) 
 	for i := 0; i < l; i++ { // 先执行最后的before，直到最早的before
 		pack := s.packHandlers[i]
 		handlerLog := HandlerLog{
+			BeforeCtx: ctx,
 			Input:     data,
 			PackName:  pack.Name(),
 			Type:      HandlerLog_Type_Before,
@@ -101,6 +102,8 @@ func (s *Stream) run(ctx context.Context, input []byte) (out []byte, err error) 
 		}
 		ctx, data, err = pack.Before(ctx, data)
 		handlerLog.Err = err
+		handlerLog.AfterCtx = ctx
+		handlerLog.Output = data
 		streamLog.HandlerLogs = append(streamLog.HandlerLogs, handlerLog)
 		if err != nil {
 			return nil, err
@@ -110,6 +113,7 @@ func (s *Stream) run(ctx context.Context, input []byte) (out []byte, err error) 
 	for i := l - 1; i > -1; i-- { // 先执行最后的after，直到最早的after
 		pack := s.packHandlers[i]
 		handlerLog := HandlerLog{
+			BeforeCtx: ctx,
 			Input:     data,
 			PackName:  pack.Name(),
 			Type:      HandlerLog_Type_After,
@@ -118,6 +122,8 @@ func (s *Stream) run(ctx context.Context, input []byte) (out []byte, err error) 
 		handlerLog.Input = data
 		ctx, data, err = pack.After(ctx, data)
 		handlerLog.Err = err
+		handlerLog.AfterCtx = ctx
+		handlerLog.Output = data
 		streamLog.HandlerLogs = append(streamLog.HandlerLogs, handlerLog)
 		if err != nil {
 			return nil, err
