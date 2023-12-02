@@ -7,12 +7,14 @@ import (
 )
 
 type ErrorPacketHandler struct {
-	Error error
+	BeforeErr error
+	AfterErr  error
 }
 
-func NewErrorIPacketHandler(err error) (packet stream.PacketHandlerI) {
+func NewErrorIPacketHandler(beforeErr error, afterErr error) (packet stream.PacketHandlerI) {
 	return &ErrorPacketHandler{
-		Error: err,
+		BeforeErr: beforeErr,
+		AfterErr:  afterErr,
 	}
 }
 
@@ -24,18 +26,18 @@ func (packet *ErrorPacketHandler) Description() string {
 }
 
 func (packet *ErrorPacketHandler) String() string {
-	return packet.Error.Error()
+	return packet.AfterErr.Error()
 }
 func (packet *ErrorPacketHandler) Before(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
-	if packet.Error.Error() == "" {
+	if packet.BeforeErr != nil && packet.BeforeErr.Error() == "" {
 		return ctx, input, nil
 	}
-	return ctx, input, packet.Error
+	return ctx, input, packet.BeforeErr
 }
 
 func (packet *ErrorPacketHandler) After(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
-	if packet.Error.Error() == "" {
+	if packet.AfterErr != nil && packet.AfterErr.Error() == "" {
 		return ctx, input, nil
 	}
-	return ctx, input, packet.Error
+	return ctx, input, packet.AfterErr
 }
