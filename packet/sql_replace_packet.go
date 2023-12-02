@@ -5,15 +5,13 @@ import (
 	"database/sql"
 
 	"github.com/blastrain/vitess-sqlparser/sqlparser"
-	"github.com/suifengpiao14/cudevent/cudeventimpl"
 	"github.com/suifengpiao14/sqlexec"
 	"github.com/suifengpiao14/sqlplus"
 	"github.com/suifengpiao14/stream"
 )
 
 type _SQLReplacePacketHandler struct {
-	db          *sql.DB
-	sqlRawEvent *cudeventimpl.SQLRawEvent
+	db *sql.DB
 }
 
 func NewSQLReplacePacketHandler(db *sql.DB) (packHandler stream.PacketHandlerI) {
