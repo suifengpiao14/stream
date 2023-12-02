@@ -53,7 +53,8 @@ func SDKPacketJsonHandlers(client sdkgolib.ClientInterface) (packetHandlers stre
 	convertGpath := lineschema.ToGoTypeTransfer(out).String()
 	transferPack := NewTransferPacketHandler("", convertGpath)
 	packetHandlers.Add(transferPack)
-
+	cfigStr := client.GetSDKConfig().String()
+	packetHandlers.Add(NewJsonMergePacket([]byte(cfigStr), nil))
 	packetHandlers.Add(NewSDKPackHandler(client))
 
 	return packetHandlers
