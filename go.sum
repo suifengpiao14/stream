@@ -323,8 +323,8 @@ github.com/suifengpiao14/sqlexec v0.0.9 h1:lV+CZLFqTCqKbYrBkU7Cf9Z5jsXEmYtzIHSr0
 github.com/suifengpiao14/sqlexec v0.0.9/go.mod h1:oCsYqeihwcj22hIAkhqoHo7lkgrd8n0HQcXLK5/nptI=
 github.com/suifengpiao14/sqlplus v0.0.7 h1:5/BX+lPEKlAJ0D5Ch5B5ZmeVSBf14CXBRRMA0qYR0OA=
 github.com/suifengpiao14/sqlplus v0.0.7/go.mod h1:rpScV4fnziPcyR7B+khAtCYJAaXwGx2fzm1tNKImdoU=
-github.com/suifengpiao14/torm v0.0.22 h1:byJUk5hXMJ9QQHXF3kBostpfzaFAjw/gqJfF2vjHSv8=
-github.com/suifengpiao14/torm v0.0.22/go.mod h1:Gsftw5F93l2snHrymxjjii1IJgQMHnkA5TfurNEjspY=
+github.com/suifengpiao14/torm v0.0.23 h1:UFCh/CsKwN2PL6VfgXE8pmZCvmdHrdWNTf0enhIXSyc=
+github.com/suifengpiao14/torm v0.0.23/go.mod h1:Gsftw5F93l2snHrymxjjii1IJgQMHnkA5TfurNEjspY=
 github.com/tidwall/gjson v1.14.2/go.mod h1:/wbyibRr2FHMks5tjHJ5F8dMZh3AcwJEMf5vlfC0lxk=
 github.com/tidwall/gjson v1.17.0 h1:/Jocvlh98kcTfpN2+JzGQWQcqrPQwDrVEMApx/M5ZwM=
 github.com/tidwall/gjson v1.17.0/go.mod h1:/wbyibRr2FHMks5tjHJ5F8dMZh3AcwJEMf5vlfC0lxk=

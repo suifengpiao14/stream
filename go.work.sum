@@ -63,10 +63,10 @@ github.com/spf13/cast v1.5.1/go.mod h1:b9PdjNptOpzXr7Rq1q9gJML/2cdGQAo69NKzQ10KN
 github.com/spf13/pflag v1.0.5/go.mod h1:McXfInJRrz4CZXVZOBLb0bTZqETkiAhM9Iw0y3An2Bg=
 github.com/suifengpiao14/funcs v0.0.16/go.mod h1:g95inzlUrS2Vtyvv5SjVFOnOeX7ZBPWwyKuEMMW+g7U=
 github.com/suifengpiao14/glob v0.0.1/go.mod h1:TIU/uxdBBmpuGqK1FA6LjeOrGX5GdOjU1lci5WdN4EA=
-github.com/suifengpiao14/lineschema v0.0.20 h1:n3JwUFqEHDE/fRX3I9UDml7SwNV74pijhNiJ2Uhduk0=
-github.com/suifengpiao14/lineschema v0.0.20/go.mod h1:l1ue//dksiuExrNkQ8JKlMD47qrHhkCRTFXy8iDd1ps=
 github.com/suifengpiao14/sqlstream v0.0.6 h1:DZOAbV7M8tqv9869FoyrvqBlHdnpNUhkjPrCPVd51fg=
 github.com/suifengpiao14/sqlstream v0.0.6/go.mod h1:MYVPfnPfkHPvIjMQD2dquQBUAptfd4a3x7k7h5ZnnqI=
+github.com/suifengpiao14/torm v0.0.23 h1:UFCh/CsKwN2PL6VfgXE8pmZCvmdHrdWNTf0enhIXSyc=
+github.com/suifengpiao14/torm v0.0.23/go.mod h1:Gsftw5F93l2snHrymxjjii1IJgQMHnkA5TfurNEjspY=
 github.com/tmc/grpc-websocket-proxy v0.0.0-20201229170055-e5319fda7802/go.mod h1:ncp9v5uamzpCO7NfCPTXjqaC+bZgJeR0sMTm6dMHP7U=
 github.com/xdg-go/pbkdf2 v1.0.0/go.mod h1:jrpuAogTd400dnrH08LKmI/xc1MbPOebTwRqcT5RDeI=
 github.com/xdg-go/scram v1.0.2/go.mod h1:1WAq6h33pAW+iRreB34OORO2Nf7qel3VV3fjBj+hCSs=
