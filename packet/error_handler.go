@@ -27,9 +27,15 @@ func (packet *ErrorPacketHandler) String() string {
 	return packet.Error.Error()
 }
 func (packet *ErrorPacketHandler) Before(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
+	if packet.Error.Error() == "" {
+		return ctx, input, nil
+	}
 	return ctx, input, packet.Error
 }
 
 func (packet *ErrorPacketHandler) After(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
+	if packet.Error.Error() == "" {
+		return ctx, input, nil
+	}
 	return ctx, input, packet.Error
 }
