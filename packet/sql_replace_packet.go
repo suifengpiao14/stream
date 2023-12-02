@@ -12,31 +12,30 @@ import (
 	"github.com/suifengpiao14/stream"
 )
 
-type _SQLSetPacketHandler struct {
+type _SQLReplacePacketHandler struct {
 	db          *sql.DB
 	sqlRawEvent *cudeventimpl.SQLRawEvent
 }
 
 func NewSQLSetPacketHandler(db *sql.DB) (packHandler stream.PacketHandlerI) {
-	return &_SQLSetPacketHandler{
+	return &_SQLReplacePacketHandler{
 		db: db,
 	}
 }
 
-func (packet *_SQLSetPacketHandler) Name() string {
+func (packet *_SQLReplacePacketHandler) Name() string {
 	return stream.GeneratePacketHandlerName(packet)
 }
 
-func (packet *_SQLSetPacketHandler) Description() string {
+func (packet *_SQLReplacePacketHandler) Description() string {
 	return `从更新语句中获取查询条件,存在则执行更新,不存在则转为insert语句,实现set功能`
 }
 
-func (packet *_SQLSetPacketHandler) String() string {
+func (packet *_SQLReplacePacketHandler) String() string {
 	return ""
 }
 
-func (packet *_SQLSetPacketHandler) Before(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
-	out = input
+func (packet *_SQLReplacePacketHandler) Before(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
 	sql := string(input)
 	stmt, err := sqlparser.Parse(sql)
 	if err != nil {
@@ -56,13 +55,23 @@ func (packet *_SQLSetPacketHandler) Before(ctx context.Context, input []byte) (n
 		packet.sqlRawEvent.BeforeData = before
 		if before == "" { //不存在,则生成insert语句
 			insertSql := sqlplus.ConvertUpdateToInsert(stmt)
-			out = []byte(insertSql)
+			//替换为insert语句后,重新设置事件内容
+			input = []byte(insertSql)
+			sql := string(input)
+			stmt, err := sqlparser.Parse(sql)
+			if err != nil {
+				return ctx, nil, err
+			}
+			packet.sqlRawEvent = &cudeventimpl.SQLRawEvent{} // 重新初始化
+			packet.sqlRawEvent.SQL = sql
+			packet.sqlRawEvent.DB = packet.db
+			packet.sqlRawEvent.Stmt = stmt
 
 		}
 	}
-	return ctx, out, nil
+	return ctx, input, nil
 }
-func (packet *_SQLSetPacketHandler) After(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
+func (packet *_SQLReplacePacketHandler) After(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
 	stmt := packet.sqlRawEvent.Stmt
 	switch stmt.(type) {
 	case *sqlparser.Insert:
