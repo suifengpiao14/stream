@@ -16,7 +16,7 @@ type _SQLReplacePacketHandler struct {
 	sqlRawEvent *cudeventimpl.SQLRawEvent
 }
 
-func NewSQLSetPacketHandler(db *sql.DB) (packHandler stream.PacketHandlerI) {
+func NewSQLReplacePacketHandler(db *sql.DB) (packHandler stream.PacketHandlerI) {
 	return &_SQLReplacePacketHandler{
 		db: db,
 	}
@@ -47,7 +47,6 @@ func (packet *_SQLReplacePacketHandler) Before(ctx context.Context, input []byte
 		if err != nil {
 			return ctx, nil, err
 		}
-		packet.sqlRawEvent.BeforeData = before
 		if before == "" { //不存在,则生成insert语句
 			insertSql := sqlplus.ConvertUpdateToInsert(stmt)
 			//替换为insert语句后,重新设置事件内容
