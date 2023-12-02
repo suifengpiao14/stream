@@ -9,13 +9,13 @@ require (
 	github.com/spf13/cast v1.6.0
 	github.com/stretchr/testify v1.8.4
 	github.com/suifengpiao14/apihandler v0.0.69
-	github.com/suifengpiao14/cudevent v0.0.12
+	github.com/suifengpiao14/cudevent v0.0.13
 	github.com/suifengpiao14/funcs v0.0.17
 	github.com/suifengpiao14/lineschema v0.0.20
 	github.com/suifengpiao14/logchan/v2 v2.0.22
 	github.com/suifengpiao14/sdkgolib v0.0.18
 	github.com/suifengpiao14/sqlexec v0.0.9
-	github.com/suifengpiao14/sqlplus v0.0.7
+	github.com/suifengpiao14/sqlplus v0.0.8
 	github.com/suifengpiao14/torm v0.0.23
 	github.com/tidwall/gjson v1.17.0
 	github.com/tidwall/sjson v1.2.5

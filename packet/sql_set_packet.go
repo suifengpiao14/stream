@@ -12,30 +12,31 @@ import (
 	"github.com/suifengpiao14/stream"
 )
 
-type _CUDEventPackHandler struct {
+type _SQLSetPacketHandler struct {
 	db          *sql.DB
 	sqlRawEvent *cudeventimpl.SQLRawEvent
 }
 
-func NewCUDEventPackHandler(db *sql.DB) (packHandler stream.PacketHandlerI) {
-	return &_CUDEventPackHandler{
+func NewSQLSetPacketHandler(db *sql.DB) (packHandler stream.PacketHandlerI) {
+	return &_SQLSetPacketHandler{
 		db: db,
 	}
 }
 
-func (packet *_CUDEventPackHandler) Name() string {
+func (packet *_SQLSetPacketHandler) Name() string {
 	return stream.GeneratePacketHandlerName(packet)
 }
 
-func (packet *_CUDEventPackHandler) Description() string {
-	return `解析sql,发布增改删事件`
+func (packet *_SQLSetPacketHandler) Description() string {
+	return `从更新语句中获取查询条件,存在则执行更新,不存在则转为insert语句,实现set功能`
 }
 
-func (packet *_CUDEventPackHandler) String() string {
+func (packet *_SQLSetPacketHandler) String() string {
 	return ""
 }
 
-func (packet *_CUDEventPackHandler) Before(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
+func (packet *_SQLSetPacketHandler) Before(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
+	out = input
 	sql := string(input)
 	stmt, err := sqlparser.Parse(sql)
 	if err != nil {
@@ -53,10 +54,15 @@ func (packet *_CUDEventPackHandler) Before(ctx context.Context, input []byte) (n
 			return ctx, nil, err
 		}
 		packet.sqlRawEvent.BeforeData = before
+		if before == "" { //不存在,则生成insert语句
+			insertSql := sqlplus.ConvertUpdateToInsert(stmt)
+			out = []byte(insertSql)
+
+		}
 	}
-	return ctx, input, nil
+	return ctx, out, nil
 }
-func (packet *_CUDEventPackHandler) After(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
+func (packet *_SQLSetPacketHandler) After(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
 	stmt := packet.sqlRawEvent.Stmt
 	switch stmt.(type) {
 	case *sqlparser.Insert:
