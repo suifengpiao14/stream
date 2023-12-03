@@ -11,7 +11,7 @@ require (
 	github.com/suifengpiao14/apihandler v0.0.69
 	github.com/suifengpiao14/cudevent v0.0.13
 	github.com/suifengpiao14/funcs v0.0.17
-	github.com/suifengpiao14/lineschema v0.0.20
+	github.com/suifengpiao14/lineschema v0.0.21
 	github.com/suifengpiao14/logchan/v2 v2.0.22
 	github.com/suifengpiao14/sdkgolib v0.0.18
 	github.com/suifengpiao14/sqlexec v0.0.9
@@ -64,7 +64,7 @@ require (
 	github.com/patrickmn/go-cache v2.1.0+incompatible // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rs/xid v1.5.0 // indirect
-	github.com/suifengpiao14/gjsonmodifier v0.1.9 // indirect
+	github.com/suifengpiao14/gjsonmodifier v0.1.10 // indirect
 	github.com/suifengpiao14/kvstruct v0.0.14 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.1 // indirect
