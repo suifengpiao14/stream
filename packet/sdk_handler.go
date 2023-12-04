@@ -45,17 +45,17 @@ func (packet *_SDKPackHandler) After(ctx context.Context, input []byte) (newCtx 
 func SDKPacketJsonHandlers(client sdkgolib.ClientInterface) (packetHandlers stream.PacketHandlers) {
 	packetHandlers = make(stream.PacketHandlers, 0)
 	out := client.GetOutRef()
-	packetHandlers.Add(NewErrorIPacketHandler(nil, out))
+	packetHandlers.Append(NewErrorIPacketHandler(nil, out))
 
 	strucpackHandler := NewJsonMarshalUnMarshalPacket(client, out)
-	packetHandlers.Add(strucpackHandler)
+	packetHandlers.Append(strucpackHandler)
 
 	convertGpath := lineschema.ToGoTypeTransfer(out).String()
 	transferPack := NewTransferPacketHandler("", convertGpath)
-	packetHandlers.Add(transferPack)
+	packetHandlers.Append(transferPack)
 	cfigStr := client.GetSDKConfig().String()
-	packetHandlers.Add(NewJsonMergePacket([]byte(cfigStr), nil))
-	packetHandlers.Add(NewSDKPackHandler(client))
+	packetHandlers.Append(NewJsonMergePacket([]byte(cfigStr), nil))
+	packetHandlers.Append(NewSDKPackHandler(client))
 
 	return packetHandlers
 }

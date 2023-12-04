@@ -50,7 +50,7 @@ func ServerpacketHandlers(api LineschemaPacketI) (packetHandlers stream.PacketHa
 		return nil, err
 	}
 	packetHandlers = make(stream.PacketHandlers, 0)
-	packetHandlers.Add(
+	packetHandlers.Append(
 		NewValidatePacketHandler(string(unpackLineschema.Jsonschema), string(packLineschema.Jsonschema), unpackLineschema.validateLoader, packLineschema.validateLoader),
 		NewMergeDefaultHandler(string(unpackLineschema.DefaultJson), string(packLineschema.DefaultJson)),
 		NewTransferPacketHandler(unpackLineschema.transferToFormatGjsonPath, packLineschema.transferToTypeGjsonPath),
@@ -71,7 +71,7 @@ func SDKpacketHandlers(api LineschemaPacketI) (packetHandlers stream.PacketHandl
 		return nil, err
 	}
 	packetHandlers = make(stream.PacketHandlers, 0)
-	packetHandlers.Add(
+	packetHandlers.Append(
 		NewTransferPacketHandler(packLineschema.transferToTypeGjsonPath, unpackLineschema.transferToFormatGjsonPath),
 		NewMergeDefaultHandler(string(packLineschema.DefaultJson), string(unpackLineschema.DefaultJson)),
 		NewValidatePacketHandler(string(packLineschema.Jsonschema), string(unpackLineschema.Jsonschema), packLineschema.validateLoader, unpackLineschema.validateLoader),

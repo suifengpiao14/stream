@@ -37,11 +37,54 @@ func JsonString(packet PacketHandlerI) string {
 
 type PacketHandlers []PacketHandlerI
 
-func (ps *PacketHandlers) Add(packetHandlers ...PacketHandlerI) {
+func NewPacketHandlers(packetHandlerIs ...PacketHandlerI) (packetHandlers PacketHandlers) {
+	packetHandlers = make(PacketHandlers, 0)
+	packetHandlers.Append(packetHandlerIs...)
+	return packetHandlers
+}
+
+func (ps *PacketHandlers) Append(packetHandlers ...PacketHandlerI) {
 	if *ps == nil {
 		*ps = make(PacketHandlers, 0)
 	}
 	*ps = append(*ps, packetHandlers...)
+}
+
+func (ps *PacketHandlers) InsertBefore(targetName string, packetHandlers ...PacketHandlerI) {
+	index := ps.getIndexByName(targetName)
+	if index <= 0 { // 找不到模板包位置，或者找到第一个，直接插入开头
+		tmp := *ps
+		*ps = make(PacketHandlers, 0)
+		ps.Append(packetHandlers...)
+		ps.Append(tmp...)
+		return
+	}
+	before, after := (*ps)[0:index], (*ps)[index:]
+	*ps = before
+	ps.Append(packetHandlers...)
+	ps.Append(after...)
+
+}
+
+func (ps *PacketHandlers) InsertAfter(targetName string, packetHandlers ...PacketHandlerI) {
+	index := ps.getIndexByName(targetName)
+	if index < 0 || index == len(*ps)-1 { // 找不到模板包位置,或者目标本就是最后一个，直接在结尾追加
+		ps.Append(packetHandlers...)
+		return
+	}
+	before, after := (*ps)[0:index+1], (*ps)[index+1:]
+	*ps = before
+	ps.Append(packetHandlers...)
+	ps.Append(after...)
+}
+
+func (ps *PacketHandlers) getIndexByName(name string) (index int) {
+	for i, packet := range *ps {
+		if packet.Name() == name {
+			return i
+		}
+	}
+	return -1
 }
 
 type StreamI interface {
@@ -52,13 +95,13 @@ type StreamI interface {
 // 任务节点结构定义
 type Stream struct {
 	packetHandlers PacketHandlers // 处理链条集合
-	errorHandler ErrorHandler //错误处理
+	errorHandler   ErrorHandler   //错误处理
 }
 
 func NewStream(errorHandelr ErrorHandler, packetHandlers ...PacketHandlerI) *Stream {
 	stream := &Stream{
 		packetHandlers: packetHandlers,
-		errorHandler: errorHandelr,
+		errorHandler:   errorHandelr,
 	}
 	return stream
 }

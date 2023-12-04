@@ -43,7 +43,7 @@ func (packet *_ApiPackHandler) After(ctx context.Context, input []byte) (newCtx 
 
 func ApiPacketHandlers(api apihandler.ApiInterface) (packetHandlers stream.PacketHandlers) {
 	packetHandlers = make(stream.PacketHandlers, 0)
-	packetHandlers.Add(
+	packetHandlers.Append(
 		NewJsonUnmarshalMarshalPacket(api, api.GetOutRef()),
 		NewApiPackHandler(api),
 	)
