@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 
+	"github.com/pkg/errors"
 	"github.com/suifengpiao14/stream"
 	"github.com/tidwall/gjson"
 )
@@ -39,6 +40,10 @@ func (packet *_TransferPacketHandler) Before(ctx context.Context, input []byte) 
 	if packet.BeforGjsonPath == "" {
 		return ctx, input, nil
 	}
+	if !gjson.ValidBytes(input) {
+		err = errors.Errorf("input is not json struct ,got:%s", string(input))
+		return ctx, nil, err
+	}
 	str := gjson.GetBytes(input, packet.BeforGjsonPath).String()
 	out = []byte(str)
 	return ctx, out, nil
@@ -47,6 +52,10 @@ func (packet *_TransferPacketHandler) Before(ctx context.Context, input []byte) 
 func (packet *_TransferPacketHandler) After(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
 	if packet.AfterGjsonPath == "" {
 		return ctx, input, nil
+	}
+	if !gjson.ValidBytes(input) {
+		err = errors.Errorf("input is not json struct ,got:%s", string(input))
+		return ctx, nil, err
 	}
 	str := gjson.GetBytes(input, packet.AfterGjsonPath).String()
 	out = []byte(str)
