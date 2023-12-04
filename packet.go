@@ -81,11 +81,15 @@ func (ps *PacketHandlers) Delete(index int) {
 	ps.Append(after...)
 }
 
-func (ps *PacketHandlers) Replace(index int, packetHandler PacketHandlerI) {
+func (ps *PacketHandlers) Replace(index int, packetHandlers ...PacketHandlerI) {
 	if index < 0 || len(*ps)-1 < index { // 找不到模板包位置,不删除
 		return
 	}
-	(*ps)[index] = packetHandler
+	before, after := (*ps)[0:index], (*ps)[index+1:]
+	*ps = make(PacketHandlers, 0) // 此处必须重新申请，否则操作会覆盖原有地址
+	ps.Append(before...)
+	ps.Append(packetHandlers...)
+	ps.Append(after...)
 }
 
 func (ps *PacketHandlers) Index(name string) (indexs []int) {
