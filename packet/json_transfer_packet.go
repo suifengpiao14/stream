@@ -41,7 +41,7 @@ func (packet *_TransferPacketHandler) Before(ctx context.Context, input []byte) 
 		return ctx, input, nil
 	}
 	if !gjson.ValidBytes(input) {
-		err = errors.Errorf("input is not json struct ,got:%s", string(input))
+		err = errors.Errorf("input require json string ,got:%s", string(input))
 		return ctx, nil, err
 	}
 	str := gjson.GetBytes(input, packet.BeforGjsonPath).String()
@@ -54,7 +54,7 @@ func (packet *_TransferPacketHandler) After(ctx context.Context, input []byte) (
 		return ctx, input, nil
 	}
 	if !gjson.ValidBytes(input) {
-		err = errors.Errorf("input is not json struct ,got:%s", string(input))
+		err = errors.Errorf("input require json string ,got:%s", string(input))
 		return ctx, nil, err
 	}
 	str := gjson.GetBytes(input, packet.AfterGjsonPath).String()
