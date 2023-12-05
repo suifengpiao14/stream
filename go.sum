@@ -317,8 +317,8 @@ github.com/suifengpiao14/lineschema v0.0.21 h1:K+uliLW5y6yheg3cO4xDp+WH5iKGCY1Lf
 github.com/suifengpiao14/lineschema v0.0.21/go.mod h1:x2U8O3MCjvqLLkjR44RfJ3xyeDSGlz4vVwWl6RtgNSM=
 github.com/suifengpiao14/logchan/v2 v2.0.22 h1:LhpV9E0ofNRQFEvR9MOF4hSHJes8s/aXn9Z4qdLVPck=
 github.com/suifengpiao14/logchan/v2 v2.0.22/go.mod h1:6o0naTqWDkgYMR4vQetJn1zVGMLD9YZ8TrNzQ9OjAFY=
-github.com/suifengpiao14/sdkgolib v0.0.19 h1:X+YsuSRiTX/+yPjR+1RyiNDMzWTQFPU9QnNI2L+wXPE=
-github.com/suifengpiao14/sdkgolib v0.0.19/go.mod h1:YdEk8eKYTpbLf3z+LsWzY8GsrpRgn8R7N/WT3Uvwzqw=
+github.com/suifengpiao14/sdkgolib v0.0.20 h1:NnM2YsPF5GZoXhBpfBYY170ZXPrxIlWwMdh08j8uTSI=
+github.com/suifengpiao14/sdkgolib v0.0.20/go.mod h1:YdEk8eKYTpbLf3z+LsWzY8GsrpRgn8R7N/WT3Uvwzqw=
 github.com/suifengpiao14/sqlexec v0.0.9 h1:lV+CZLFqTCqKbYrBkU7Cf9Z5jsXEmYtzIHSr0QXNZ/I=
 github.com/suifengpiao14/sqlexec v0.0.9/go.mod h1:oCsYqeihwcj22hIAkhqoHo7lkgrd8n0HQcXLK5/nptI=
 github.com/suifengpiao14/sqlplus v0.0.9 h1:vudL1a6MnXeAlWdmC3AFCVjl4JR6hPvnarPcVEjAMvQ=
