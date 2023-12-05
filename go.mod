@@ -15,7 +15,7 @@ require (
 	github.com/suifengpiao14/logchan/v2 v2.0.22
 	github.com/suifengpiao14/sdkgolib v0.0.20
 	github.com/suifengpiao14/sqlexec v0.0.9
-	github.com/suifengpiao14/sqlplus v0.0.9
+	github.com/suifengpiao14/sqlplus v0.0.10
 	github.com/suifengpiao14/torm v0.0.23
 	github.com/tidwall/gjson v1.17.0
 	github.com/tidwall/sjson v1.2.5
