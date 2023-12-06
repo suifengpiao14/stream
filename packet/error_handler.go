@@ -6,12 +6,16 @@ import (
 	"github.com/suifengpiao14/stream"
 )
 
-type ErrorPacketHandler struct {
-	BeforeErr error
-	AfterErr  error
+type ErrorI interface {
+	Error() (err error)
 }
 
-func NewErrorIPacketHandler(beforeErr error, afterErr error) (packet stream.PacketHandlerI) {
+type ErrorPacketHandler struct {
+	BeforeErr ErrorI
+	AfterErr  ErrorI
+}
+
+func NewErrorIPacketHandler(beforeErr ErrorI, afterErr ErrorI) (packet stream.PacketHandlerI) {
 	return &ErrorPacketHandler{
 		BeforeErr: beforeErr,
 		AfterErr:  afterErr,
@@ -25,19 +29,32 @@ func (packet *ErrorPacketHandler) Description() string {
 	return `将实现了ErrorI接口的结构体,封装成packet,目的是获取其中的error`
 }
 
-func (packet *ErrorPacketHandler) String() string {
-	return packet.AfterErr.Error()
+func (packet *ErrorPacketHandler) String() (s string) {
+	var err error
+	if packet.AfterErr != nil {
+		err = packet.AfterErr.Error()
+	}
+	if err != nil {
+		s = err.Error()
+	}
+	return s
 }
 func (packet *ErrorPacketHandler) Before(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
-	if packet.BeforeErr != nil && packet.BeforeErr.Error() == "" {
-		return ctx, input, nil
+	if packet.BeforeErr != nil {
+		err = packet.AfterErr.Error()
 	}
-	return ctx, input, packet.BeforeErr
+	if err != nil {
+		return ctx, input, err
+	}
+	return ctx, input, nil
 }
 
 func (packet *ErrorPacketHandler) After(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
-	if packet.AfterErr != nil && packet.AfterErr.Error() == "" {
-		return ctx, input, nil
+	if packet.BeforeErr != nil {
+		err = packet.AfterErr.Error()
 	}
-	return ctx, input, packet.AfterErr
+	if err != nil {
+		return ctx, input, err
+	}
+	return ctx, input, nil
 }
