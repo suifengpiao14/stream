@@ -313,8 +313,8 @@ github.com/suifengpiao14/gjsonmodifier v0.1.10 h1:2oagEit1ZI4R1ZbywYMYYALNF/v7oY
 github.com/suifengpiao14/gjsonmodifier v0.1.10/go.mod h1:bwhORc92wKB1Ms1REvG5IGgBLLEjhOt/hu/XmtQWuKw=
 github.com/suifengpiao14/kvstruct v0.0.14 h1:c5Eb6AsBN0gTVGk/Vj05aEiJ79j+pNNo3aIBw09EuMo=
 github.com/suifengpiao14/kvstruct v0.0.14/go.mod h1:v3hf2KPrafdYJJ49M5RWLfpYS8Z2fsJO/rAGMnIBYn8=
-github.com/suifengpiao14/lineschema v0.0.21 h1:K+uliLW5y6yheg3cO4xDp+WH5iKGCY1LflZvguYBOMY=
-github.com/suifengpiao14/lineschema v0.0.21/go.mod h1:x2U8O3MCjvqLLkjR44RfJ3xyeDSGlz4vVwWl6RtgNSM=
+github.com/suifengpiao14/lineschema v0.0.22 h1:DPrLZGbUfU5xVT/4nHCxk8yA0AvO7bpfEiHU9mdQZhc=
+github.com/suifengpiao14/lineschema v0.0.22/go.mod h1:x2U8O3MCjvqLLkjR44RfJ3xyeDSGlz4vVwWl6RtgNSM=
 github.com/suifengpiao14/logchan/v2 v2.0.22 h1:LhpV9E0ofNRQFEvR9MOF4hSHJes8s/aXn9Z4qdLVPck=
 github.com/suifengpiao14/logchan/v2 v2.0.22/go.mod h1:6o0naTqWDkgYMR4vQetJn1zVGMLD9YZ8TrNzQ9OjAFY=
 github.com/suifengpiao14/sdkgolib v0.0.21 h1:inqNoSZTwja/AcRJDEQBWaZMk20auyPNQSxtRv73EKc=

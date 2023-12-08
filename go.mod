@@ -11,7 +11,7 @@ require (
 	github.com/suifengpiao14/apihandler v0.0.69
 	github.com/suifengpiao14/cudevent v0.0.13
 	github.com/suifengpiao14/funcs v0.0.17
-	github.com/suifengpiao14/lineschema v0.0.21
+	github.com/suifengpiao14/lineschema v0.0.22
 	github.com/suifengpiao14/logchan/v2 v2.0.22
 	github.com/suifengpiao14/sdkgolib v0.0.21
 	github.com/suifengpiao14/sqlexec v0.0.9
