@@ -37,6 +37,9 @@ func (packet *_TransferPacketHandler) String() string {
 }
 
 func (packet *_TransferPacketHandler) Before(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
+	if len(input) == 0 { //空数据(如不需要入参)则直接返回
+		return ctx, input, nil
+	}
 	if packet.BeforGjsonPath == "" {
 		return ctx, input, nil
 	}
@@ -50,6 +53,9 @@ func (packet *_TransferPacketHandler) Before(ctx context.Context, input []byte) 
 }
 
 func (packet *_TransferPacketHandler) After(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
+	if len(input) == 0 { //空数据(如数据库查不到数据)则直接返回
+		return ctx, input, nil
+	}
 	if packet.AfterGjsonPath == "" {
 		return ctx, input, nil
 	}
