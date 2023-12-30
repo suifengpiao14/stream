@@ -12,7 +12,7 @@ type _JsonMarshalUnMarshalPacket struct {
 	dataReceiver interface{}
 }
 
-//NewJsonMarshalUnMarshalPacket 结构体转字节再转结构体
+// NewJsonMarshalUnMarshalPacket 结构体转字节再转结构体
 func NewJsonMarshalUnMarshalPacket(dataProvider interface{}, dataReceiver interface{}) (pack stream.PacketHandlerI) {
 	return &_JsonMarshalUnMarshalPacket{
 		dataProvider: dataProvider,
@@ -43,6 +43,9 @@ func (pack *_JsonMarshalUnMarshalPacket) After(ctx context.Context, input []byte
 	if pack.dataReceiver == nil {
 		return ctx, input, nil
 	}
+	if len(input) == 0 {
+		return ctx, input, nil
+	}
 	err = json.Unmarshal(input, pack.dataReceiver)
 	return ctx, nil, err
 }
@@ -51,7 +54,7 @@ type _JsonUnmarshalMarshalPacket struct {
 	_JsonMarshalUnMarshalPacket
 }
 
-//NewJsonUnmarshalMarshalPacket 字节转结构体再转字节
+// NewJsonUnmarshalMarshalPacket 字节转结构体再转字节
 func NewJsonUnmarshalMarshalPacket(dataReceiver interface{}, dataProvider interface{}) (pack stream.PacketHandlerI) {
 	return &_JsonUnmarshalMarshalPacket{
 		_JsonMarshalUnMarshalPacket: _JsonMarshalUnMarshalPacket{
