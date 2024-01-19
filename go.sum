@@ -226,8 +226,8 @@ github.com/suifengpiao14/logchan/v2 v2.0.22 h1:LhpV9E0ofNRQFEvR9MOF4hSHJes8s/aXn
 github.com/suifengpiao14/logchan/v2 v2.0.22/go.mod h1:6o0naTqWDkgYMR4vQetJn1zVGMLD9YZ8TrNzQ9OjAFY=
 github.com/suifengpiao14/sdkgolib v0.0.22 h1:cEqk9u7oB95EnVwsW4RncSQHHC0MOLWnoaTXW2XwB+U=
 github.com/suifengpiao14/sdkgolib v0.0.22/go.mod h1:CUQUcBl1GWvB3JQDC6AHA/k2jvRrBH2drnYMX58vadE=
-github.com/suifengpiao14/sqlexec v0.0.9 h1:lV+CZLFqTCqKbYrBkU7Cf9Z5jsXEmYtzIHSr0QXNZ/I=
-github.com/suifengpiao14/sqlexec v0.0.9/go.mod h1:oCsYqeihwcj22hIAkhqoHo7lkgrd8n0HQcXLK5/nptI=
+github.com/suifengpiao14/sqlexec v0.0.10 h1:9sbn1jLGJtLiZmX3t2Z8C4SExlgRdhLXfpqXbDVl4uY=
+github.com/suifengpiao14/sqlexec v0.0.10/go.mod h1:juH/yHoTjBWMzMibOZ7EOAZ1hWZIm3DIxxeBum39X5Q=
 github.com/suifengpiao14/sqlplus v0.0.10 h1:XtTQQDp1FQ4UST4YQ2Kq3tUBf1SZ7qUnx37ZRi3yPFY=
 github.com/suifengpiao14/sqlplus v0.0.10/go.mod h1:rpScV4fnziPcyR7B+khAtCYJAaXwGx2fzm1tNKImdoU=
 github.com/suifengpiao14/torm v0.0.23 h1:UFCh/CsKwN2PL6VfgXE8pmZCvmdHrdWNTf0enhIXSyc=
