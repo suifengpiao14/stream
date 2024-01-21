@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"github.com/suifengpiao14/httpraw/curlhookimpl/curlhookyaegi"
+	"github.com/suifengpiao14/stream/packet/yaegipacket"
 )
 
 func TestNewCurlHookYaegi(t *testing.T) {
@@ -33,7 +33,7 @@ func TestNewCurlHookYaegi(t *testing.T) {
 	}
 	
 		`
-		_, err := curlhookyaegi.NewCurlHookYaegi(dynamic)
+		_, err := yaegipacket.NewCurlHookYaegi(dynamic)
 		require.NoError(t, err)
 	})
 
@@ -58,7 +58,7 @@ func TestNewCurlHookYaegi(t *testing.T) {
 	
 	}
 		`
-		_, err := curlhookyaegi.NewCurlHookYaegi(dynamic)
+		_, err := yaegipacket.NewCurlHookYaegi(dynamic)
 		require.NoError(t, err)
 	})
 
@@ -70,7 +70,7 @@ func TestNewCurlHookYaegi(t *testing.T) {
 		return body, nil
 	}
 		`
-		_, err := curlhookyaegi.NewCurlHookYaegi(dynamic)
+		_, err := yaegipacket.NewCurlHookYaegi(dynamic)
 		require.NoError(t, err)
 	})
 
