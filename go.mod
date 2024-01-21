@@ -11,6 +11,7 @@ require (
 	github.com/suifengpiao14/apihandler v0.0.71
 	github.com/suifengpiao14/cudevent v0.0.13
 	github.com/suifengpiao14/funcs v0.0.17
+	github.com/suifengpiao14/httpraw v0.0.5
 	github.com/suifengpiao14/lineschema v0.0.32
 	github.com/suifengpiao14/logchan/v2 v2.0.22
 	github.com/suifengpiao14/sdkgolib v0.0.22
@@ -19,10 +20,14 @@ require (
 	github.com/suifengpiao14/torm v0.0.23
 	github.com/tidwall/gjson v1.17.0
 	github.com/tidwall/sjson v1.2.5
+	github.com/traefik/yaegi v0.15.1
 	github.com/xeipuuv/gojsonschema v1.2.0
 )
 
 require (
+	github.com/Masterminds/goutils v1.1.1 // indirect
+	github.com/Masterminds/semver/v3 v3.2.0 // indirect
+	github.com/Masterminds/sprig/v3 v3.2.3 // indirect
 	github.com/ThreeDotsLabs/watermill v1.2.0 // indirect
 	github.com/casdoor/casdoor-go-sdk v0.29.1 // indirect
 	github.com/d5/tengo/v2 v2.16.1 // indirect
@@ -37,15 +42,20 @@ require (
 	github.com/golang-jwt/jwt/v4 v4.1.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/uuid v1.3.0 // indirect
+	github.com/huandu/xstrings v1.3.3 // indirect
+	github.com/imdario/mergo v0.3.11 // indirect
 	github.com/jfcote87/sshdb v0.5.3 // indirect
 	github.com/jmoiron/sqlx v1.3.5 // indirect
 	github.com/jtolds/gls v4.20.0+incompatible // indirect
 	github.com/juju/errors v1.0.0 // indirect
 	github.com/leodido/go-urn v1.2.4 // indirect
 	github.com/lithammer/shortuuid/v3 v3.0.7 // indirect
+	github.com/mitchellh/copystructure v1.0.0 // indirect
+	github.com/mitchellh/reflectwalk v1.0.0 // indirect
 	github.com/oklog/ulid v1.3.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rs/xid v1.5.0 // indirect
+	github.com/shopspring/decimal v1.2.0 // indirect
 	github.com/suifengpiao14/gjsonmodifier v0.1.10 // indirect
 	github.com/suifengpiao14/kvstruct v0.0.14 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
