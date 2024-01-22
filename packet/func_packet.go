@@ -27,8 +27,8 @@ func (packet *_FuncPacketHandler) Description() string {
 }
 func (packet *_FuncPacketHandler) Before(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
 
-	if packet.afterFn == nil {
-		return ctx, input, nil
+	if packet.beforeFn == nil {
+		return stream.EmptyHandlerFn(ctx, input)
 	}
 	newCtx, out, err = packet.beforeFn(ctx, input)
 	if err != nil {
@@ -38,7 +38,7 @@ func (packet *_FuncPacketHandler) Before(ctx context.Context, input []byte) (new
 }
 func (packet *_FuncPacketHandler) After(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
 	if packet.afterFn == nil {
-		return ctx, input, nil
+		return stream.EmptyHandlerFn(ctx, input)
 	}
 	newCtx, out, err = packet.afterFn(ctx, input)
 	if err != nil {

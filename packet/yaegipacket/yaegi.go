@@ -2,6 +2,7 @@ package yaegipacket
 
 import (
 	"context"
+	"fmt"
 	"reflect"
 	"strings"
 
@@ -17,6 +18,9 @@ import (
 var Symbols = stdlib.Symbols
 var CURLHookBeforeFnPoint = "curlhook.BeforeFn"
 var CURLHookAfterFnPoint = "curlhook.AfterFn"
+
+// 动态脚本构造函数格式,兼容js,tengo,php脚本定义，所以 定义成最通用的string
+type HookFn func(input string) (output string, err error)
 
 const (
 	undefined_selector_error_prefix = "undefined selector: "
@@ -36,8 +40,8 @@ type YaegiHook struct {
 
 func NewCurlHookYaegi(dynamicScript string) (yaegiHook *YaegiHook, err error) {
 	var (
-		beforeFn       stream.HandlerFn
-		afterFn        stream.HandlerFn
+		beforeFn       HookFn
+		afterFn        HookFn
 		beforeFnExists = true
 		afterFnExists  = true
 	)
@@ -56,15 +60,14 @@ func NewCurlHookYaegi(dynamicScript string) (yaegiHook *YaegiHook, err error) {
 		err = errors.WithMessage(err, "init dynamic go script error")
 		return nil, err
 	}
-	var fn func(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error)
-	fnT := reflect.TypeOf(fn)
+	fnT := reflect.TypeOf((HookFn)(nil))
 	beforeFnV, beforeFnExists, err := getFn(interpreter, CURLHookBeforeFnPoint, fnT)
 	if err != nil {
 		return nil, err
 	}
 
 	if beforeFnExists {
-		beforeFn = beforeFnV.Interface().(stream.HandlerFn)
+		beforeFn = beforeFnV.Interface().(HookFn)
 	}
 
 	afterFnV, afterFnExists, err := getFn(interpreter, CURLHookAfterFnPoint, fnT)
@@ -72,10 +75,26 @@ func NewCurlHookYaegi(dynamicScript string) (yaegiHook *YaegiHook, err error) {
 		return nil, err
 	}
 	if afterFnExists {
-		afterFn = afterFnV.Interface().(stream.HandlerFn)
+		afterFn = afterFnV.Interface().(HookFn)
 	}
-	yaegiHook.DynamicBefore = beforeFn
-	yaegiHook.DynamicAfter = afterFn
+	yaegiHook.DynamicBefore = func(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
+		if beforeFn == nil {
+			return stream.EmptyHandlerFn(ctx, input)
+		}
+		inputS := string(input)
+		outS, err := beforeFn(inputS)
+		out = []byte(outS)
+		return ctx, out, err
+	}
+	yaegiHook.DynamicAfter = func(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
+		if afterFn == nil {
+			return stream.EmptyHandlerFn(ctx, input)
+		}
+		inputS := string(input)
+		outS, err := afterFn(inputS)
+		out = []byte(outS)
+		return ctx, out, err
+	}
 	return yaegiHook, nil
 }
 
@@ -92,7 +111,7 @@ func getFn(interpreter *interp.Interpreter, selector string, dstType reflect.Typ
 		return fn, false, err
 	}
 	if !fnV.CanConvert(dstType) {
-		err = errors.Errorf("dynamic func %s ,must can convert to %s", selector, dstType.PkgPath())
+		err = errors.Errorf("dynamic func %s ,must can convert to %s", selector, fmt.Sprintf("%s.%s", dstType.PkgPath(), dstType.Name()))
 		return fn, true, err
 	}
 	fn = fnV.Convert(dstType)
@@ -104,3 +123,5 @@ func getFn(interpreter *interp.Interpreter, selector string, dstType reflect.Typ
 //go:generate yaegi extract github.com/tidwall/gjson
 //go:generate yaegi extract github.com/tidwall/sjson
 //go:generate yaegi extract github.com/spf13/cast
+//go:generate yaegi extract github.com/suifengpiao14/stream/packet/yaegipacket/customfunc
+//go:generate yaegi extract github.com/syyongx/php2go

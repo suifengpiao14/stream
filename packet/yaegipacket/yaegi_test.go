@@ -11,26 +11,25 @@ func TestNewCurlHookYaegi(t *testing.T) {
 	t.Run("has BeforeFn and AfterFn", func(t *testing.T) {
 		dynamic := `
 		package curlhook
-	
-	import (
-		"github.com/suifengpiao14/httpraw"
-		"github.com/tidwall/gjson"
-		"github.com/tidwall/sjson"
-	)
-	
-	func BeforeFn(r httpraw.RequestDTO, scriptData map[string]interface{}) (nr *httpraw.RequestDTO, err error) {
-		timestamps := gjson.Get(r.Body, "_head._timestamps").String()
-		_ = timestamps
-		r.Body, err = sjson.Set(r.Body, "_head._timestamps", "1111111111111111")
-		if err != nil {
-			return nil, err
-		}
-		return &r, nil
-	
+
+import (
+	"github.com/tidwall/gjson"
+	"github.com/tidwall/sjson"
+)
+
+func BeforeFn(input string) (output string, err error) {
+	timestamps := gjson.Get(input, "body._head._timestamps").String()
+	_ = timestamps
+	input, err = sjson.Set(input, "body._head._timestamps", "1111111111111111")
+	if err != nil {
+		return "", err
 	}
-	func AfterFn(body []byte, scriptData map[string]interface{}) (newBody []byte, err error) {
-		return body, nil
-	}
+	return input, nil
+}
+func AfterFn(input string) (output string, err error) {
+	return input, nil
+}
+
 	
 		`
 		_, err := yaegipacket.NewCurlHookYaegi(dynamic)
@@ -40,23 +39,23 @@ func TestNewCurlHookYaegi(t *testing.T) {
 	t.Run("only BeforFn", func(t *testing.T) {
 		dynamic := `
 		package curlhook
-	
-	import (
-		"github.com/suifengpiao14/httpraw"
-		"github.com/tidwall/gjson"
-		"github.com/tidwall/sjson"
-	)
-	
-	func BeforeFn(r httpraw.RequestDTO, scriptData map[string]interface{}) (nr *httpraw.RequestDTO, err error) {
-		timestamps := gjson.Get(r.Body, "_head._timestamps").String()
-		_ = timestamps
-		r.Body, err = sjson.Set(r.Body, "_head._timestamps", "1111111111111111")
-		if err != nil {
-			return nil, err
-		}
-		return &r, nil
-	
+
+import (
+	"github.com/tidwall/gjson"
+	"github.com/tidwall/sjson"
+)
+
+func BeforeFn(input string) (output string, err error) {
+	timestamps := gjson.Get(input, "body._head._timestamps").String()
+	_ = timestamps
+	input, err = sjson.Set(input, "body._head._timestamps", "1111111111111111")
+	if err != nil {
+		return "", err
 	}
+	return input, nil
+}
+
+
 		`
 		_, err := yaegipacket.NewCurlHookYaegi(dynamic)
 		require.NoError(t, err)
@@ -65,10 +64,10 @@ func TestNewCurlHookYaegi(t *testing.T) {
 	t.Run("only AfterFn", func(t *testing.T) {
 		dynamic := `
 		package curlhook
-	
-	func AfterFn(body []byte, scriptData map[string]interface{}) (newBody []byte, err error) {
-		return body, nil
-	}
+		func AfterFn(input string) (output string, err error) {
+			return input, nil
+		}
+		
 		`
 		_, err := yaegipacket.NewCurlHookYaegi(dynamic)
 		require.NoError(t, err)

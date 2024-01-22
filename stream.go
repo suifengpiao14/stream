@@ -3,6 +3,7 @@ package stream
 import (
 	"context"
 
+	"github.com/pkg/errors"
 	"github.com/suifengpiao14/logchan/v2"
 )
 
@@ -14,7 +15,6 @@ import (
 除了首节点，每个节都会设置一个回调函数的指针，用本节点的任务执行,
 最后一个节点的nextStream为空,表示任务链结束。
 **/
-
 
 type StreamI interface {
 	Run(ctx context.Context, input []byte) (out []byte, err error)
@@ -73,6 +73,10 @@ func (s *Stream) run(ctx context.Context, input []byte) (out []byte, err error) 
 			Serialize: pack.String(),
 		}
 		ctx, data, err = pack.Before(ctx, data)
+		if errors.Is(err, ERROR_EMPTY_FUNC) { // 这个错误标记是空函数，可以不计日志
+			err = nil
+			continue
+		}
 		handlerLog.Err = err
 		handlerLog.AfterCtx = ctx
 		handlerLog.Output = data
@@ -93,6 +97,10 @@ func (s *Stream) run(ctx context.Context, input []byte) (out []byte, err error) 
 		}
 		handlerLog.Input = data
 		ctx, data, err = pack.After(ctx, data)
+		if errors.Is(err, ERROR_EMPTY_FUNC) { // 这个错误标记是空函数，可以不计日志
+			err = nil
+			continue
+		}
 		handlerLog.Err = err
 		handlerLog.AfterCtx = ctx
 		handlerLog.Output = data

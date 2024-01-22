@@ -47,7 +47,7 @@ func (packet *_TemplatePacketHandler) Before(ctx context.Context, input []byte) 
 	return ctx, out, nil
 }
 func (packet *_TemplatePacketHandler) After(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
-	return
+	return stream.EmptyHandlerFn(ctx, input)
 }
 
 func (packet *_TemplatePacketHandler) String() string {
