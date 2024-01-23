@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/pkg/errors"
 	"github.com/suifengpiao14/httpraw"
 	"github.com/suifengpiao14/stream"
 )
@@ -30,6 +31,7 @@ func (packet *_RestyPacketHandler) Before(ctx context.Context, input []byte) (ne
 	var reqDTo httpraw.RequestDTO
 	err = json.Unmarshal(input, &reqDTo)
 	if err != nil {
+		err = errors.WithMessagef(err, "got input :%s ", string(input))
 		return ctx, nil, err
 	}
 	r, err := httpraw.BuildRequest(&reqDTo)
