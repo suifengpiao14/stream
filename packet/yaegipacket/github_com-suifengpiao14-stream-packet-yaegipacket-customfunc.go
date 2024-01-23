@@ -11,6 +11,7 @@ func init() {
 	Symbols["github.com/suifengpiao14/stream/packet/yaegipacket/customfunc/customfunc"] = map[string]reflect.Value{
 		// function, constant and variable definitions
 		"Fen2yuan":     reflect.ValueOf(customfunc.Fen2yuan),
+		"FiledMapping": reflect.ValueOf(customfunc.FiledMapping),
 		"GetsetJson":   reflect.ValueOf(customfunc.GetsetJson),
 		"MaskFunc":     reflect.ValueOf(customfunc.MaskFunc),
 		"WalkArrayMap": reflect.ValueOf(customfunc.WalkArrayMap),

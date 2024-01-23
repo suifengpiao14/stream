@@ -41,6 +41,15 @@ func GetsetJson(input string, gjsonPath string, changeFn func(oldValue string) (
 
 }
 
+//FiledMapping 从json中获取映射，可以设置默认值
+func FiledMapping(key string, mapping gjson.Result, defaultValue string) (value string) {
+	result := mapping.Get(key)
+	if result.Exists() {
+		return result.String()
+	}
+	return defaultValue
+}
+
 func WalkArrayMap(body string, gjsonPath string, walkFn func(row map[string]any) (newRow map[string]any)) (output string, err error) {
 	data := gjson.Get(body, gjsonPath).String()
 	if data == "" {
