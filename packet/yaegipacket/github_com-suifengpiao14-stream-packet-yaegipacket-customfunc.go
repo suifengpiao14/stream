@@ -10,6 +10,9 @@ import (
 func init() {
 	Symbols["github.com/suifengpiao14/stream/packet/yaegipacket/customfunc/customfunc"] = map[string]reflect.Value{
 		// function, constant and variable definitions
-		"IncreaPageNumber": reflect.ValueOf(customfunc.IncreaPageNumber),
+		"Fen2yuan":     reflect.ValueOf(customfunc.Fen2yuan),
+		"GetsetJson":   reflect.ValueOf(customfunc.GetsetJson),
+		"MaskFunc":     reflect.ValueOf(customfunc.MaskFunc),
+		"WalkArrayMap": reflect.ValueOf(customfunc.WalkArrayMap),
 	}
 }

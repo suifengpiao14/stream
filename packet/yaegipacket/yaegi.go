@@ -125,3 +125,4 @@ func getFn(interpreter *interp.Interpreter, selector string, dstType reflect.Typ
 //go:generate yaegi extract github.com/spf13/cast
 //go:generate yaegi extract github.com/suifengpiao14/stream/packet/yaegipacket/customfunc
 //go:generate yaegi extract github.com/syyongx/php2go
+//github.com/suifengpiao14/gjsonmodifier
