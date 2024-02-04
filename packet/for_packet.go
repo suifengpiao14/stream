@@ -35,7 +35,7 @@ func (packet *_ForPacketHandler) Before(ctx context.Context, input []byte) (newC
 			return ctx, nil, err
 		default:
 		}
-		s := stream.NewStream(nil, packet.packetHandlers...)
+		s := stream.NewStream("for", nil, packet.packetHandlers...)
 		input, err = s.Run(ctx, input)
 		if errors.Is(err, Error_break) {
 			break

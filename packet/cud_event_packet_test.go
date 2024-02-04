@@ -32,7 +32,7 @@ func TestCud(t *testing.T) {
 	executorSql := GetExecutorSQL()
 	err := cudeventimpl.RegisterTablePrimaryKeyByDB(executorSql.GetDB(), "curdservice")
 	require.NoError(t, err)
-	s := stream.NewStream(nil)
+	s := stream.NewStream("",nil)
 	cudEventPackHandler := packet.NewCUDEventPackHandler(executorSql.GetDB())
 	sqlExecPack := packet.NewMysqlPacketHandler(executorSql.GetDB())
 	t.Run("select", func(t *testing.T) {
