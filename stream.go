@@ -27,7 +27,7 @@ type Stream struct {
 	errorHandler   ErrorHandler   //错误处理
 }
 
-func NewStream(errorHandelr ErrorHandler, packetHandlers ...PacketHandlerI) *Stream {
+func NewStream(name string, errorHandelr ErrorHandler, packetHandlers ...PacketHandlerI) *Stream {
 	stream := &Stream{
 		packetHandlers: packetHandlers,
 		errorHandler:   errorHandelr,
