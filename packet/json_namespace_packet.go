@@ -9,13 +9,15 @@ import (
 )
 
 type _JsonAddTrimNamespacePacket struct {
-	namespace string
+	namespaceAdd  string
+	namespaceTrim string
 }
 
 // NewJsonAddTrimNamespacePacket 给json增加命名空间
-func NewJsonAddTrimNamespacePacket(namespace string) (pack stream.PacketHandlerI) {
+func NewJsonAddTrimNamespacePacket(namespaceAdd string, namespaceTrim string) (pack stream.PacketHandlerI) {
 	return &_JsonAddTrimNamespacePacket{
-		namespace: namespace,
+		namespaceAdd:  namespaceAdd,
+		namespaceTrim: namespaceTrim,
 	}
 }
 
@@ -31,10 +33,10 @@ func (pack *_JsonAddTrimNamespacePacket) String() string {
 }
 
 func (pack *_JsonAddTrimNamespacePacket) Before(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
-	if pack.namespace == "" {
+	if pack.namespaceAdd == "" {
 		return ctx, input, nil
 	}
-	out, err = sjson.SetRawBytes([]byte{}, pack.namespace, input)
+	out, err = sjson.SetRawBytes([]byte{}, pack.namespaceAdd, input)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -43,10 +45,10 @@ func (pack *_JsonAddTrimNamespacePacket) Before(ctx context.Context, input []byt
 }
 
 func (pack *_JsonAddTrimNamespacePacket) After(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
-	if pack.namespace == "" {
+	if pack.namespaceTrim == "" {
 		return ctx, input, nil
 	}
-	s := gjson.GetBytes(input, pack.namespace).String()
+	s := gjson.GetBytes(input, pack.namespaceTrim).String()
 	out = []byte(s)
 	return ctx, out, nil
 }
@@ -59,7 +61,7 @@ type _JsonTrimAddNamespacePacket struct {
 func NewJsonTrimAddNamespacePacket(namespace string) (pack stream.PacketHandlerI) {
 	return &_JsonTrimAddNamespacePacket{
 		_JsonAddTrimNamespacePacket: _JsonAddTrimNamespacePacket{
-			namespace: namespace,
+			namespaceAdd: namespace,
 		},
 	}
 }
