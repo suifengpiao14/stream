@@ -16,8 +16,8 @@ require (
 	github.com/suifengpiao14/logchan/v2 v2.0.22
 	github.com/suifengpiao14/pathtransfer v0.0.2
 	github.com/suifengpiao14/sdkgolib v0.0.22
-	github.com/suifengpiao14/sqlexec v0.0.19
-	github.com/suifengpiao14/sqlplus v0.0.13
+	github.com/suifengpiao14/sqlexec v0.0.21
+	github.com/suifengpiao14/sqlplus v0.0.14
 	github.com/suifengpiao14/sshmysql v0.0.1
 	github.com/suifengpiao14/torm v0.0.23
 	github.com/tidwall/gjson v1.17.1
@@ -82,7 +82,7 @@ require (
 	golang.org/x/sys v0.17.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20240221002015-b0ce06bbee7c // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20240228224816-df926f6c8641 // indirect
 	google.golang.org/grpc v1.62.0 // indirect
 	google.golang.org/protobuf v1.32.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect

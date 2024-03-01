@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"encoding/json"
 
+	"github.com/blastrain/vitess-sqlparser/sqlparser"
 	"github.com/pkg/errors"
 	"github.com/suifengpiao14/sqlexec"
 	"github.com/suifengpiao14/sqlplus"
@@ -51,7 +52,7 @@ func (packet *SqlUniqueueCheckHandler) Before(ctx context.Context, input []byte)
 			return ctx, nil, err
 		}
 		if data != "" {
-			err = errors.WithMessage(Error_Uniqueue_exists, selectSql.Where.String())
+			err = errors.WithMessage(Error_Uniqueue_exists, sqlparser.String(selectSql.Where.WhereAndExpr()))
 
 			return ctx, nil, err
 		}
