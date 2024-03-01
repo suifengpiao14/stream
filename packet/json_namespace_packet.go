@@ -2,6 +2,7 @@ package packet
 
 import (
 	"context"
+	"strings"
 
 	"github.com/suifengpiao14/stream"
 	"github.com/tidwall/gjson"
@@ -16,8 +17,8 @@ type _JsonAddTrimNamespacePacket struct {
 // NewJsonAddTrimNamespacePacket 给json增加命名空间
 func NewJsonAddTrimNamespacePacket(namespaceAdd string, namespaceTrim string) (pack stream.PacketHandlerI) {
 	return &_JsonAddTrimNamespacePacket{
-		namespaceAdd:  namespaceAdd,
-		namespaceTrim: namespaceTrim,
+		namespaceAdd:  strings.TrimSuffix(namespaceAdd, "."),
+		namespaceTrim: strings.TrimSuffix(namespaceTrim, "."),
 	}
 }
 
