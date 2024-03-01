@@ -375,10 +375,12 @@ github.com/suifengpiao14/httpraw v0.0.6 h1:F8CtZMbS/H/OHd2J5pTJqTT8LW5LxNzZYcUN2
 github.com/suifengpiao14/httpraw v0.0.6/go.mod h1:+GI3N3piIdeeXHkQR59pApn3T93oy1cLcHp3CR80DJM=
 github.com/suifengpiao14/kvstruct v0.0.14 h1:c5Eb6AsBN0gTVGk/Vj05aEiJ79j+pNNo3aIBw09EuMo=
 github.com/suifengpiao14/kvstruct v0.0.14/go.mod h1:v3hf2KPrafdYJJ49M5RWLfpYS8Z2fsJO/rAGMnIBYn8=
-github.com/suifengpiao14/lineschema v0.0.32 h1:Jc4iY/aVmpKrvcSBG+MxnIZZ+jDJh4hgvqop0zSc6Q8=
-github.com/suifengpiao14/lineschema v0.0.32/go.mod h1:x2U8O3MCjvqLLkjR44RfJ3xyeDSGlz4vVwWl6RtgNSM=
+github.com/suifengpiao14/lineschema v0.0.35 h1:4UkDkI/4Y1C/p2b9J2PLnb1VSsSahjtLFNZboW9yNqE=
+github.com/suifengpiao14/lineschema v0.0.35/go.mod h1:ITtxFGRZ5c/M+WWGi+qXMr89SIokKlaXS7Q2mCcnH3E=
 github.com/suifengpiao14/logchan/v2 v2.0.22 h1:LhpV9E0ofNRQFEvR9MOF4hSHJes8s/aXn9Z4qdLVPck=
 github.com/suifengpiao14/logchan/v2 v2.0.22/go.mod h1:6o0naTqWDkgYMR4vQetJn1zVGMLD9YZ8TrNzQ9OjAFY=
+github.com/suifengpiao14/pathtransfer v0.0.2 h1:pzrM0J+TGIqzu85RgjXbNqzkmw1atcfz/yI2FWgTsdU=
+github.com/suifengpiao14/pathtransfer v0.0.2/go.mod h1:rCR9rnaIKX8BWDxyA7V6MBs5sGAYVaLfzZCDjVstgpw=
 github.com/suifengpiao14/sdkgolib v0.0.22 h1:cEqk9u7oB95EnVwsW4RncSQHHC0MOLWnoaTXW2XwB+U=
 github.com/suifengpiao14/sdkgolib v0.0.22/go.mod h1:CUQUcBl1GWvB3JQDC6AHA/k2jvRrBH2drnYMX58vadE=
 github.com/suifengpiao14/sqlexec v0.0.19 h1:BvbIiUk22NDOschWw8ELHyWlEhFw5lJrncm/OgdvKsI=
@@ -391,8 +393,8 @@ github.com/suifengpiao14/torm v0.0.23 h1:UFCh/CsKwN2PL6VfgXE8pmZCvmdHrdWNTf0enhI
 github.com/suifengpiao14/torm v0.0.23/go.mod h1:Gsftw5F93l2snHrymxjjii1IJgQMHnkA5TfurNEjspY=
 github.com/tiancaiamao/appdash v0.0.0-20181126055449-889f96f722a2/go.mod h1:2PfKggNGDuadAa0LElHrByyrz4JPZ9fFx6Gs7nx7ZZU=
 github.com/tidwall/gjson v1.14.2/go.mod h1:/wbyibRr2FHMks5tjHJ5F8dMZh3AcwJEMf5vlfC0lxk=
-github.com/tidwall/gjson v1.17.0 h1:/Jocvlh98kcTfpN2+JzGQWQcqrPQwDrVEMApx/M5ZwM=
-github.com/tidwall/gjson v1.17.0/go.mod h1:/wbyibRr2FHMks5tjHJ5F8dMZh3AcwJEMf5vlfC0lxk=
+github.com/tidwall/gjson v1.17.1 h1:wlYEnwqAHgzmhNUFfw7Xalt2JzQvsMx2Se4PcoFCT/U=
+github.com/tidwall/gjson v1.17.1/go.mod h1:/wbyibRr2FHMks5tjHJ5F8dMZh3AcwJEMf5vlfC0lxk=
 github.com/tidwall/match v1.1.1 h1:+Ho715JplO36QYgwN9PGYNhgZvoUSc9X2c80KVTi+GA=
 github.com/tidwall/match v1.1.1/go.mod h1:eRSPERbgtNPcGhD8UCthc6PmLEQXEWd3PRB5JTxsfmM=
 github.com/tidwall/pretty v1.2.0/go.mod h1:ITEVvHYasfjBbM0u2Pg8T2nJnzm8xPwvNhhsoaGGjNU=

@@ -3,7 +3,7 @@ package packet
 import (
 	"context"
 
-	"github.com/suifengpiao14/lineschema"
+	"github.com/suifengpiao14/pathtransfer"
 	"github.com/suifengpiao14/sdkgolib"
 	"github.com/suifengpiao14/stream"
 )
@@ -50,7 +50,7 @@ func SDKPacketJsonHandlers(client sdkgolib.ClientInterface) (packetHandlers stre
 	strucpackHandler := NewJsonMarshalUnMarshalPacket(client, out)
 	packetHandlers.Append(strucpackHandler)
 
-	convertGpath := lineschema.ToGoTypeTransfer(out).String()
+	convertGpath := pathtransfer.ToGoTypeTransfer(out).String()
 	transferPack := NewTransferPacketHandler("", convertGpath)
 	packetHandlers.Append(transferPack)
 	cfigStr := client.GetSDKConfig().String()
