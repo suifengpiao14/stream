@@ -379,8 +379,8 @@ github.com/suifengpiao14/lineschema v0.0.35 h1:4UkDkI/4Y1C/p2b9J2PLnb1VSsSahjtLF
 github.com/suifengpiao14/lineschema v0.0.35/go.mod h1:ITtxFGRZ5c/M+WWGi+qXMr89SIokKlaXS7Q2mCcnH3E=
 github.com/suifengpiao14/logchan/v2 v2.0.22 h1:LhpV9E0ofNRQFEvR9MOF4hSHJes8s/aXn9Z4qdLVPck=
 github.com/suifengpiao14/logchan/v2 v2.0.22/go.mod h1:6o0naTqWDkgYMR4vQetJn1zVGMLD9YZ8TrNzQ9OjAFY=
-github.com/suifengpiao14/pathtransfer v0.0.2 h1:pzrM0J+TGIqzu85RgjXbNqzkmw1atcfz/yI2FWgTsdU=
-github.com/suifengpiao14/pathtransfer v0.0.2/go.mod h1:rCR9rnaIKX8BWDxyA7V6MBs5sGAYVaLfzZCDjVstgpw=
+github.com/suifengpiao14/pathtransfer v0.0.3 h1:L8ypn0226VCdOJX9W+gx7hWU7E6N3X6txKtKqA+RHiY=
+github.com/suifengpiao14/pathtransfer v0.0.3/go.mod h1:rCR9rnaIKX8BWDxyA7V6MBs5sGAYVaLfzZCDjVstgpw=
 github.com/suifengpiao14/sdkgolib v0.0.22 h1:cEqk9u7oB95EnVwsW4RncSQHHC0MOLWnoaTXW2XwB+U=
 github.com/suifengpiao14/sdkgolib v0.0.22/go.mod h1:CUQUcBl1GWvB3JQDC6AHA/k2jvRrBH2drnYMX58vadE=
 github.com/suifengpiao14/sqlexec v0.0.21 h1:sMcZj9Ddtl7wQ+5ZSdy4sY+RFE9SN8G2BEAuuFSfzO4=
