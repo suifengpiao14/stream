@@ -26,7 +26,7 @@ func (c *Container) RegisterStream(stream *Stream) (err error) {
 	return err
 }
 func (c *Container) GetStream(name string) (stream *Stream, err error) {
-	stream, ok := c.streams[stream.Name]
+	stream, ok := c.streams[name]
 	if !ok {
 		err = errors.Errorf("stream not found by name:%s", name)
 		return nil, err
