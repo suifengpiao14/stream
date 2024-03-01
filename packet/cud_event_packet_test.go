@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/require"
-	"github.com/suifengpiao14/cudevent/cudeventimpl"
 	"github.com/suifengpiao14/sqlexec"
+	"github.com/suifengpiao14/sqlexec/sqlexecparser"
 	"github.com/suifengpiao14/sshmysql"
 	"github.com/suifengpiao14/stream"
 	"github.com/suifengpiao14/stream/packet"
@@ -32,10 +32,15 @@ func GetExecutorSQL() (executorSql *sqlexec.ExecutorSQL) {
 
 func TestCud(t *testing.T) {
 	executorSql := GetExecutorSQL()
-	err := cudeventimpl.RegisterTablePrimaryKeyByDB(executorSql.GetDB(), "curdservice")
+	db := executorSql.GetDB()
+	ddl, err := sqlexec.GetDDL(db)
+	require.NoError(t, err)
+	dbName, err := sqlexec.GetDatabaseName(db)
+	require.NoError(t, err)
+	err = sqlexecparser.RegisterTableByDDL(ddl)
 	require.NoError(t, err)
 	s := stream.NewStream("test", nil)
-	cudEventPackHandler := packet.NewCUDEventPackHandler(executorSql.GetDB())
+	cudEventPackHandler := packet.NewCUDEventPackHandler(executorSql.GetDB(), dbName)
 	sqlExecPack := packet.NewMysqlPacketHandler(executorSql.GetDB())
 	t.Run("select", func(t *testing.T) {
 		sql := "select * from service where 1=1;"

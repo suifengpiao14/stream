@@ -14,13 +14,16 @@ import (
 
 type _CUDEventPackHandler struct {
 	db          *sql.DB
+	database    string
 	sqlRawEvent *cudeventimpl.SQLRawEvent
 }
 
-func NewCUDEventPackHandler(db *sql.DB) (packHandler stream.PacketHandlerI) {
-	return &_CUDEventPackHandler{
-		db: db,
+func NewCUDEventPackHandler(db *sql.DB, dbName string) (packHandler stream.PacketHandlerI) {
+	packHandler = &_CUDEventPackHandler{
+		db:       db,
+		database: dbName,
 	}
+	return packHandler
 }
 
 func (packet *_CUDEventPackHandler) Name() string {
@@ -41,10 +44,12 @@ func (packet *_CUDEventPackHandler) Before(ctx context.Context, input []byte) (n
 	if err != nil {
 		return ctx, nil, err
 	}
-	packet.sqlRawEvent = &cudeventimpl.SQLRawEvent{} // 重新初始化
-	packet.sqlRawEvent.SQL = sql
-	packet.sqlRawEvent.DB = packet.db
-	packet.sqlRawEvent.Stmt = stmt
+	packet.sqlRawEvent = &cudeventimpl.SQLRawEvent{
+		SQL:      sql,
+		DB:       packet.db,
+		Stmt:     stmt,
+		Database: packet.database,
+	} // 重新初始化
 	switch stmt := stmt.(type) {
 	case *sqlparser.Update: // 更新类型，先查询更新前数据，并保存
 		selectSQL := sqlplus.ConvertUpdateToSelect(stmt)

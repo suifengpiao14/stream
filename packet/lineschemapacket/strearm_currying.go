@@ -3,8 +3,10 @@ package lineschemapacket
 import (
 	"context"
 	"encoding/json"
+	"strings"
 
 	"github.com/pkg/errors"
+	"github.com/spf13/cast"
 	"github.com/suifengpiao14/lineschema"
 	"github.com/suifengpiao14/stream"
 	"github.com/xeipuuv/gojsonschema"
@@ -101,6 +103,22 @@ func MakeValidateHandlerFn(validateLoader gojsonschema.JSONLoader) (fn stream.Ha
 		if validateLoader == nil {
 			return ctx, input, nil
 		}
+		if len(input) == 0 { // 填充默认格式
+			input = []byte("{}")
+			jInterface, err := validateLoader.LoadJSON()
+			if err != nil {
+				return ctx, nil, err
+			}
+			if m, ok := jInterface.(map[string]any); ok {
+				if typ, ok := m["type"]; ok {
+					typS := cast.ToString(typ)
+					if strings.EqualFold(typS, "array") {
+						input = []byte("[]")
+					}
+				}
+			}
+		}
+
 		err = lineschema.Validate(input, validateLoader)
 		if err != nil {
 			return ctx, nil, err
