@@ -16,7 +16,7 @@ require (
 	github.com/suifengpiao14/logchan/v2 v2.0.22
 	github.com/suifengpiao14/pathtransfer v0.0.3
 	github.com/suifengpiao14/sdkgolib v0.0.22
-	github.com/suifengpiao14/sqlexec v0.0.21
+	github.com/suifengpiao14/sqlexec v0.0.22
 	github.com/suifengpiao14/sqlplus v0.0.14
 	github.com/suifengpiao14/sshmysql v0.0.1
 	github.com/suifengpiao14/torm v0.0.23
@@ -31,7 +31,6 @@ require (
 	github.com/Masterminds/semver/v3 v3.2.0 // indirect
 	github.com/Masterminds/sprig/v3 v3.2.3 // indirect
 	github.com/ThreeDotsLabs/watermill v1.2.0 // indirect
-	github.com/bytewatch/ddl-executor v0.0.0-20191006051259-3983fa694bf8 // indirect
 	github.com/casdoor/casdoor-go-sdk v0.29.1 // indirect
 	github.com/cznic/mathutil v0.0.0-20181122101859-297441e03548 // indirect
 	github.com/d5/tengo/v2 v2.16.1 // indirect
@@ -68,6 +67,7 @@ require (
 	github.com/shirou/gopsutil v3.21.11+incompatible // indirect
 	github.com/shopspring/decimal v1.2.0 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
+	github.com/suifengpiao14/ddl-executor v0.0.1 // indirect
 	github.com/suifengpiao14/gjsonmodifier v0.1.10 // indirect
 	github.com/suifengpiao14/kvstruct v0.0.14 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
