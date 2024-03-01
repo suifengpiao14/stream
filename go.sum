@@ -383,8 +383,8 @@ github.com/suifengpiao14/sdkgolib v0.0.22 h1:cEqk9u7oB95EnVwsW4RncSQHHC0MOLWnoaT
 github.com/suifengpiao14/sdkgolib v0.0.22/go.mod h1:CUQUcBl1GWvB3JQDC6AHA/k2jvRrBH2drnYMX58vadE=
 github.com/suifengpiao14/sqlexec v0.0.19 h1:BvbIiUk22NDOschWw8ELHyWlEhFw5lJrncm/OgdvKsI=
 github.com/suifengpiao14/sqlexec v0.0.19/go.mod h1:ckHHiN9xss13xCqUhRC9KaM4S1HCZTP1HwBbd2zFqdQ=
-github.com/suifengpiao14/sqlplus v0.0.12 h1:Zt4WSVyg8JXN15HDTXYKTgttC6zRLa2OxN3mKEX24WY=
-github.com/suifengpiao14/sqlplus v0.0.12/go.mod h1:25Kv9xvsQANSD1nIFl/RpRwwi/XG2kdkHLCIgiQ777g=
+github.com/suifengpiao14/sqlplus v0.0.13 h1:+Wdz2rrb20qq4sDOm3QVJEZ1jUyrjEv/NLeIICoOjxQ=
+github.com/suifengpiao14/sqlplus v0.0.13/go.mod h1:25Kv9xvsQANSD1nIFl/RpRwwi/XG2kdkHLCIgiQ777g=
 github.com/suifengpiao14/sshmysql v0.0.1 h1:A6bj4TLpTBpcTkPOuSZDrmhNeeiKELL1S1vcFAMvmZ4=
 github.com/suifengpiao14/sshmysql v0.0.1/go.mod h1:XqRYddwQ7Ek4anaf6/YwZYZt8owXxFk9w/Potae/fC8=
 github.com/suifengpiao14/torm v0.0.23 h1:UFCh/CsKwN2PL6VfgXE8pmZCvmdHrdWNTf0enhIXSyc=
