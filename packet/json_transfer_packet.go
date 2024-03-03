@@ -14,6 +14,8 @@ type _TransferPacketHandler struct {
 	AfterGjsonPath string `json:"afterGjsonPath"`
 }
 
+const PACKETHANDLER_NAME_TransferPacketHandler = "github.com/suifengpiao14/stream/packet/_TransferPacketHandler"
+
 // NewTransferPacketHandler json转换
 func NewTransferPacketHandler(beforGjsonPath string, afterGjsonPath string) (packet stream.PacketHandlerI) {
 	return &_TransferPacketHandler{
@@ -23,7 +25,7 @@ func NewTransferPacketHandler(beforGjsonPath string, afterGjsonPath string) (pac
 }
 
 func (packet *_TransferPacketHandler) Name() string {
-	return stream.GeneratePacketHandlerName(packet)
+	return PACKETHANDLER_NAME_TransferPacketHandler
 }
 
 func (packet *_TransferPacketHandler) Description() string {

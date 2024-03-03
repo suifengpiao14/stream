@@ -14,6 +14,8 @@ type _SQLReplacePacketHandler struct {
 	db *sql.DB
 }
 
+const PACKETHANDLER_NAME_SQLReplacePacketHandler = "github.com/suifengpiao14/stream/packet/_SQLReplacePacketHandler"
+
 func NewSQLReplacePacketHandler(db *sql.DB) (packHandler stream.PacketHandlerI) {
 	return &_SQLReplacePacketHandler{
 		db: db,
@@ -21,7 +23,7 @@ func NewSQLReplacePacketHandler(db *sql.DB) (packHandler stream.PacketHandlerI) 
 }
 
 func (packet *_SQLReplacePacketHandler) Name() string {
-	return stream.GeneratePacketHandlerName(packet)
+	return PACKETHANDLER_NAME_SQLReplacePacketHandler
 }
 
 func (packet *_SQLReplacePacketHandler) Description() string {

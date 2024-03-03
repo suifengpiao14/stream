@@ -95,6 +95,8 @@ type SetContextOperatorPackHandler struct {
 	packet.SetContextPacketHandler
 }
 
+const PACKETHANDLER_NAME_SetContextOperatorPackHandler = "github.com/suifengpiao14/stream/packet/sqlpluspack/SetContextOperatorPackHandler"
+
 // OperatorpacketHandlersetContent 从输入流中提取operatorId 到ctx中，在输出流中自动添加operatorId
 func NewSetContextOperatorPackHandler(getOperatorFn GetOperatorValueFn, setOperatorFn SetOperatorValueFn) (packHandler stream.PacketHandlerI) {
 	setContext := packet.SetContext{
@@ -185,7 +187,7 @@ type OperatorPackHandler struct {
 }
 
 func (packet *OperatorPackHandler) Name() string {
-	return stream.GeneratePacketHandlerName(packet)
+	return PACKETHANDLER_NAME_SetContextOperatorPackHandler
 }
 
 func (packet *OperatorPackHandler) Description() string {

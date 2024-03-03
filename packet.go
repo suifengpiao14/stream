@@ -3,6 +3,7 @@ package stream
 import (
 	"context"
 	"encoding/json"
+	"strings"
 
 	"github.com/pkg/errors"
 )
@@ -25,7 +26,7 @@ type PacketHandlerI interface {
 	String() string
 }
 
-//JsonString 用户实现PacketHandlerI.String()
+// JsonString 用户实现PacketHandlerI.String()
 func JsonString(packet PacketHandlerI) string {
 	b, _ := json.Marshal(packet)
 	s := string(b)
@@ -45,6 +46,36 @@ func (ps *PacketHandlers) Append(packetHandlers ...PacketHandlerI) {
 		*ps = make(PacketHandlers, 0)
 	}
 	*ps = append(*ps, packetHandlers...)
+}
+
+// GetByName 通过名称获取子集合
+func (ps *PacketHandlers) GetNames() (names []string) {
+	names = make([]string, 0)
+	for _, p := range *ps {
+		names = append(names, p.Name())
+	}
+	return names
+}
+
+// GetByName 通过名称获取子集合
+func (ps *PacketHandlers) GetByName(names ...string) (packetHandlers PacketHandlers, err error) {
+	packetHandlers = make(PacketHandlers, 0)
+	for _, name := range names {
+		exists := false
+		for _, p := range *ps {
+			if strings.EqualFold(p.Name(), name) {
+				packetHandlers.Append(p)
+				exists = true
+				break
+			}
+		}
+		if !exists {
+			err = errors.Errorf("not found packet handler named:%s", name)
+			return nil, err
+		}
+	}
+
+	return packetHandlers, nil
 }
 
 func (ps *PacketHandlers) InsertBefore(index int, packetHandlers ...PacketHandlerI) {

@@ -13,6 +13,8 @@ type _JsonMergePacket struct {
 	AfterMergedData  []byte `json:"afterMergedData"`
 }
 
+const PACKETHANDLER_NAME_JsonMergePacket = "github.com/suifengpiao14/stream/packet/_JsonMergePacket"
+
 // NewJsonMergePacket 合并数据
 func NewJsonMergePacket(beforeMergedData []byte, afterMergedData []byte) (pack stream.PacketHandlerI) {
 	return &_JsonMergePacket{
@@ -22,7 +24,7 @@ func NewJsonMergePacket(beforeMergedData []byte, afterMergedData []byte) (pack s
 }
 
 func (pack *_JsonMergePacket) Name() string {
-	return stream.GeneratePacketHandlerName(pack)
+	return PACKETHANDLER_NAME_JsonMergePacket
 }
 func (pack *_JsonMergePacket) Description() string {
 	return "合并json数据"

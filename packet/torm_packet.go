@@ -12,8 +12,10 @@ type _TormPackHandler struct {
 	torm torm.TormI
 }
 
+const PACKETHANDLER_NAME_TormPackHandler = "github.com/suifengpiao14/stream/packet/_TormPackHandler"
+
 func (packet *_TormPackHandler) Name() string {
-	return stream.GeneratePacketHandlerName(packet)
+	return PACKETHANDLER_NAME_TormPackHandler
 }
 func (packet *_TormPackHandler) Description() string {
 	return `使用go template 生成sql语句`

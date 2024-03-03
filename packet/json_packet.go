@@ -12,6 +12,8 @@ type _JsonMarshalUnMarshalPacket struct {
 	dataReceiver interface{}
 }
 
+const PACKETHANDLER_NAME_JsonMarshalUnMarshalPacket = "github.com/suifengpiao14/stream/packet/_JsonMarshalUnMarshalPacket"
+
 // NewJsonMarshalUnMarshalPacket 结构体转字节再转结构体
 func NewJsonMarshalUnMarshalPacket(dataProvider interface{}, dataReceiver interface{}) (pack stream.PacketHandlerI) {
 	return &_JsonMarshalUnMarshalPacket{
@@ -21,7 +23,7 @@ func NewJsonMarshalUnMarshalPacket(dataProvider interface{}, dataReceiver interf
 }
 
 func (pack *_JsonMarshalUnMarshalPacket) Name() string {
-	return stream.GeneratePacketHandlerName(pack)
+	return PACKETHANDLER_NAME_JsonMarshalUnMarshalPacket
 }
 func (pack *_JsonMarshalUnMarshalPacket) Description() string {
 	return "struct -> []byte -> struct"

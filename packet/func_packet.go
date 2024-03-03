@@ -7,19 +7,21 @@ import (
 )
 
 type _FuncPacketHandler struct {
+	name     string
 	beforeFn stream.HandlerFn
 	afterFn  stream.HandlerFn
 }
 
-func NewFuncPacketHandler(beforeFn stream.HandlerFn, afterFn stream.HandlerFn) (packHandler stream.PacketHandlerI) {
+func NewFuncPacketHandler(name string, beforeFn stream.HandlerFn, afterFn stream.HandlerFn) (packHandler stream.PacketHandlerI) {
 	return &_FuncPacketHandler{
+		name:     name,
 		beforeFn: beforeFn,
 		afterFn:  afterFn,
 	}
 }
 
 func (packet *_FuncPacketHandler) Name() string {
-	return stream.GeneratePacketHandlerName(packet)
+	return packet.name
 }
 
 func (packet *_FuncPacketHandler) Description() string {

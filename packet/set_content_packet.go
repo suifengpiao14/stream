@@ -75,6 +75,8 @@ type SetContext struct {
 	SetFn      SetValueFn
 }
 
+const PACKETHANDLER_NAME_SetContext = "github.com/suifengpiao14/stream/packet/SetContext"
+
 // NewSetContextPacketHandler 设置上下文处理器
 func NewSetContextPacketHandler(setContexts ...SetContext) (packHandler stream.PacketHandlerI) {
 	return &SetContextPacketHandler{
@@ -87,7 +89,7 @@ type SetContextPacketHandler struct {
 }
 
 func (packetSetContent SetContextPacketHandler) Name() string {
-	return stream.GeneratePacketHandlerName(packetSetContent)
+	return PACKETHANDLER_NAME_SetContext
 }
 
 func (packetSetContent SetContextPacketHandler) Description() string {

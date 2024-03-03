@@ -13,6 +13,8 @@ type SqlPlusPacketHandler struct {
 	TableColumns []sqlplus.TableColumn `json:"tableColumns"`
 }
 
+const PACKETHANDLER_NAME_SqlPlusPacketHandler = "github.com/suifengpiao14/stream/packet/sqlpluspack/SqlPlusPacketHandler"
+
 // NewSqlPlusPacketHandler sql 增删改查语句扩展
 func NewSqlPlusPacketHandler(scenes sqlplus.Scenes, tableColumns ...sqlplus.TableColumn) (packHandler stream.PacketHandlerI) {
 	return &SqlPlusPacketHandler{
@@ -22,7 +24,7 @@ func NewSqlPlusPacketHandler(scenes sqlplus.Scenes, tableColumns ...sqlplus.Tabl
 }
 
 func (packet *SqlPlusPacketHandler) Name() string {
-	return stream.GeneratePacketHandlerName(packet)
+	return PACKETHANDLER_NAME_SqlPlusPacketHandler
 }
 func (packet *SqlPlusPacketHandler) String() string {
 	b, _ := json.Marshal(packet)

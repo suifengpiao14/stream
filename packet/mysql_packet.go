@@ -12,6 +12,8 @@ type _MysqlPacketHandler struct {
 	db *sql.DB
 }
 
+const PACKETHANDLER_NAME_MysqlPacketHandler = "github.com/suifengpiao14/stream/packet/_MysqlPacketHandler"
+
 func NewMysqlPacketHandler(db *sql.DB) (packHandler stream.PacketHandlerI) {
 	return &_MysqlPacketHandler{
 		db: db,
@@ -19,7 +21,7 @@ func NewMysqlPacketHandler(db *sql.DB) (packHandler stream.PacketHandlerI) {
 }
 
 func (packet *_MysqlPacketHandler) Name() string {
-	return stream.GeneratePacketHandlerName(packet)
+	return PACKETHANDLER_NAME_MysqlPacketHandler
 }
 
 func (packet *_MysqlPacketHandler) Description() string {

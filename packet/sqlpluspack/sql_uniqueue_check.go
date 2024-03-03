@@ -17,6 +17,8 @@ type SqlUniqueueCheckHandler struct {
 	db       *sql.DB
 }
 
+const PACKETHANDLER_NAME_SqlUniqueueCheckHandler = "github.com/suifengpiao14/stream/packet/sqlpluspack/SqlUniqueueCheckHandler"
+
 // NewSqlUniqueueCheckHandler sql 新增场景检测唯一键是否存在
 func NewSqlUniqueueCheckHandler(database string, db *sql.DB) (packHandler stream.PacketHandlerI) {
 	return &SqlUniqueueCheckHandler{
@@ -26,7 +28,7 @@ func NewSqlUniqueueCheckHandler(database string, db *sql.DB) (packHandler stream
 }
 
 func (packet *SqlUniqueueCheckHandler) Name() string {
-	return stream.GeneratePacketHandlerName(packet)
+	return PACKETHANDLER_NAME_SqlUniqueueCheckHandler
 }
 func (packet *SqlUniqueueCheckHandler) String() string {
 	b, _ := json.Marshal(packet)

@@ -14,6 +14,8 @@ type _RestyPacketHandler struct {
 	transport *http.Transport
 }
 
+const PACKETHANDLER_NAME_RestyPacketHandler = "github.com/suifengpiao14/stream/packet/_RestyPacketHandler"
+
 func NewRestyPacketHandler(transport *http.Transport) (packHandler stream.PacketHandlerI) {
 	return &_RestyPacketHandler{
 		transport: transport,
@@ -21,7 +23,7 @@ func NewRestyPacketHandler(transport *http.Transport) (packHandler stream.Packet
 }
 
 func (packet *_RestyPacketHandler) Name() string {
-	return stream.GeneratePacketHandlerName(packet)
+	return PACKETHANDLER_NAME_RestyPacketHandler
 }
 
 func (packet *_RestyPacketHandler) Description() string {

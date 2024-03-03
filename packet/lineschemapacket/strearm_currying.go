@@ -17,6 +17,8 @@ type _MergeDefaultPacketHandler struct {
 	AfterDefaultJson  string `json:"afterDefaultJson"`
 }
 
+const PACKETHANDLER_NAME_MergeDefaultPacketHandler = "github.com/suifengpiao14/stream/packet/lineschemapacket/_MergeDefaultPacketHandler"
+
 func NewMergeDefaultHandler(beforeDefaultJson string, afterDefaultJson string) (packet stream.PacketHandlerI) {
 	return &_MergeDefaultPacketHandler{
 		BeforeDefaultJson: beforeDefaultJson,
@@ -25,7 +27,7 @@ func NewMergeDefaultHandler(beforeDefaultJson string, afterDefaultJson string) (
 }
 
 func (packet *_MergeDefaultPacketHandler) Name() string {
-	return stream.GeneratePacketHandlerName(packet)
+	return PACKETHANDLER_NAME_MergeDefaultPacketHandler
 }
 
 func (packet *_MergeDefaultPacketHandler) Description() string {
@@ -68,6 +70,8 @@ type _ValidatePacketHandler struct {
 	afterValidateLoader  gojsonschema.JSONLoader
 }
 
+const PACKETHANDLER_NAME_ValidatePacket = "github.com/suifengpiao14/stream/packet/lineschemapacket/_ValidatePacketHandler"
+
 func NewValidatePacketHandler(beforeJsonschema string, afterJsonschema string, beforeValidateLoader gojsonschema.JSONLoader, afterValidateLoader gojsonschema.JSONLoader) (packet stream.PacketHandlerI) {
 	return &_ValidatePacketHandler{
 		BeforeJsonSchema:     beforeJsonschema,
@@ -78,7 +82,7 @@ func NewValidatePacketHandler(beforeJsonschema string, afterJsonschema string, b
 }
 
 func (packet *_ValidatePacketHandler) Name() string {
-	return stream.GeneratePacketHandlerName(packet)
+	return PACKETHANDLER_NAME_ValidatePacket
 }
 func (packet *_ValidatePacketHandler) Description() string {
 	return ``
@@ -127,38 +131,40 @@ func MakeValidateHandlerFn(validateLoader gojsonschema.JSONLoader) (fn stream.Ha
 	}
 }
 
-type _TransferPacketHandler struct {
+type _TransferTypeFormatPacketHandler struct {
 	BeforePathMap string `json:"beforePathMap"`
 	AfterPathMap  string `json:"afterPathMap"`
 }
 
+const PACKETHANDLER_NAME_TransferTypeFormatPacket = "github.com/suifengpiao14/stream/packet/lineschemapacket/_TransferTypeFormatPacketHandler"
+
 func NewTransferPacketHandler(beforePathMap string, afterPathMap string) (packet stream.PacketHandlerI) {
-	return &_TransferPacketHandler{
+	return &_TransferTypeFormatPacketHandler{
 		BeforePathMap: beforePathMap,
 		AfterPathMap:  afterPathMap,
 	}
 }
 
-func (packet *_TransferPacketHandler) Name() string {
+func (packet *_TransferTypeFormatPacketHandler) Name() string {
 
-	return stream.GeneratePacketHandlerName(packet)
+	return PACKETHANDLER_NAME_TransferTypeFormatPacket
 }
 
-func (packet *_TransferPacketHandler) Description() string {
+func (packet *_TransferTypeFormatPacketHandler) Description() string {
 
 	return `json数据转换,由type类型转成format格式,经过后续处理完又将输出从format格式转为type格式,适用于服务端接口`
 }
 
-func (packet *_TransferPacketHandler) String() string {
+func (packet *_TransferTypeFormatPacketHandler) String() string {
 
 	return stream.JsonString(packet)
 }
 
-func (packet *_TransferPacketHandler) Before(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
+func (packet *_TransferTypeFormatPacketHandler) Before(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
 	return MakeTransferHandler(packet.BeforePathMap)(ctx, input)
 }
 
-func (packet *_TransferPacketHandler) After(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
+func (packet *_TransferTypeFormatPacketHandler) After(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
 	return MakeTransferHandler(packet.AfterPathMap)(ctx, input)
 }
 

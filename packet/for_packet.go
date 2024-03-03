@@ -11,6 +11,8 @@ type _ForPacketHandler struct {
 	packetHandlers stream.PacketHandlers
 }
 
+const PACKETHANDLER_NAME_ForPacketHandler = "github.com/suifengpiao14/stream/packet/_ForPacketHandler"
+
 var Error_break = errors.New("break for loop")
 
 func NewForPacketHandler(packetHandlers ...stream.PacketHandlerI) (packHandler stream.PacketHandlerI) {
@@ -20,7 +22,7 @@ func NewForPacketHandler(packetHandlers ...stream.PacketHandlerI) (packHandler s
 }
 
 func (packet *_ForPacketHandler) Name() string {
-	return stream.GeneratePacketHandlerName(packet)
+	return PACKETHANDLER_NAME_ForPacketHandler
 }
 
 func (packet *_ForPacketHandler) Description() string {

@@ -15,6 +15,8 @@ type _TemplatePacketHandler struct {
 	dataType reflect.Type
 }
 
+const PACKETHANDLER_NAME_TemplatePacketHandler = "github.com/suifengpiao14/stream/packet/_TemplatePacketHandler"
+
 func NewTemplatePacketHandler(tpl template.Template, dataType reflect.Type) (packHandler stream.PacketHandlerI) {
 	return &_TemplatePacketHandler{
 		tpl:      &tpl,
@@ -23,7 +25,7 @@ func NewTemplatePacketHandler(tpl template.Template, dataType reflect.Type) (pac
 }
 
 func (packet *_TemplatePacketHandler) Name() string {
-	return stream.GeneratePacketHandlerName(packet)
+	return PACKETHANDLER_NAME_TemplatePacketHandler
 }
 
 func (packet *_TemplatePacketHandler) Description() string {

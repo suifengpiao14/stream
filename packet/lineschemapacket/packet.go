@@ -42,12 +42,26 @@ func ServerpacketHandlers(api LineschemaPacketI) (packetHandlers stream.PacketHa
 	unpackId, packId := makeLineschemaPacketKey(method, path)
 	unpackLineschema, err := GetClineschema(unpackId)
 	if err != nil {
-		return nil, err
+		line, err := lineschema.ParseLineschema(api.UnpackSchema())
+		if err != nil {
+			return nil, err
+		}
+		err = RegisterLineschema(unpackId, *line)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	packLineschema, err := GetClineschema(packId)
 	if err != nil {
-		return nil, err
+		line, err := lineschema.ParseLineschema(api.PackSchema())
+		if err != nil {
+			return nil, err
+		}
+		err = RegisterLineschema(packId, *line)
+		if err != nil {
+			return nil, err
+		}
 	}
 	packetHandlers = make(stream.PacketHandlers, 0)
 	packetHandlers.Append(

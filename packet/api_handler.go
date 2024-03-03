@@ -2,6 +2,7 @@ package packet
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/suifengpiao14/apihandler"
 	"github.com/suifengpiao14/stream"
@@ -11,6 +12,8 @@ type _ApiPackHandler struct {
 	api apihandler.ApiInterface
 }
 
+const PACKETHANDLER_NAME_ApiPackHandler = "github.com/suifengpiao14/stream/packet/_ApiPackHandler_domain"
+
 func NewApiPackHandler(api apihandler.ApiInterface) (packet stream.PacketHandlerI) {
 	return &_ApiPackHandler{
 		api: api,
@@ -18,7 +21,8 @@ func NewApiPackHandler(api apihandler.ApiInterface) (packet stream.PacketHandler
 }
 
 func (packet *_ApiPackHandler) Name() string {
-	return stream.GeneratePacketHandlerName(packet)
+	domain, name := packet.api.GetName()
+	return fmt.Sprintf(PACKETHANDLER_NAME_ApiPackHandler, domain, name)
 }
 
 func (packet *_ApiPackHandler) Description() string {

@@ -14,6 +14,8 @@ type _JsonAddTrimNamespacePacket struct {
 	namespaceTrim string
 }
 
+const PACKETHANDLER_NAME_JsonAddTrimNamespacePacket = "github.com/suifengpiao14/stream/packet/_JsonAddTrimNamespacePacket"
+
 // NewJsonAddTrimNamespacePacket 给json增加命名空间
 func NewJsonAddTrimNamespacePacket(namespaceAdd string, namespaceTrim string) (pack stream.PacketHandlerI) {
 	return &_JsonAddTrimNamespacePacket{
@@ -23,7 +25,7 @@ func NewJsonAddTrimNamespacePacket(namespaceAdd string, namespaceTrim string) (p
 }
 
 func (pack *_JsonAddTrimNamespacePacket) Name() string {
-	return stream.GeneratePacketHandlerName(pack)
+	return PACKETHANDLER_NAME_JsonAddTrimNamespacePacket
 }
 func (pack *_JsonAddTrimNamespacePacket) Description() string {
 	return "add namespace to json"

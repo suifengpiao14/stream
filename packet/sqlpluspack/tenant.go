@@ -23,6 +23,8 @@ type _SetContextTenantPackHandler struct {
 	packet.SetContextPacketHandler
 }
 
+const PACKETHANDLER_NAME_SetContextTenantPackHandler = "github.com/suifengpiao14/stream/packet/sqlpluspack/_SetContextTenantPackHandler"
+
 // NewSetContextTenantPackHandler 从输入流中提取tenantId 到ctx中，在输出流中自动添加tenantId
 func NewSetContextTenantPackHandler(getTenantIDFn packet.GetValueFn, setTenantIDFn packet.SetValueFn) (packHandler stream.PacketHandlerI) {
 	setContext := packet.SetContext{
@@ -39,7 +41,7 @@ func NewSetContextTenantPackHandler(getTenantIDFn packet.GetValueFn, setTenantID
 }
 
 func (packet *_SetContextTenantPackHandler) Name() string {
-	return stream.GeneratePacketHandlerName(packet)
+	return PACKETHANDLER_NAME_SetContextTenantPackHandler
 }
 func (packet *_SetContextTenantPackHandler) Description() string {
 	return `设置多租户值到上下文`
@@ -49,6 +51,8 @@ type _TenantPacketHandler struct {
 	TenantID string `json:"tenantID"`
 	SqlPlusPacketHandler
 }
+
+const PACKETHANDLER_NAME_TenantPacketHandler = "github.com/suifengpiao14/stream/packet/sqlpluspack/_TenantPacketHandler"
 
 func NewTenantPacketHandler(tenatID string) (packHandler stream.PacketHandlerI) {
 	tableColumn := TenantColumnConfig
@@ -70,7 +74,7 @@ func NewTenantPacketHandler(tenatID string) (packHandler stream.PacketHandlerI) 
 }
 
 func (packet *_TenantPacketHandler) Name() string {
-	return stream.GeneratePacketHandlerName(packet)
+	return PACKETHANDLER_NAME_TenantPacketHandler
 }
 
 func (packet *_TenantPacketHandler) Description() string {

@@ -15,6 +15,8 @@ type ErrorPacketHandler struct {
 	AfterErr  ErrorI
 }
 
+const PACKETHANDLER_NAME_ErrorPacketHandler = "github.com/suifengpiao14/stream/packet/ErrorPacketHandler"
+
 func NewErrorIPacketHandler(beforeErr ErrorI, afterErr ErrorI) (packet stream.PacketHandlerI) {
 	return &ErrorPacketHandler{
 		BeforeErr: beforeErr,
@@ -23,7 +25,7 @@ func NewErrorIPacketHandler(beforeErr ErrorI, afterErr ErrorI) (packet stream.Pa
 }
 
 func (packet *ErrorPacketHandler) Name() string {
-	return stream.GeneratePacketHandlerName(packet)
+	return PACKETHANDLER_NAME_ErrorPacketHandler
 }
 func (packet *ErrorPacketHandler) Description() string {
 	return `将实现了ErrorI接口的结构体,封装成packet,目的是获取其中的error`

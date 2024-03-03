@@ -11,12 +11,14 @@ import (
 type _HttprawPacketHandler struct {
 }
 
+const PACKETHANDLER_NAME_HttprawPacketHandler = "github.com/suifengpiao14/stream/packet/_HttprawPacketHandler"
+
 func NewHttprawPacketHandler() (packHandler stream.PacketHandlerI) {
 	return &_HttprawPacketHandler{}
 }
 
 func (packet *_HttprawPacketHandler) Name() string {
-	return stream.GeneratePacketHandlerName(packet)
+	return PACKETHANDLER_NAME_HttprawPacketHandler
 }
 
 func (packet *_HttprawPacketHandler) Description() string {

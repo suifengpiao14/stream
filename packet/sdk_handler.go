@@ -12,6 +12,8 @@ type _SDKPackHandler struct {
 	sdk sdkgolib.ClientInterface
 }
 
+const PACKETHANDLER_NAME_SDKPackHandler = "github.com/suifengpiao14/stream/packet/_SDKPackHandler"
+
 func NewSDKPackHandler(sdk sdkgolib.ClientInterface) (packet stream.PacketHandlerI) {
 	return &_SDKPackHandler{
 		sdk: sdk,
@@ -19,7 +21,7 @@ func NewSDKPackHandler(sdk sdkgolib.ClientInterface) (packet stream.PacketHandle
 }
 
 func (packet *_SDKPackHandler) Name() string {
-	return stream.GeneratePacketHandlerName(packet)
+	return PACKETHANDLER_NAME_SDKPackHandler
 }
 
 func (packet *_SDKPackHandler) Description() string {

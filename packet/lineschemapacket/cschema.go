@@ -12,8 +12,8 @@ import (
 
 var clineschemaMap sync.Map
 
-// _Clineschema 编译好的jsonschema
-type _Clineschema struct {
+// Clineschema 编译好的jsonschema
+type Clineschema struct {
 	ID                        string `json:"id"`
 	Lineschema                lineschema.Lineschema
 	Jsonschema                []byte `json:"jsonschema"`
@@ -23,31 +23,26 @@ type _Clineschema struct {
 	validateLoader            gojsonschema.JSONLoader
 }
 
-func RegisterLineschema(identify string, lschema lineschema.Lineschema) (err error) {
-	v, ok := clineschemaMap.Load(identify)
-	if ok {
-		err = errors.Errorf("id already registered,id:%s,value:%T", identify, v)
-		return err
-	}
+func NewClineschame(identify string, lschema lineschema.Lineschema) (clineschema *Clineschema, err error) {
 	err = lschema.Validate()
 	if err != nil {
-		return err
+		return nil, err
 	}
 	jschema, err := lschema.JsonSchema()
 	if err != nil {
-		return err
+		return nil, err
 	}
 	err = ValidateJsonschema(jschema)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	jsonschemaLoader := gojsonschema.NewBytesLoader(jschema)
 	defaultJson, err := lineschema.GenerateDefaultJSON(jschema)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	cJsonschema := _Clineschema{
+	clineschema = &Clineschema{
 		ID:                        identify,
 		Lineschema:                lschema,
 		Jsonschema:                jschema,
@@ -55,6 +50,19 @@ func RegisterLineschema(identify string, lschema lineschema.Lineschema) (err err
 		transferToTypeGjsonPath:   lschema.TransferToFormat().Reverse().String(),
 		DefaultJson:               defaultJson,
 		validateLoader:            jsonschemaLoader,
+	}
+	return clineschema, nil
+}
+
+func RegisterLineschema(identify string, lschema lineschema.Lineschema) (err error) {
+	v, ok := clineschemaMap.Load(identify)
+	if ok {
+		err = errors.Errorf("id already registered,id:%s,value:%T", identify, v)
+		return err
+	}
+	cJsonschema, err := NewClineschame(identify, lschema)
+	if err != nil {
+		return err
 	}
 	clineschemaMap.Store(identify, &cJsonschema)
 	return nil
@@ -64,13 +72,13 @@ var (
 	ERROR_NOT_FOUND_CSCHEMA = errors.New("not found _Clineschema")
 )
 
-func GetClineschema(id string) (cLineschema *_Clineschema, err error) {
+func GetClineschema(id string) (cLineschema *Clineschema, err error) {
 	v, ok := clineschemaMap.Load(id)
 	if !ok {
 		err = errors.WithMessagef(ERROR_NOT_FOUND_CSCHEMA, "id:%s", id)
 		return nil, err
 	}
-	ref, ok := v.(*_Clineschema)
+	ref, ok := v.(*Clineschema)
 	if !ok {
 		err = errors.Errorf("expect:*_Clineschema,got:%T", v)
 		return nil, err

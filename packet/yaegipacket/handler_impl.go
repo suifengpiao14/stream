@@ -2,12 +2,12 @@ package yaegipacket
 
 import (
 	"context"
-
-	"github.com/suifengpiao14/stream"
 )
 
+const PACKETHANDLER_NAME_YaegiHook = "github.com/suifengpiao14/stream/packet/yaegipacket/YaegiHook"
+
 func (packet *YaegiHook) Name() string {
-	return stream.GeneratePacketHandlerName(packet)
+	return PACKETHANDLER_NAME_YaegiHook
 }
 func (packet *YaegiHook) Description() string {
 	return ``
