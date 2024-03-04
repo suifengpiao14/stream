@@ -27,10 +27,10 @@ type Stream struct {
 	Context        context.Context
 	Name           string
 	packetHandlers packethandler.PacketHandlers // 处理链条集合
-	errorHandler   packethandler.ErrorHandler   //错误处理
+	errorHandler   ErrorHandler                 //错误处理
 }
 
-func NewStream(name string, errorHandler packethandler.ErrorHandler, packetHandlers ...packethandler.PacketHandlerI) *Stream {
+func NewStream(name string, errorHandler ErrorHandler, packetHandlers ...packethandler.PacketHandlerI) *Stream {
 	stream := &Stream{
 		packetHandlers: packetHandlers,
 		errorHandler:   errorHandler,
