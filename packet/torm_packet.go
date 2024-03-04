@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 
-	"github.com/suifengpiao14/stream"
+	"github.com/suifengpiao14/packethandler"
 	"github.com/suifengpiao14/torm"
 )
 
@@ -46,7 +46,7 @@ func (packet *_TormPackHandler) After(ctx context.Context, input []byte) (newCtx
 }
 
 // NewTormPackHandler 执行模板返回SQL
-func NewTormPackHandler(torm torm.TormI) (packHandler stream.PacketHandlerI) {
+func NewTormPackHandler(torm torm.TormI) (packHandler packethandler.PacketHandlerI) {
 	return &_TormPackHandler{
 		torm: torm,
 	}

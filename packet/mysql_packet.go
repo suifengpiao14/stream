@@ -4,8 +4,8 @@ import (
 	"context"
 	"database/sql"
 
+	"github.com/suifengpiao14/packethandler"
 	"github.com/suifengpiao14/sqlexec"
-	"github.com/suifengpiao14/stream"
 )
 
 type _MysqlPacketHandler struct {
@@ -14,7 +14,7 @@ type _MysqlPacketHandler struct {
 
 const PACKETHANDLER_NAME_MysqlPacketHandler = "github.com/suifengpiao14/stream/packet/_MysqlPacketHandler"
 
-func NewMysqlPacketHandler(db *sql.DB) (packHandler stream.PacketHandlerI) {
+func NewMysqlPacketHandler(db *sql.DB) (packHandler packethandler.PacketHandlerI) {
 	return &_MysqlPacketHandler{
 		db: db,
 	}

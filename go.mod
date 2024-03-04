@@ -7,13 +7,13 @@ require (
 	github.com/evanphx/json-patch/v5 v5.8.1
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/cast v1.6.0
-	github.com/stretchr/testify v1.8.4
+	github.com/stretchr/testify v1.9.0
 	github.com/suifengpiao14/apihandler v0.0.71
 	github.com/suifengpiao14/cudevent v0.0.16
 	github.com/suifengpiao14/funcs v0.0.18
 	github.com/suifengpiao14/httpraw v0.0.6
 	github.com/suifengpiao14/lineschema v0.0.35
-	github.com/suifengpiao14/logchan/v2 v2.0.22
+	github.com/suifengpiao14/packethandler v0.0.1
 	github.com/suifengpiao14/pathtransfer v0.0.3
 	github.com/suifengpiao14/sdkgolib v0.0.22
 	github.com/suifengpiao14/sqlexec v0.0.22
@@ -70,6 +70,7 @@ require (
 	github.com/suifengpiao14/ddl-executor v0.0.1 // indirect
 	github.com/suifengpiao14/gjsonmodifier v0.1.10 // indirect
 	github.com/suifengpiao14/kvstruct v0.0.14 // indirect
+	github.com/suifengpiao14/logchan/v2 v2.0.22 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.1 // indirect
 	github.com/xeipuuv/gojsonpointer v0.0.0-20180127040702-4e3ac2762d5f // indirect

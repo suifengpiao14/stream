@@ -3,9 +3,9 @@ package packet
 import (
 	"context"
 
+	"github.com/suifengpiao14/packethandler"
 	"github.com/suifengpiao14/pathtransfer"
 	"github.com/suifengpiao14/sdkgolib"
-	"github.com/suifengpiao14/stream"
 )
 
 type _SDKPackHandler struct {
@@ -14,7 +14,7 @@ type _SDKPackHandler struct {
 
 const PACKETHANDLER_NAME_SDKPackHandler = "github.com/suifengpiao14/stream/packet/_SDKPackHandler"
 
-func NewSDKPackHandler(sdk sdkgolib.ClientInterface) (packet stream.PacketHandlerI) {
+func NewSDKPackHandler(sdk sdkgolib.ClientInterface) (packet packethandler.PacketHandlerI) {
 	return &_SDKPackHandler{
 		sdk: sdk,
 	}
@@ -44,8 +44,8 @@ func (packet *_SDKPackHandler) After(ctx context.Context, input []byte) (newCtx 
 	return ctx, input, nil
 }
 
-func SDKPacketJsonHandlers(client sdkgolib.ClientInterface) (packetHandlers stream.PacketHandlers) {
-	packetHandlers = make(stream.PacketHandlers, 0)
+func SDKPacketJsonHandlers(client sdkgolib.ClientInterface) (packetHandlers packethandler.PacketHandlers) {
+	packetHandlers = make(packethandler.PacketHandlers, 0)
 	out := client.GetOutRef()
 	packetHandlers.Append(NewErrorIPacketHandler(nil, out))
 

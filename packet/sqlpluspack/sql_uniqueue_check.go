@@ -7,9 +7,9 @@ import (
 
 	"github.com/blastrain/vitess-sqlparser/sqlparser"
 	"github.com/pkg/errors"
+	"github.com/suifengpiao14/packethandler"
 	"github.com/suifengpiao14/sqlexec"
 	"github.com/suifengpiao14/sqlplus"
-	"github.com/suifengpiao14/stream"
 )
 
 type SqlUniqueueCheckHandler struct {
@@ -20,7 +20,7 @@ type SqlUniqueueCheckHandler struct {
 const PACKETHANDLER_NAME_SqlUniqueueCheckHandler = "github.com/suifengpiao14/stream/packet/sqlpluspack/SqlUniqueueCheckHandler"
 
 // NewSqlUniqueueCheckHandler sql 新增场景检测唯一键是否存在
-func NewSqlUniqueueCheckHandler(database string, db *sql.DB) (packHandler stream.PacketHandlerI) {
+func NewSqlUniqueueCheckHandler(database string, db *sql.DB) (packHandler packethandler.PacketHandlerI) {
 	return &SqlUniqueueCheckHandler{
 		Database: database,
 		db:       db,

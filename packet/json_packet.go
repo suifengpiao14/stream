@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 
-	"github.com/suifengpiao14/stream"
+	"github.com/suifengpiao14/packethandler"
 )
 
 type _JsonMarshalUnMarshalPacket struct {
@@ -15,7 +15,7 @@ type _JsonMarshalUnMarshalPacket struct {
 const PACKETHANDLER_NAME_JsonMarshalUnMarshalPacket = "github.com/suifengpiao14/stream/packet/_JsonMarshalUnMarshalPacket"
 
 // NewJsonMarshalUnMarshalPacket 结构体转字节再转结构体
-func NewJsonMarshalUnMarshalPacket(dataProvider interface{}, dataReceiver interface{}) (pack stream.PacketHandlerI) {
+func NewJsonMarshalUnMarshalPacket(dataProvider interface{}, dataReceiver interface{}) (pack packethandler.PacketHandlerI) {
 	return &_JsonMarshalUnMarshalPacket{
 		dataProvider: dataProvider,
 		dataReceiver: dataReceiver,
@@ -56,8 +56,10 @@ type _JsonUnmarshalMarshalPacket struct {
 	_JsonMarshalUnMarshalPacket
 }
 
+const PACKETHANDLER_NAME_JsonUnmarshalMarshalPacket = "github.com/suifengpiao14/stream/packet/_JsonUnmarshalMarshalPacket"
+
 // NewJsonUnmarshalMarshalPacket 字节转结构体再转字节
-func NewJsonUnmarshalMarshalPacket(dataReceiver interface{}, dataProvider interface{}) (pack stream.PacketHandlerI) {
+func NewJsonUnmarshalMarshalPacket(dataReceiver interface{}, dataProvider interface{}) (pack packethandler.PacketHandlerI) {
 	return &_JsonUnmarshalMarshalPacket{
 		_JsonMarshalUnMarshalPacket: _JsonMarshalUnMarshalPacket{
 			dataProvider: dataProvider,
@@ -67,7 +69,7 @@ func NewJsonUnmarshalMarshalPacket(dataReceiver interface{}, dataProvider interf
 }
 
 func (pack *_JsonUnmarshalMarshalPacket) Name() string {
-	return stream.GeneratePacketHandlerName(pack)
+	return PACKETHANDLER_NAME_JsonUnmarshalMarshalPacket
 }
 func (pack *_JsonUnmarshalMarshalPacket) Description() string {
 	return "[]byte -> struct -> []byte"

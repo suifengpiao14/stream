@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 
 	"github.com/pkg/errors"
-	"github.com/suifengpiao14/stream"
+	"github.com/suifengpiao14/packethandler"
 	"github.com/tidwall/gjson"
 )
 
@@ -17,7 +17,7 @@ type _TransferPacketHandler struct {
 const PACKETHANDLER_NAME_TransferPacketHandler = "github.com/suifengpiao14/stream/packet/_TransferPacketHandler"
 
 // NewTransferPacketHandler json转换
-func NewTransferPacketHandler(beforGjsonPath string, afterGjsonPath string) (packet stream.PacketHandlerI) {
+func NewTransferPacketHandler(beforGjsonPath string, afterGjsonPath string) (packet packethandler.PacketHandlerI) {
 	return &_TransferPacketHandler{
 		BeforGjsonPath: beforGjsonPath,
 		AfterGjsonPath: afterGjsonPath,

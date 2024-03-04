@@ -4,18 +4,19 @@ import (
 	"context"
 	"errors"
 
+	"github.com/suifengpiao14/packethandler"
 	"github.com/suifengpiao14/stream"
 )
 
 type _ForPacketHandler struct {
-	packetHandlers stream.PacketHandlers
+	packetHandlers packethandler.PacketHandlers
 }
 
 const PACKETHANDLER_NAME_ForPacketHandler = "github.com/suifengpiao14/stream/packet/_ForPacketHandler"
 
 var Error_break = errors.New("break for loop")
 
-func NewForPacketHandler(packetHandlers ...stream.PacketHandlerI) (packHandler stream.PacketHandlerI) {
+func NewForPacketHandler(packetHandlers ...packethandler.PacketHandlerI) (packHandler packethandler.PacketHandlerI) {
 	return &_ForPacketHandler{
 		packetHandlers: packetHandlers,
 	}

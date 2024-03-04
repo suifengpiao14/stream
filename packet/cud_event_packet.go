@@ -7,9 +7,9 @@ import (
 	"github.com/blastrain/vitess-sqlparser/sqlparser"
 	"github.com/spf13/cast"
 	"github.com/suifengpiao14/cudevent/cudeventimpl"
+	"github.com/suifengpiao14/packethandler"
 	"github.com/suifengpiao14/sqlexec"
 	"github.com/suifengpiao14/sqlplus"
-	"github.com/suifengpiao14/stream"
 )
 
 type _CUDEventPackHandler struct {
@@ -20,7 +20,7 @@ type _CUDEventPackHandler struct {
 
 const PACKETHANDLER_NAME_CUDEvent = "github.com/suifengpiao14/stream/packet/_CUDEventPackHandler"
 
-func NewCUDEventPackHandler(db *sql.DB, dbName string) (packHandler stream.PacketHandlerI) {
+func NewCUDEventPackHandler(db *sql.DB, dbName string) (packHandler packethandler.PacketHandlerI) {
 	packHandler = &_CUDEventPackHandler{
 		db:       db,
 		database: dbName,

@@ -7,8 +7,8 @@ import (
 
 	"github.com/blastrain/vitess-sqlparser/sqlparser"
 	jsonpatch "github.com/evanphx/json-patch/v5"
+	"github.com/suifengpiao14/packethandler"
 	"github.com/suifengpiao14/sqlplus"
-	"github.com/suifengpiao14/stream"
 	"github.com/suifengpiao14/stream/packet"
 )
 
@@ -98,7 +98,7 @@ type SetContextOperatorPackHandler struct {
 const PACKETHANDLER_NAME_SetContextOperatorPackHandler = "github.com/suifengpiao14/stream/packet/sqlpluspack/SetContextOperatorPackHandler"
 
 // OperatorpacketHandlersetContent 从输入流中提取operatorId 到ctx中，在输出流中自动添加operatorId
-func NewSetContextOperatorPackHandler(getOperatorFn GetOperatorValueFn, setOperatorFn SetOperatorValueFn) (packHandler stream.PacketHandlerI) {
+func NewSetContextOperatorPackHandler(getOperatorFn GetOperatorValueFn, setOperatorFn SetOperatorValueFn) (packHandler packethandler.PacketHandlerI) {
 	setContext := packet.SetContext{
 		ContextKey: operatorContextKey,
 		JsonKey:    "",
@@ -142,7 +142,7 @@ func NewSetContextOperatorPackHandler(getOperatorFn GetOperatorValueFn, setOpera
 }
 
 // NewSetContentOperatorpacketHandlersetContent 从输入流中提取operatorId 到ctx中，在输出流中自动添加operatorId
-func NewSetContentOperatorpacketHandlersetContent(getOperatorFn GetOperatorValueFn, setOperatorFn SetOperatorValueFn) (packHandler stream.PacketHandlerI) {
+func NewSetContentOperatorpacketHandlersetContent(getOperatorFn GetOperatorValueFn, setOperatorFn SetOperatorValueFn) (packHandler packethandler.PacketHandlerI) {
 	setContext := packet.SetContext{
 		ContextKey: operatorContextKey,
 		JsonKey:    "",
@@ -201,7 +201,7 @@ func (packet *OperatorPackHandler) String() string {
 }
 
 // OperatorPackHandler 柯里化操作人组件
-func NewOperatorPackHandler(operator Operator) (packHandler stream.PacketHandlerI) {
+func NewOperatorPackHandler(operator Operator) (packHandler packethandler.PacketHandlerI) {
 	tableColumns := make([]sqlplus.TableColumn, 0)
 	if OperatorColumn.ID != nil {
 		operatorIDtableColumn := OperatorColumn.ID

@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 
 	"github.com/suifengpiao14/httpraw"
-	"github.com/suifengpiao14/stream"
+	"github.com/suifengpiao14/packethandler"
 )
 
 type _HttprawPacketHandler struct {
@@ -13,7 +13,7 @@ type _HttprawPacketHandler struct {
 
 const PACKETHANDLER_NAME_HttprawPacketHandler = "github.com/suifengpiao14/stream/packet/_HttprawPacketHandler"
 
-func NewHttprawPacketHandler() (packHandler stream.PacketHandlerI) {
+func NewHttprawPacketHandler() (packHandler packethandler.PacketHandlerI) {
 	return &_HttprawPacketHandler{}
 }
 
@@ -41,7 +41,7 @@ func (packet *_HttprawPacketHandler) Before(ctx context.Context, input []byte) (
 	return ctx, out, nil
 }
 func (packet *_HttprawPacketHandler) After(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
-	return stream.EmptyHandlerFn(ctx, input)
+	return packethandler.EmptyHandlerFn(ctx, input)
 }
 
 func (packet *_HttprawPacketHandler) String() string {

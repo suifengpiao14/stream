@@ -8,7 +8,7 @@ import (
 
 	"github.com/pkg/errors"
 	_ "github.com/spf13/cast"
-	"github.com/suifengpiao14/stream"
+	"github.com/suifengpiao14/packethandler"
 	_ "github.com/tidwall/gjson"
 	_ "github.com/tidwall/sjson"
 	"github.com/traefik/yaegi/interp"
@@ -34,8 +34,8 @@ func Validate(dynamicScript string) (err error) {
 
 type YaegiHook struct {
 	dynamicScript string
-	DynamicBefore stream.HandlerFn
-	DynamicAfter  stream.HandlerFn
+	DynamicBefore packethandler.HandlerFn
+	DynamicAfter  packethandler.HandlerFn
 }
 
 func NewCurlHookYaegi(dynamicScript string) (yaegiHook *YaegiHook, err error) {
@@ -79,7 +79,7 @@ func NewCurlHookYaegi(dynamicScript string) (yaegiHook *YaegiHook, err error) {
 	}
 	yaegiHook.DynamicBefore = func(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
 		if beforeFn == nil {
-			return stream.EmptyHandlerFn(ctx, input)
+			return packethandler.EmptyHandlerFn(ctx, input)
 		}
 		inputS := string(input)
 		outS, err := beforeFn(inputS)
@@ -88,7 +88,7 @@ func NewCurlHookYaegi(dynamicScript string) (yaegiHook *YaegiHook, err error) {
 	}
 	yaegiHook.DynamicAfter = func(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
 		if afterFn == nil {
-			return stream.EmptyHandlerFn(ctx, input)
+			return packethandler.EmptyHandlerFn(ctx, input)
 		}
 		inputS := string(input)
 		outS, err := afterFn(inputS)

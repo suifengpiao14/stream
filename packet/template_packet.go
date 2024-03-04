@@ -7,7 +7,7 @@ import (
 	"reflect"
 	"text/template"
 
-	"github.com/suifengpiao14/stream"
+	"github.com/suifengpiao14/packethandler"
 )
 
 type _TemplatePacketHandler struct {
@@ -17,7 +17,7 @@ type _TemplatePacketHandler struct {
 
 const PACKETHANDLER_NAME_TemplatePacketHandler = "github.com/suifengpiao14/stream/packet/_TemplatePacketHandler"
 
-func NewTemplatePacketHandler(tpl template.Template, dataType reflect.Type) (packHandler stream.PacketHandlerI) {
+func NewTemplatePacketHandler(tpl template.Template, dataType reflect.Type) (packHandler packethandler.PacketHandlerI) {
 	return &_TemplatePacketHandler{
 		tpl:      &tpl,
 		dataType: dataType,
@@ -49,7 +49,7 @@ func (packet *_TemplatePacketHandler) Before(ctx context.Context, input []byte) 
 	return ctx, out, nil
 }
 func (packet *_TemplatePacketHandler) After(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
-	return stream.EmptyHandlerFn(ctx, input)
+	return packethandler.EmptyHandlerFn(ctx, input)
 }
 
 func (packet *_TemplatePacketHandler) String() string {

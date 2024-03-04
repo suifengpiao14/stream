@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/suifengpiao14/lineschema"
-	"github.com/suifengpiao14/stream"
+	"github.com/suifengpiao14/packethandler"
 )
 
 // lineschema 格式数据包
@@ -37,7 +37,7 @@ func RegisterLineschemaPacket(pack LineschemaPacketI) (err error) {
 	return err
 }
 
-func ServerpacketHandlers(api LineschemaPacketI) (packetHandlers stream.PacketHandlers, err error) {
+func ServerpacketHandlers(api LineschemaPacketI) (packetHandlers packethandler.PacketHandlers, err error) {
 	method, path := api.GetRoute()
 	unpackId, packId := makeLineschemaPacketKey(method, path)
 	unpackLineschema, err := GetClineschema(unpackId)
@@ -63,7 +63,7 @@ func ServerpacketHandlers(api LineschemaPacketI) (packetHandlers stream.PacketHa
 			return nil, err
 		}
 	}
-	packetHandlers = make(stream.PacketHandlers, 0)
+	packetHandlers = make(packethandler.PacketHandlers, 0)
 	packetHandlers.Append(
 		NewValidatePacketHandler(string(unpackLineschema.Jsonschema), string(packLineschema.Jsonschema), unpackLineschema.validateLoader, packLineschema.validateLoader),
 		NewMergeDefaultHandler(string(unpackLineschema.DefaultJson), string(packLineschema.DefaultJson)),
@@ -72,7 +72,7 @@ func ServerpacketHandlers(api LineschemaPacketI) (packetHandlers stream.PacketHa
 	return packetHandlers, nil
 }
 
-func SDKpacketHandlers(api LineschemaPacketI) (packetHandlers stream.PacketHandlers, err error) {
+func SDKpacketHandlers(api LineschemaPacketI) (packetHandlers packethandler.PacketHandlers, err error) {
 	method, path := api.GetRoute()
 	unpackId, packId := makeLineschemaPacketKey(method, path)
 	unpackLineschema, err := GetClineschema(unpackId)
@@ -84,7 +84,7 @@ func SDKpacketHandlers(api LineschemaPacketI) (packetHandlers stream.PacketHandl
 	if err != nil {
 		return nil, err
 	}
-	packetHandlers = make(stream.PacketHandlers, 0)
+	packetHandlers = make(packethandler.PacketHandlers, 0)
 	packetHandlers.Append(
 		NewTransferPacketHandler(packLineschema.transferToTypeGjsonPath, unpackLineschema.transferToFormatGjsonPath),
 		NewMergeDefaultHandler(string(packLineschema.DefaultJson), string(unpackLineschema.DefaultJson)),

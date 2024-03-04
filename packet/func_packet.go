@@ -3,16 +3,16 @@ package packet
 import (
 	"context"
 
-	"github.com/suifengpiao14/stream"
+	"github.com/suifengpiao14/packethandler"
 )
 
 type _FuncPacketHandler struct {
 	name     string
-	beforeFn stream.HandlerFn
-	afterFn  stream.HandlerFn
+	beforeFn packethandler.HandlerFn
+	afterFn  packethandler.HandlerFn
 }
 
-func NewFuncPacketHandler(name string, beforeFn stream.HandlerFn, afterFn stream.HandlerFn) (packHandler stream.PacketHandlerI) {
+func NewFuncPacketHandler(name string, beforeFn packethandler.HandlerFn, afterFn packethandler.HandlerFn) (packHandler packethandler.PacketHandlerI) {
 	return &_FuncPacketHandler{
 		name:     name,
 		beforeFn: beforeFn,
@@ -30,7 +30,7 @@ func (packet *_FuncPacketHandler) Description() string {
 func (packet *_FuncPacketHandler) Before(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
 
 	if packet.beforeFn == nil {
-		return stream.EmptyHandlerFn(ctx, input)
+		return packethandler.EmptyHandlerFn(ctx, input)
 	}
 	newCtx, out, err = packet.beforeFn(ctx, input)
 	if err != nil {
@@ -40,7 +40,7 @@ func (packet *_FuncPacketHandler) Before(ctx context.Context, input []byte) (new
 }
 func (packet *_FuncPacketHandler) After(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
 	if packet.afterFn == nil {
-		return stream.EmptyHandlerFn(ctx, input)
+		return packethandler.EmptyHandlerFn(ctx, input)
 	}
 	newCtx, out, err = packet.afterFn(ctx, input)
 	if err != nil {

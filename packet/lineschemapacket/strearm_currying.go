@@ -8,7 +8,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/spf13/cast"
 	"github.com/suifengpiao14/lineschema"
-	"github.com/suifengpiao14/stream"
+	"github.com/suifengpiao14/packethandler"
 	"github.com/xeipuuv/gojsonschema"
 )
 
@@ -19,7 +19,7 @@ type _MergeDefaultPacketHandler struct {
 
 const PACKETHANDLER_NAME_MergeDefaultPacketHandler = "github.com/suifengpiao14/stream/packet/lineschemapacket/_MergeDefaultPacketHandler"
 
-func NewMergeDefaultHandler(beforeDefaultJson string, afterDefaultJson string) (packet stream.PacketHandlerI) {
+func NewMergeDefaultHandler(beforeDefaultJson string, afterDefaultJson string) (packet packethandler.PacketHandlerI) {
 	return &_MergeDefaultPacketHandler{
 		BeforeDefaultJson: beforeDefaultJson,
 		AfterDefaultJson:  afterDefaultJson,
@@ -36,7 +36,7 @@ func (packet *_MergeDefaultPacketHandler) Description() string {
 
 func (packet *_MergeDefaultPacketHandler) String() string {
 
-	return stream.JsonString(packet)
+	return packethandler.JsonString(packet)
 }
 
 func (packet *_MergeDefaultPacketHandler) Before(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
@@ -48,7 +48,7 @@ func (packet *_MergeDefaultPacketHandler) After(ctx context.Context, input []byt
 	return MakeMergeDefaultHandler([]byte(packet.AfterDefaultJson))(ctx, input)
 }
 
-func MakeMergeDefaultHandler(defaultJson []byte) (fn stream.HandlerFn) {
+func MakeMergeDefaultHandler(defaultJson []byte) (fn packethandler.HandlerFn) {
 	return func(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
 		if len(defaultJson) == 0 {
 			return ctx, input, err
@@ -72,7 +72,7 @@ type _ValidatePacketHandler struct {
 
 const PACKETHANDLER_NAME_ValidatePacket = "github.com/suifengpiao14/stream/packet/lineschemapacket/_ValidatePacketHandler"
 
-func NewValidatePacketHandler(beforeJsonschema string, afterJsonschema string, beforeValidateLoader gojsonschema.JSONLoader, afterValidateLoader gojsonschema.JSONLoader) (packet stream.PacketHandlerI) {
+func NewValidatePacketHandler(beforeJsonschema string, afterJsonschema string, beforeValidateLoader gojsonschema.JSONLoader, afterValidateLoader gojsonschema.JSONLoader) (packet packethandler.PacketHandlerI) {
 	return &_ValidatePacketHandler{
 		BeforeJsonSchema:     beforeJsonschema,
 		AfterJsonSchema:      afterJsonschema,
@@ -102,7 +102,7 @@ func (packet *_ValidatePacketHandler) After(ctx context.Context, input []byte) (
 	return MakeValidateHandlerFn(packet.afterValidateLoader)(ctx, input)
 }
 
-func MakeValidateHandlerFn(validateLoader gojsonschema.JSONLoader) (fn stream.HandlerFn) {
+func MakeValidateHandlerFn(validateLoader gojsonschema.JSONLoader) (fn packethandler.HandlerFn) {
 	return func(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
 		if validateLoader == nil {
 			return ctx, input, nil
@@ -138,7 +138,7 @@ type _TransferTypeFormatPacketHandler struct {
 
 const PACKETHANDLER_NAME_TransferTypeFormatPacket = "github.com/suifengpiao14/stream/packet/lineschemapacket/_TransferTypeFormatPacketHandler"
 
-func NewTransferPacketHandler(beforePathMap string, afterPathMap string) (packet stream.PacketHandlerI) {
+func NewTransferPacketHandler(beforePathMap string, afterPathMap string) (packet packethandler.PacketHandlerI) {
 	return &_TransferTypeFormatPacketHandler{
 		BeforePathMap: beforePathMap,
 		AfterPathMap:  afterPathMap,
@@ -157,7 +157,7 @@ func (packet *_TransferTypeFormatPacketHandler) Description() string {
 
 func (packet *_TransferTypeFormatPacketHandler) String() string {
 
-	return stream.JsonString(packet)
+	return packethandler.JsonString(packet)
 }
 
 func (packet *_TransferTypeFormatPacketHandler) Before(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
@@ -168,7 +168,7 @@ func (packet *_TransferTypeFormatPacketHandler) After(ctx context.Context, input
 	return MakeTransferHandler(packet.AfterPathMap)(ctx, input)
 }
 
-func MakeTransferHandler(pathMap string) (fn stream.HandlerFn) {
+func MakeTransferHandler(pathMap string) (fn packethandler.HandlerFn) {
 	return func(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
 		out = lineschema.ConvertFomat(input, pathMap)
 		return ctx, out, nil

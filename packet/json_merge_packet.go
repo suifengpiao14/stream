@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 
 	"github.com/suifengpiao14/lineschema"
-	"github.com/suifengpiao14/stream"
+	"github.com/suifengpiao14/packethandler"
 )
 
 type _JsonMergePacket struct {
@@ -16,7 +16,7 @@ type _JsonMergePacket struct {
 const PACKETHANDLER_NAME_JsonMergePacket = "github.com/suifengpiao14/stream/packet/_JsonMergePacket"
 
 // NewJsonMergePacket 合并数据
-func NewJsonMergePacket(beforeMergedData []byte, afterMergedData []byte) (pack stream.PacketHandlerI) {
+func NewJsonMergePacket(beforeMergedData []byte, afterMergedData []byte) (pack packethandler.PacketHandlerI) {
 	return &_JsonMergePacket{
 		BeforeMergedData: beforeMergedData,
 		AfterMergedData:  afterMergedData,

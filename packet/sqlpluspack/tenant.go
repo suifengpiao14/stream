@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 
 	"github.com/blastrain/vitess-sqlparser/sqlparser"
+	"github.com/suifengpiao14/packethandler"
 	"github.com/suifengpiao14/sqlplus"
-	"github.com/suifengpiao14/stream"
 	"github.com/suifengpiao14/stream/packet"
 )
 
@@ -26,7 +26,7 @@ type _SetContextTenantPackHandler struct {
 const PACKETHANDLER_NAME_SetContextTenantPackHandler = "github.com/suifengpiao14/stream/packet/sqlpluspack/_SetContextTenantPackHandler"
 
 // NewSetContextTenantPackHandler 从输入流中提取tenantId 到ctx中，在输出流中自动添加tenantId
-func NewSetContextTenantPackHandler(getTenantIDFn packet.GetValueFn, setTenantIDFn packet.SetValueFn) (packHandler stream.PacketHandlerI) {
+func NewSetContextTenantPackHandler(getTenantIDFn packet.GetValueFn, setTenantIDFn packet.SetValueFn) (packHandler packethandler.PacketHandlerI) {
 	setContext := packet.SetContext{
 		ContextKey: tenantIDKey,
 		JsonKey:    TenantJsonKey,
@@ -54,7 +54,7 @@ type _TenantPacketHandler struct {
 
 const PACKETHANDLER_NAME_TenantPacketHandler = "github.com/suifengpiao14/stream/packet/sqlpluspack/_TenantPacketHandler"
 
-func NewTenantPacketHandler(tenatID string) (packHandler stream.PacketHandlerI) {
+func NewTenantPacketHandler(tenatID string) (packHandler packethandler.PacketHandlerI) {
 	tableColumn := TenantColumnConfig
 	tableColumn.DynamicValue = tenatID
 	// 查询、更新条件、删除条件，新增 时增加租户条件

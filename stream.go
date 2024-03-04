@@ -5,7 +5,7 @@ import (
 	"reflect"
 
 	"github.com/pkg/errors"
-	"github.com/suifengpiao14/logchan/v2"
+	"github.com/suifengpiao14/packethandler"
 )
 
 /**
@@ -16,21 +16,21 @@ import (
 除了首节点，每个节都会设置一个回调函数的指针，用本节点的任务执行,
 最后一个节点的nextStream为空,表示任务链结束。
 **/
-
+type ErrorHandler func(ctx context.Context, err error) (out []byte)
 type StreamI interface {
 	Run(ctx context.Context, input []byte) (out []byte, err error)
-	AddPack(handlerPacks ...PacketHandlerI) // 包裹更多处理函数
+	AddPack(handlerPacks ...packethandler.PacketHandlerI) // 包裹更多处理函数
 }
 
 // 任务节点结构定义
 type Stream struct {
 	Context        context.Context
 	Name           string
-	packetHandlers PacketHandlers // 处理链条集合
-	errorHandler   ErrorHandler   //错误处理
+	packetHandlers packethandler.PacketHandlers // 处理链条集合
+	errorHandler   packethandler.ErrorHandler   //错误处理
 }
 
-func NewStream(name string, errorHandler ErrorHandler, packetHandlers ...PacketHandlerI) *Stream {
+func NewStream(name string, errorHandler packethandler.ErrorHandler, packetHandlers ...packethandler.PacketHandlerI) *Stream {
 	stream := &Stream{
 		packetHandlers: packetHandlers,
 		errorHandler:   errorHandler,
@@ -67,78 +67,19 @@ func (s *Stream) GetContextValue(key any, dest any) (err error) {
 }
 
 // AddPack 增加打包
-func (s *Stream) AddPack(handlerPacks ...PacketHandlerI) {
+func (s *Stream) AddPack(handlerPacks ...packethandler.PacketHandlerI) {
 	s.packetHandlers = append(s.packetHandlers, handlerPacks...)
 }
 
 func (s *Stream) Run(ctx context.Context, input []byte) (out []byte, err error) {
-	out, err = s.run(ctx, input)
+	out, err = s.packetHandlers.Run(ctx, input)
 	if err != nil && s.errorHandler != nil {
 		out = s.errorHandler(ctx, err)
 		err = nil
 	}
-
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 
-}
-func (s *Stream) run(ctx context.Context, input []byte) (out []byte, err error) {
-	data := input
-	l := len(s.packetHandlers)
-	streamLog := StreamLog{
-		HandlerLogs: make([]HandlerLog, 0),
-	}
-	defer func() {
-		streamLog.SetContext(ctx)
-		logchan.SendLogInfo(&streamLog)
-	}()
-	for i := 0; i < l; i++ { // 先执行最后的before，直到最早的before
-		pack := s.packetHandlers[i]
-		handlerLog := HandlerLog{
-			BeforeCtx: ctx,
-			Input:     data,
-			PackName:  pack.Name(),
-			Type:      HandlerLog_Type_Before,
-			Serialize: pack.String(),
-		}
-		ctx, data, err = pack.Before(ctx, data)
-		if errors.Is(err, ERROR_EMPTY_FUNC) { // 这个错误标记是空函数，可以不计日志
-			err = nil
-			continue
-		}
-		handlerLog.Err = err
-		handlerLog.AfterCtx = ctx
-		handlerLog.Output = data
-		streamLog.HandlerLogs = append(streamLog.HandlerLogs, handlerLog)
-		if err != nil {
-			return nil, err
-		}
-	}
-
-	for i := l - 1; i > -1; i-- { // 先执行最后的after，直到最早的after
-		pack := s.packetHandlers[i]
-		handlerLog := HandlerLog{
-			BeforeCtx: ctx,
-			Input:     data,
-			PackName:  pack.Name(),
-			Type:      HandlerLog_Type_After,
-			Serialize: pack.String(),
-		}
-		handlerLog.Input = data
-		ctx, data, err = pack.After(ctx, data)
-		if errors.Is(err, ERROR_EMPTY_FUNC) { // 这个错误标记是空函数，可以不计日志
-			err = nil
-			continue
-		}
-		handlerLog.Err = err
-		handlerLog.AfterCtx = ctx
-		handlerLog.Output = data
-		streamLog.HandlerLogs = append(streamLog.HandlerLogs, handlerLog)
-		if err != nil {
-			return nil, err
-		}
-	}
-	return data, err
 }

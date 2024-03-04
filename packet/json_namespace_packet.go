@@ -4,7 +4,7 @@ import (
 	"context"
 	"strings"
 
-	"github.com/suifengpiao14/stream"
+	"github.com/suifengpiao14/packethandler"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
@@ -17,7 +17,7 @@ type _JsonAddTrimNamespacePacket struct {
 const PACKETHANDLER_NAME_JsonAddTrimNamespacePacket = "github.com/suifengpiao14/stream/packet/_JsonAddTrimNamespacePacket"
 
 // NewJsonAddTrimNamespacePacket 给json增加命名空间
-func NewJsonAddTrimNamespacePacket(namespaceAdd string, namespaceTrim string) (pack stream.PacketHandlerI) {
+func NewJsonAddTrimNamespacePacket(namespaceAdd string, namespaceTrim string) (pack packethandler.PacketHandlerI) {
 	return &_JsonAddTrimNamespacePacket{
 		namespaceAdd:  strings.TrimSuffix(namespaceAdd, "."),
 		namespaceTrim: strings.TrimSuffix(namespaceTrim, "."),
@@ -60,8 +60,10 @@ type _JsonTrimAddNamespacePacket struct {
 	_JsonAddTrimNamespacePacket
 }
 
+const PACKETHANDLER_NAME_JsonTrimAddNamespacePacket = "github.com/suifengpiao14/stream/packet/_JsonTrimAddNamespacePacket"
+
 // NewJsonTrimAddNamespacePacket 删除json命名空间
-func NewJsonTrimAddNamespacePacket(namespace string) (pack stream.PacketHandlerI) {
+func NewJsonTrimAddNamespacePacket(namespace string) (pack packethandler.PacketHandlerI) {
 	return &_JsonTrimAddNamespacePacket{
 		_JsonAddTrimNamespacePacket: _JsonAddTrimNamespacePacket{
 			namespaceAdd: namespace,
@@ -70,7 +72,7 @@ func NewJsonTrimAddNamespacePacket(namespace string) (pack stream.PacketHandlerI
 }
 
 func (pack *_JsonTrimAddNamespacePacket) Name() string {
-	return stream.GeneratePacketHandlerName(pack)
+	return PACKETHANDLER_NAME_JsonTrimAddNamespacePacket
 }
 func (pack *_JsonTrimAddNamespacePacket) Description() string {
 	return "drop json name space"

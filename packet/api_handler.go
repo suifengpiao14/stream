@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/suifengpiao14/apihandler"
-	"github.com/suifengpiao14/stream"
+	"github.com/suifengpiao14/packethandler"
 )
 
 type _ApiPackHandler struct {
@@ -13,7 +13,7 @@ type _ApiPackHandler struct {
 
 const PACKETHANDLER_NAME_ApiPackHandler = "github.com/suifengpiao14/stream/packet/_ApiPackHandler"
 
-func NewApiPackHandler(api apihandler.ApiInterface) (packet stream.PacketHandlerI) {
+func NewApiPackHandler(api apihandler.ApiInterface) (packet packethandler.PacketHandlerI) {
 	return &_ApiPackHandler{
 		api: api,
 	}
@@ -43,8 +43,8 @@ func (packet *_ApiPackHandler) After(ctx context.Context, input []byte) (newCtx 
 	return ctx, input, nil
 }
 
-func ApiPacketHandlers(api apihandler.ApiInterface) (packetHandlers stream.PacketHandlers) {
-	packetHandlers = make(stream.PacketHandlers, 0)
+func ApiPacketHandlers(api apihandler.ApiInterface) (packetHandlers packethandler.PacketHandlers) {
+	packetHandlers = make(packethandler.PacketHandlers, 0)
 	packetHandlers.Append(
 		NewJsonUnmarshalMarshalPacket(api, api.GetOutRef()),
 		NewApiPackHandler(api),

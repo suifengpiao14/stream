@@ -5,9 +5,9 @@ import (
 	"database/sql"
 
 	"github.com/blastrain/vitess-sqlparser/sqlparser"
+	"github.com/suifengpiao14/packethandler"
 	"github.com/suifengpiao14/sqlexec"
 	"github.com/suifengpiao14/sqlplus"
-	"github.com/suifengpiao14/stream"
 )
 
 type _SQLReplacePacketHandler struct {
@@ -16,7 +16,7 @@ type _SQLReplacePacketHandler struct {
 
 const PACKETHANDLER_NAME_SQLReplacePacketHandler = "github.com/suifengpiao14/stream/packet/_SQLReplacePacketHandler"
 
-func NewSQLReplacePacketHandler(db *sql.DB) (packHandler stream.PacketHandlerI) {
+func NewSQLReplacePacketHandler(db *sql.DB) (packHandler packethandler.PacketHandlerI) {
 	return &_SQLReplacePacketHandler{
 		db: db,
 	}

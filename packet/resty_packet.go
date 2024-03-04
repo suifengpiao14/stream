@@ -7,7 +7,7 @@ import (
 
 	"github.com/pkg/errors"
 	"github.com/suifengpiao14/httpraw"
-	"github.com/suifengpiao14/stream"
+	"github.com/suifengpiao14/packethandler"
 )
 
 type _RestyPacketHandler struct {
@@ -16,7 +16,7 @@ type _RestyPacketHandler struct {
 
 const PACKETHANDLER_NAME_RestyPacketHandler = "github.com/suifengpiao14/stream/packet/_RestyPacketHandler"
 
-func NewRestyPacketHandler(transport *http.Transport) (packHandler stream.PacketHandlerI) {
+func NewRestyPacketHandler(transport *http.Transport) (packHandler packethandler.PacketHandlerI) {
 	return &_RestyPacketHandler{
 		transport: transport,
 	}
@@ -48,7 +48,7 @@ func (packet *_RestyPacketHandler) Before(ctx context.Context, input []byte) (ne
 	return ctx, out, nil
 }
 func (packet *_RestyPacketHandler) After(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
-	return stream.EmptyHandlerFn(ctx, input)
+	return packethandler.EmptyHandlerFn(ctx, input)
 }
 
 func (packet *_RestyPacketHandler) String() string {

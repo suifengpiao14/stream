@@ -64,7 +64,7 @@ func RegisterLineschema(identify string, lschema lineschema.Lineschema) (err err
 	if err != nil {
 		return err
 	}
-	clineschemaMap.Store(identify, &cJsonschema)
+	clineschemaMap.Store(identify, cJsonschema)
 	return nil
 }
 

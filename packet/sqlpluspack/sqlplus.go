@@ -4,8 +4,8 @@ import (
 	"context"
 	"encoding/json"
 
+	"github.com/suifengpiao14/packethandler"
 	"github.com/suifengpiao14/sqlplus"
-	"github.com/suifengpiao14/stream"
 )
 
 type SqlPlusPacketHandler struct {
@@ -16,7 +16,7 @@ type SqlPlusPacketHandler struct {
 const PACKETHANDLER_NAME_SqlPlusPacketHandler = "github.com/suifengpiao14/stream/packet/sqlpluspack/SqlPlusPacketHandler"
 
 // NewSqlPlusPacketHandler sql 增删改查语句扩展
-func NewSqlPlusPacketHandler(scenes sqlplus.Scenes, tableColumns ...sqlplus.TableColumn) (packHandler stream.PacketHandlerI) {
+func NewSqlPlusPacketHandler(scenes sqlplus.Scenes, tableColumns ...sqlplus.TableColumn) (packHandler packethandler.PacketHandlerI) {
 	return &SqlPlusPacketHandler{
 		Scenes:       scenes,
 		TableColumns: tableColumns,

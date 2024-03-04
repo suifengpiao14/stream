@@ -355,8 +355,8 @@ github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/
 github.com/stretchr/testify v1.7.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/stretchr/testify v1.8.0/go.mod h1:yNjHg4UonilssWZ8iaSj1OCr/vHnekPRkoO+kdMU+MU=
 github.com/stretchr/testify v1.8.2/go.mod h1:w2LPCIKwWwSfY2zedu0+kehJoqGctiVI29o6fzry7u4=
-github.com/stretchr/testify v1.8.4 h1:CcVxjf3Q8PM0mHUKJCdn+eZZtm5yQwehR5yeSVQQcUk=
-github.com/stretchr/testify v1.8.4/go.mod h1:sz/lmYIOXD/1dqDmKjjqLyZ2RngseejIcXlSw2iwfAo=
+github.com/stretchr/testify v1.9.0 h1:HtqpIVDClZ4nwg75+f6Lvsy/wHu+3BoSGCbBAcpTsTg=
+github.com/stretchr/testify v1.9.0/go.mod h1:r2ic/lqez/lEtzL7wO/rwa5dbSLXVDPFyf8C91i36aY=
 github.com/struCoder/pidusage v0.1.2/go.mod h1:pWBlW3YuSwRl6h7R5KbvA4N8oOqe9LjaKW5CwT1SPjI=
 github.com/suifengpiao14/apihandler v0.0.71 h1://HSJp23KclS/JBoqS5zRIzHHtUaqicZ5Ln0mLNatTI=
 github.com/suifengpiao14/apihandler v0.0.71/go.mod h1:lvFfSPcgayWxdzYHnlzHEePpLvFVVTP01304yv7fApM=
@@ -376,6 +376,8 @@ github.com/suifengpiao14/lineschema v0.0.35 h1:4UkDkI/4Y1C/p2b9J2PLnb1VSsSahjtLF
 github.com/suifengpiao14/lineschema v0.0.35/go.mod h1:ITtxFGRZ5c/M+WWGi+qXMr89SIokKlaXS7Q2mCcnH3E=
 github.com/suifengpiao14/logchan/v2 v2.0.22 h1:LhpV9E0ofNRQFEvR9MOF4hSHJes8s/aXn9Z4qdLVPck=
 github.com/suifengpiao14/logchan/v2 v2.0.22/go.mod h1:6o0naTqWDkgYMR4vQetJn1zVGMLD9YZ8TrNzQ9OjAFY=
+github.com/suifengpiao14/packethandler v0.0.1 h1:sgQ6sI60yzib4eM3CzQZGr4vSWeK5p0YMt7P4WOhzeQ=
+github.com/suifengpiao14/packethandler v0.0.1/go.mod h1:iYOEgGLQ+QJ6LTv6Ph7wL5bZtQrHjeBwXYhzdweGeeU=
 github.com/suifengpiao14/pathtransfer v0.0.3 h1:L8ypn0226VCdOJX9W+gx7hWU7E6N3X6txKtKqA+RHiY=
 github.com/suifengpiao14/pathtransfer v0.0.3/go.mod h1:rCR9rnaIKX8BWDxyA7V6MBs5sGAYVaLfzZCDjVstgpw=
 github.com/suifengpiao14/sdkgolib v0.0.22 h1:cEqk9u7oB95EnVwsW4RncSQHHC0MOLWnoaTXW2XwB+U=

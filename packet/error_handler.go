@@ -3,7 +3,7 @@ package packet
 import (
 	"context"
 
-	"github.com/suifengpiao14/stream"
+	"github.com/suifengpiao14/packethandler"
 )
 
 type ErrorI interface {
@@ -17,7 +17,7 @@ type ErrorPacketHandler struct {
 
 const PACKETHANDLER_NAME_ErrorPacketHandler = "github.com/suifengpiao14/stream/packet/ErrorPacketHandler"
 
-func NewErrorIPacketHandler(beforeErr ErrorI, afterErr ErrorI) (packet stream.PacketHandlerI) {
+func NewErrorIPacketHandler(beforeErr ErrorI, afterErr ErrorI) (packet packethandler.PacketHandlerI) {
 	return &ErrorPacketHandler{
 		BeforeErr: beforeErr,
 		AfterErr:  afterErr,
