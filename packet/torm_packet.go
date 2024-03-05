@@ -27,12 +27,14 @@ func (packet *_TormPackHandler) String() string {
 
 func (packet *_TormPackHandler) Before(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
 
-	volume := make(torm.VolumeMap)
-	err = json.Unmarshal(input, &volume)
+	var m map[string]any
+	err = json.Unmarshal(input, &m)
 	if err != nil {
 		return ctx, nil, err
 	}
-	sqls, _, _, err := torm.GetSQL(packet.torm.Identity(), packet.torm.TplName(), &volume)
+	ConvertFloatsToInt(m) // 修改float64
+	volume := torm.VolumeMap(m)
+	sqls, _, _, err := torm.GetSQL(packet.torm.Namespace(), packet.torm.TplName(), &volume)
 	if err != nil {
 		return ctx, nil, err
 	}
@@ -49,5 +51,21 @@ func (packet *_TormPackHandler) After(ctx context.Context, input []byte) (newCtx
 func NewTormPackHandler(torm torm.TormI) (packHandler packethandler.PacketHandlerI) {
 	return &_TormPackHandler{
 		torm: torm,
+	}
+}
+
+// ConvertFloatsToInt json.Unmarsha 后整数改成float64了，此处尝试优先使用int
+func ConvertFloatsToInt(data map[string]interface{}) {
+	for key, value := range data {
+		switch v := value.(type) {
+		case float64:
+			// 尝试将 float64 转换为 int
+			if float64(int(v)) == v {
+				data[key] = int(v)
+			}
+		case map[string]interface{}:
+			// 递归处理嵌套的 map
+			ConvertFloatsToInt(v)
+		}
 	}
 }
