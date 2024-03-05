@@ -4,6 +4,7 @@ import (
 	"context"
 	"strings"
 
+	"github.com/pkg/errors"
 	"github.com/suifengpiao14/packethandler"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -36,6 +37,10 @@ func (pack *_JsonAddTrimNamespacePacket) String() string {
 }
 
 func (pack *_JsonAddTrimNamespacePacket) Before(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
+	if len(input) == 0 {
+		err = errors.Errorf("input empty,can not add namespace")
+		return ctx, input, err
+	}
 	if pack.namespaceAdd == "" {
 		return ctx, input, nil
 	}
