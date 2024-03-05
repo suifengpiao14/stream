@@ -16,7 +16,7 @@ require (
 	github.com/suifengpiao14/packethandler v0.0.2
 	github.com/suifengpiao14/pathtransfer v0.0.3
 	github.com/suifengpiao14/sdkgolib v0.0.22
-	github.com/suifengpiao14/sqlexec v0.0.22
+	github.com/suifengpiao14/sqlexec v0.0.23
 	github.com/suifengpiao14/sqlplus v0.0.14
 	github.com/suifengpiao14/sshmysql v0.0.1
 	github.com/suifengpiao14/torm v0.0.23
@@ -57,9 +57,11 @@ require (
 	github.com/mitchellh/copystructure v1.0.0 // indirect
 	github.com/mitchellh/reflectwalk v1.0.0 // indirect
 	github.com/oklog/ulid v1.3.1 // indirect
+	github.com/opentracing/opentracing-go v1.1.0 // indirect
 	github.com/pingcap/errors v0.11.4 // indirect
+	github.com/pingcap/log v0.0.0-20190715063458-479153f07ebd // indirect
 	github.com/pingcap/parser v3.1.2+incompatible // indirect
-	github.com/pingcap/tidb v0.0.0-20190108123336-c68ee7318319 // indirect
+	github.com/pingcap/tidb v0.0.0-20190912055946-5c48d93368d4 // indirect
 	github.com/pingcap/tipb v0.0.0-20240227061755-3670eddec8d6 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
@@ -67,7 +69,7 @@ require (
 	github.com/shirou/gopsutil v3.21.11+incompatible // indirect
 	github.com/shopspring/decimal v1.2.0 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
-	github.com/suifengpiao14/ddl-executor v0.0.1 // indirect
+	github.com/suifengpiao14/ddl-executor v0.0.2 // indirect
 	github.com/suifengpiao14/gjsonmodifier v0.1.10 // indirect
 	github.com/suifengpiao14/kvstruct v0.0.14 // indirect
 	github.com/suifengpiao14/logchan/v2 v2.0.22 // indirect
@@ -76,6 +78,9 @@ require (
 	github.com/xeipuuv/gojsonpointer v0.0.0-20180127040702-4e3ac2762d5f // indirect
 	github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415 // indirect
 	github.com/yusufpapurcu/wmi v1.2.4 // indirect
+	go.uber.org/atomic v1.3.2 // indirect
+	go.uber.org/multierr v1.1.0 // indirect
+	go.uber.org/zap v1.9.1 // indirect
 	golang.org/x/crypto v0.19.0 // indirect
 	golang.org/x/net v0.21.0 // indirect
 	golang.org/x/oauth2 v0.16.0 // indirect
@@ -86,6 +91,7 @@ require (
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240228224816-df926f6c8641 // indirect
 	google.golang.org/grpc v1.62.0 // indirect
 	google.golang.org/protobuf v1.32.0 // indirect
+	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	gorm.io/gorm v1.25.5 // indirect
 	moul.io/http2curl v1.0.0 // indirect
