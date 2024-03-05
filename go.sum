@@ -323,8 +323,9 @@ github.com/pingcap/log v0.0.0-20190715063458-479153f07ebd/go.mod h1:WpHUKhNZ18v1
 github.com/pingcap/parser v0.0.0-20190912032624-978b8272c04e/go.mod h1:1FNvfp9+J0wvc4kl8eGNh7Rqrxveg15jJoWo/a0uHwA=
 github.com/pingcap/parser v3.1.2+incompatible h1:ZAtv2VBZitECpaHshSIp1bkBhEqJYerw7nO/HYsn8MM=
 github.com/pingcap/parser v3.1.2+incompatible/go.mod h1:1FNvfp9+J0wvc4kl8eGNh7Rqrxveg15jJoWo/a0uHwA=
-github.com/pingcap/pd v0.0.0-20190712044914-75a1f9f3062b h1:oS9PftxQqgcRouKhhdaB52tXhVLEP7Ng3Qqsd6Z18iY=
 github.com/pingcap/pd v0.0.0-20190712044914-75a1f9f3062b/go.mod h1:3DlDlFT7EF64A1bmb/tulZb6wbPSagm5G4p1AlhaEDs=
+github.com/pingcap/pd v2.1.0-rc.4+incompatible h1:/buwGk04aHO5odk/+O8ZOXGs4qkUjYTJ2UpCJXna8NE=
+github.com/pingcap/pd v2.1.0-rc.4+incompatible/go.mod h1:nD3+EoYes4+aNNODO99ES59V83MZSI+dFbhyr667a0E=
 github.com/pingcap/tidb v0.0.0-20190912055946-5c48d93368d4 h1:7ZGadrcqJy5PP1FyJm1Va56nwL+I+/mZQuCrWr54BUQ=
 github.com/pingcap/tidb v0.0.0-20190912055946-5c48d93368d4/go.mod h1:Nmo6r87GTsol+TFxvAbedf2nui/zPFz50A/Oqybw8k0=
 github.com/pingcap/tidb-tools v2.1.3-0.20190321065848-1e8b48f5c168+incompatible h1:MkWCxgZpJBgY2f4HtwWMMFzSBb3+JPzeJgF3VrXE/bU=
@@ -429,8 +430,8 @@ github.com/suifengpiao14/sdkgolib v0.0.22 h1:cEqk9u7oB95EnVwsW4RncSQHHC0MOLWnoaT
 github.com/suifengpiao14/sdkgolib v0.0.22/go.mod h1:CUQUcBl1GWvB3JQDC6AHA/k2jvRrBH2drnYMX58vadE=
 github.com/suifengpiao14/sqlexec v0.0.23 h1:pEJimTkfvJca9YEbQM10Qm7shq8lAys/n40f60PAwoc=
 github.com/suifengpiao14/sqlexec v0.0.23/go.mod h1:PaW3XgOyHuqobyxxSQtnk4Sc41zU90NgtvEyA6cOGac=
-github.com/suifengpiao14/sqlplus v0.0.14 h1:72UI0IvG+NIzWX2ZERP8/H83VI6WSZaChFeJF6Y2PpY=
-github.com/suifengpiao14/sqlplus v0.0.14/go.mod h1:xhthEqLG1AY5DogiyITeT5ro1HpsXV0qIVtK9IbGZ2w=
+github.com/suifengpiao14/sqlplus v0.0.15 h1:qMb7nxe9yQZw869WZtEksxPgQO91fIrnoQqhfcuaQvE=
+github.com/suifengpiao14/sqlplus v0.0.15/go.mod h1:E8WW2a9p+BubchqiIbvO9FIDJhlSXdD3NdUA30Acd5k=
 github.com/suifengpiao14/sshmysql v0.0.1 h1:A6bj4TLpTBpcTkPOuSZDrmhNeeiKELL1S1vcFAMvmZ4=
 github.com/suifengpiao14/sshmysql v0.0.1/go.mod h1:XqRYddwQ7Ek4anaf6/YwZYZt8owXxFk9w/Potae/fC8=
 github.com/suifengpiao14/torm v0.0.23 h1:UFCh/CsKwN2PL6VfgXE8pmZCvmdHrdWNTf0enhIXSyc=

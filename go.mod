@@ -17,7 +17,7 @@ require (
 	github.com/suifengpiao14/pathtransfer v0.0.3
 	github.com/suifengpiao14/sdkgolib v0.0.22
 	github.com/suifengpiao14/sqlexec v0.0.23
-	github.com/suifengpiao14/sqlplus v0.0.14
+	github.com/suifengpiao14/sqlplus v0.0.15
 	github.com/suifengpiao14/sshmysql v0.0.1
 	github.com/suifengpiao14/torm v0.0.23
 	github.com/tidwall/gjson v1.17.1
