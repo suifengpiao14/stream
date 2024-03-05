@@ -14,7 +14,7 @@ require (
 	github.com/suifengpiao14/httpraw v0.0.6
 	github.com/suifengpiao14/lineschema v0.0.35
 	github.com/suifengpiao14/packethandler v0.0.2
-	github.com/suifengpiao14/pathtransfer v0.0.3
+	github.com/suifengpiao14/pathtransfer v0.0.4
 	github.com/suifengpiao14/sdkgolib v0.0.22
 	github.com/suifengpiao14/sqlexec v0.0.23
 	github.com/suifengpiao14/sqlplus v0.0.15

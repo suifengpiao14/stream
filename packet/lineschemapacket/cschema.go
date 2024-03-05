@@ -46,8 +46,8 @@ func NewClineschame(identify string, lschema lineschema.Lineschema) (clineschema
 		ID:                        identify,
 		Lineschema:                lschema,
 		Jsonschema:                jschema,
-		transferToFormatGjsonPath: lschema.TransferToFormat().String(),
-		transferToTypeGjsonPath:   lschema.TransferToFormat().Reverse().String(),
+		transferToFormatGjsonPath: lschema.TransferToFormat().GjsonPath(),
+		transferToTypeGjsonPath:   lschema.TransferToFormat().Reverse().GjsonPath(),
 		DefaultJson:               defaultJson,
 		validateLoader:            jsonschemaLoader,
 	}
