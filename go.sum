@@ -438,8 +438,8 @@ github.com/suifengpiao14/sqlplus v0.0.16 h1:jSp4lF1kTnRU7N+1+3PfmlbVj9hdlRcpqNAZ
 github.com/suifengpiao14/sqlplus v0.0.16/go.mod h1:DT+wzvWYKJDSgFx87Um4Fq59MzJvUf+o2Nd1Lu2NYAU=
 github.com/suifengpiao14/sshmysql v0.0.1 h1:A6bj4TLpTBpcTkPOuSZDrmhNeeiKELL1S1vcFAMvmZ4=
 github.com/suifengpiao14/sshmysql v0.0.1/go.mod h1:XqRYddwQ7Ek4anaf6/YwZYZt8owXxFk9w/Potae/fC8=
-github.com/suifengpiao14/torm v0.0.27 h1:t5Y512mfvAgN0JrACS1hu33sAaWrkmu/yQHXJa2shcE=
-github.com/suifengpiao14/torm v0.0.27/go.mod h1:RLONBoHOJWoCTLRnjyp9M9NTIBqq1TbtnjetHLkvejI=
+github.com/suifengpiao14/torm v0.0.28 h1:TFzI+i6OzPc7tWmX5OEDk4hTWKjPnPRbiOEkDyCVHfE=
+github.com/suifengpiao14/torm v0.0.28/go.mod h1:RLONBoHOJWoCTLRnjyp9M9NTIBqq1TbtnjetHLkvejI=
 github.com/syndtr/goleveldb v0.0.0-20180815032940-ae2bd5eed72d/go.mod h1:Z4AUp2Km+PwemOoO/VB5AOx9XSsIItzFjoJlOSiYmn0=
 github.com/tiancaiamao/appdash v0.0.0-20181126055449-889f96f722a2/go.mod h1:2PfKggNGDuadAa0LElHrByyrz4JPZ9fFx6Gs7nx7ZZU=
 github.com/tidwall/gjson v1.14.2/go.mod h1:/wbyibRr2FHMks5tjHJ5F8dMZh3AcwJEMf5vlfC0lxk=

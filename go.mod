@@ -19,7 +19,7 @@ require (
 	github.com/suifengpiao14/sqlexec v0.0.24
 	github.com/suifengpiao14/sqlplus v0.0.16
 	github.com/suifengpiao14/sshmysql v0.0.1
-	github.com/suifengpiao14/torm v0.0.27
+	github.com/suifengpiao14/torm v0.0.28
 	github.com/tidwall/gjson v1.17.1
 	github.com/tidwall/sjson v1.2.5
 	github.com/traefik/yaegi v0.15.1
