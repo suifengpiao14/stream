@@ -17,7 +17,7 @@ require (
 	github.com/suifengpiao14/pathtransfer v0.0.4
 	github.com/suifengpiao14/sdkgolib v0.0.22
 	github.com/suifengpiao14/sqlexec v0.0.28
-	github.com/suifengpiao14/sqlplus v0.0.18
+	github.com/suifengpiao14/sqlplus v0.0.19
 	github.com/suifengpiao14/sshmysql v0.0.3
 	github.com/suifengpiao14/torm v0.0.28
 	github.com/tidwall/gjson v1.17.1
@@ -58,7 +58,7 @@ require (
 	github.com/mitchellh/reflectwalk v1.0.0 // indirect
 	github.com/oklog/ulid v1.3.1 // indirect
 	github.com/pingcap/errors v0.11.4 // indirect
-	github.com/pingcap/log v1.1.0 // indirect
+	github.com/pingcap/log v0.0.0-20190715063458-479153f07ebd // indirect
 	github.com/pingcap/parser v3.1.2+incompatible // indirect
 	github.com/pingcap/tidb v0.0.0-20191023085059-c9000abdc216 // indirect
 	github.com/pingcap/tipb v0.0.0-20240305085524-87f5b80908ab // indirect
