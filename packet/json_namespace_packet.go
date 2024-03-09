@@ -68,10 +68,11 @@ type _JsonTrimAddNamespacePacket struct {
 const PACKETHANDLER_NAME_JsonTrimAddNamespacePacket = "github.com/suifengpiao14/stream/packet/_JsonTrimAddNamespacePacket"
 
 // NewJsonTrimAddNamespacePacket 删除json命名空间
-func NewJsonTrimAddNamespacePacket(namespace string) (pack packethandler.PacketHandlerI) {
+func NewJsonTrimAddNamespacePacket(namespaceTrim string, namespaceAdd string) (pack packethandler.PacketHandlerI) {
 	return &_JsonTrimAddNamespacePacket{
 		_JsonAddTrimNamespacePacket: _JsonAddTrimNamespacePacket{
-			namespaceAdd: namespace,
+			namespaceAdd:  namespaceAdd,
+			namespaceTrim: namespaceTrim,
 		},
 	}
 }
