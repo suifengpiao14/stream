@@ -28,9 +28,11 @@ func (packet *_TormPackHandler) String() string {
 func (packet *_TormPackHandler) Before(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
 
 	var m map[string]any
-	err = json.Unmarshal(input, &m)
-	if err != nil {
-		return ctx, nil, err
+	if len(input) > 0 {
+		err = json.Unmarshal(input, &m)
+		if err != nil {
+			return ctx, nil, err
+		}
 	}
 	ConvertFloatsToInt(m) // 修改float64
 	volume := torm.VolumeMap(m)
