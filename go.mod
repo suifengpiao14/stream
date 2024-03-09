@@ -16,10 +16,10 @@ require (
 	github.com/suifengpiao14/packethandler v0.0.4
 	github.com/suifengpiao14/pathtransfer v0.0.4
 	github.com/suifengpiao14/sdkgolib v0.0.22
-	github.com/suifengpiao14/sqlexec v0.0.28
+	github.com/suifengpiao14/sqlexec v0.0.31
 	github.com/suifengpiao14/sqlplus v0.0.19
-	github.com/suifengpiao14/sshmysql v0.0.3
-	github.com/suifengpiao14/torm v0.0.28
+	github.com/suifengpiao14/sshmysql v0.0.5
+	github.com/suifengpiao14/torm v0.0.33
 	github.com/tidwall/gjson v1.17.1
 	github.com/tidwall/sjson v1.2.5
 	github.com/traefik/yaegi v0.15.1

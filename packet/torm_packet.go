@@ -9,7 +9,7 @@ import (
 )
 
 type _TormPackHandler struct {
-	torm torm.TormI
+	torm torm.Torm
 }
 
 const PACKETHANDLER_NAME_TormPackHandler = "github.com/suifengpiao14/stream/packet/_TormPackHandler"
@@ -34,7 +34,7 @@ func (packet *_TormPackHandler) Before(ctx context.Context, input []byte) (newCt
 	}
 	ConvertFloatsToInt(m) // 修改float64
 	volume := torm.VolumeMap(m)
-	sqls, _, _, err := torm.GetSQL(packet.torm.Namespace(), packet.torm.TplName(), &volume)
+	sqls, _, _, err := torm.GetSQLFromTemplate(packet.torm.GetRootTemplate(), packet.torm.Name, &volume)
 	if err != nil {
 		return ctx, nil, err
 	}
@@ -44,11 +44,11 @@ func (packet *_TormPackHandler) Before(ctx context.Context, input []byte) (newCt
 }
 
 func (packet *_TormPackHandler) After(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
-	return ctx, input, err
+	return ctx, input, packethandler.ERROR_EMPTY_FUNC
 }
 
 // NewTormPackHandler 执行模板返回SQL
-func NewTormPackHandler(torm torm.TormI) (packHandler packethandler.PacketHandlerI) {
+func NewTormPackHandler(torm torm.Torm) (packHandler packethandler.PacketHandlerI) {
 	return &_TormPackHandler{
 		torm: torm,
 	}
