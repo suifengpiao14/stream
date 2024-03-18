@@ -13,13 +13,13 @@ require (
 	github.com/suifengpiao14/funcs v0.0.18
 	github.com/suifengpiao14/httpraw v0.0.6
 	github.com/suifengpiao14/lineschema v0.0.35
-	github.com/suifengpiao14/packethandler v0.0.2
+	github.com/suifengpiao14/packethandler v0.0.4
 	github.com/suifengpiao14/pathtransfer v0.0.4
 	github.com/suifengpiao14/sdkgolib v0.0.22
-	github.com/suifengpiao14/sqlexec v0.0.29
-	github.com/suifengpiao14/sqlplus v0.0.20
-	github.com/suifengpiao14/sshmysql v0.0.3
-	github.com/suifengpiao14/torm v0.0.30
+	github.com/suifengpiao14/sqlexec v0.0.31
+	github.com/suifengpiao14/sqlplus v0.0.19
+	github.com/suifengpiao14/sshmysql v0.0.5
+	github.com/suifengpiao14/torm v0.0.33
 	github.com/tidwall/gjson v1.17.1
 	github.com/tidwall/sjson v1.2.5
 	github.com/traefik/yaegi v0.15.1
@@ -30,10 +30,10 @@ require (
 	github.com/Masterminds/goutils v1.1.1 // indirect
 	github.com/Masterminds/semver/v3 v3.2.0 // indirect
 	github.com/Masterminds/sprig/v3 v3.2.3 // indirect
-	github.com/ThreeDotsLabs/watermill v1.3.5 // indirect
+	github.com/ThreeDotsLabs/watermill v1.2.0 // indirect
 	github.com/casdoor/casdoor-go-sdk v0.29.1 // indirect
 	github.com/cznic/mathutil v0.0.0-20181122101859-297441e03548 // indirect
-	github.com/d5/tengo/v2 v2.17.0 // indirect
+	github.com/d5/tengo/v2 v2.16.1 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.2 // indirect
 	github.com/go-ole/go-ole v1.3.0 // indirect
@@ -52,13 +52,13 @@ require (
 	github.com/jmoiron/sqlx v1.3.5 // indirect
 	github.com/jtolds/gls v4.20.0+incompatible // indirect
 	github.com/juju/errors v1.0.0 // indirect
-	github.com/leodido/go-urn v1.4.0 // indirect
+	github.com/leodido/go-urn v1.2.4 // indirect
 	github.com/lithammer/shortuuid/v3 v3.0.7 // indirect
 	github.com/mitchellh/copystructure v1.0.0 // indirect
 	github.com/mitchellh/reflectwalk v1.0.0 // indirect
 	github.com/oklog/ulid v1.3.1 // indirect
 	github.com/pingcap/errors v0.11.4 // indirect
-	github.com/pingcap/log v1.1.0 // indirect
+	github.com/pingcap/log v0.0.0-20190715063458-479153f07ebd // indirect
 	github.com/pingcap/parser v3.1.2+incompatible // indirect
 	github.com/pingcap/tidb v0.0.0-20191023085059-c9000abdc216 // indirect
 	github.com/pingcap/tipb v0.0.0-20240305085524-87f5b80908ab // indirect
@@ -69,7 +69,7 @@ require (
 	github.com/shopspring/decimal v1.2.0 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/suifengpiao14/ddl-executor v0.0.4 // indirect
-	github.com/suifengpiao14/gjsonmodifier v0.2.2 // indirect
+	github.com/suifengpiao14/gjsonmodifier v0.1.10 // indirect
 	github.com/suifengpiao14/kvstruct v0.0.14 // indirect
 	github.com/suifengpiao14/logchan/v2 v2.0.22 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
@@ -91,6 +91,6 @@ require (
 	google.golang.org/protobuf v1.33.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	gorm.io/gorm v1.25.7 // indirect
+	gorm.io/gorm v1.25.5 // indirect
 	moul.io/http2curl v1.0.0 // indirect
 )
