@@ -412,8 +412,8 @@ github.com/suifengpiao14/ddl-executor v0.0.4 h1:VjGsG7zPOejwi2TYooWH5aRFXgRh+97i
 github.com/suifengpiao14/ddl-executor v0.0.4/go.mod h1:1jZAWqLCKRhYaYNv+ecAZsWoI813fHL6rUaRRfmo724=
 github.com/suifengpiao14/funcs v0.0.18 h1:TQZ9EPPnzGBFNIIpHO+I/y38ufO0osZlGtm49P2DNkA=
 github.com/suifengpiao14/funcs v0.0.18/go.mod h1:g95inzlUrS2Vtyvv5SjVFOnOeX7ZBPWwyKuEMMW+g7U=
-github.com/suifengpiao14/gjsonmodifier v0.1.10 h1:2oagEit1ZI4R1ZbywYMYYALNF/v7oY1gRCu/1YdEzUw=
-github.com/suifengpiao14/gjsonmodifier v0.1.10/go.mod h1:bwhORc92wKB1Ms1REvG5IGgBLLEjhOt/hu/XmtQWuKw=
+github.com/suifengpiao14/gjsonmodifier v0.2.2 h1:sWc7htKEoWc0G4ZnmyPGR6Rg7/0dPjKmsXzVEFhX1Rc=
+github.com/suifengpiao14/gjsonmodifier v0.2.2/go.mod h1:cYW5OJUld4QJCwIXS7qj9EENUTFyzy8tPyNdCpHvRUs=
 github.com/suifengpiao14/httpraw v0.0.6 h1:F8CtZMbS/H/OHd2J5pTJqTT8LW5LxNzZYcUN2yBbwdE=
 github.com/suifengpiao14/httpraw v0.0.6/go.mod h1:+GI3N3piIdeeXHkQR59pApn3T93oy1cLcHp3CR80DJM=
 github.com/suifengpiao14/kvstruct v0.0.14 h1:c5Eb6AsBN0gTVGk/Vj05aEiJ79j+pNNo3aIBw09EuMo=
@@ -424,8 +424,8 @@ github.com/suifengpiao14/logchan/v2 v2.0.22 h1:LhpV9E0ofNRQFEvR9MOF4hSHJes8s/aXn
 github.com/suifengpiao14/logchan/v2 v2.0.22/go.mod h1:6o0naTqWDkgYMR4vQetJn1zVGMLD9YZ8TrNzQ9OjAFY=
 github.com/suifengpiao14/packethandler v0.0.4 h1:oojmUgTkQ2Ylznp05QriAVTdVMCIRme4rgfdIouASbQ=
 github.com/suifengpiao14/packethandler v0.0.4/go.mod h1:v/fAGRlx6MQTzXJjza6Az66P3787x1+ryNmE4NXoitU=
-github.com/suifengpiao14/pathtransfer v0.0.4 h1:jRuLDE3i5GflT2aDAZwKQe3Qdn+YF1zquee3CbSA1Rs=
-github.com/suifengpiao14/pathtransfer v0.0.4/go.mod h1:rCR9rnaIKX8BWDxyA7V6MBs5sGAYVaLfzZCDjVstgpw=
+github.com/suifengpiao14/pathtransfer v0.0.8 h1:oUHLZeVvSbykB7puRdn4K7tjQk5tZyQg3qlDdgJ+06I=
+github.com/suifengpiao14/pathtransfer v0.0.8/go.mod h1:FuevT6Ap2I7GpCFbb4f1UiK/oc3/6HnRSynj54jato0=
 github.com/suifengpiao14/sdkgolib v0.0.22 h1:cEqk9u7oB95EnVwsW4RncSQHHC0MOLWnoaTXW2XwB+U=
 github.com/suifengpiao14/sdkgolib v0.0.22/go.mod h1:CUQUcBl1GWvB3JQDC6AHA/k2jvRrBH2drnYMX58vadE=
 github.com/suifengpiao14/sqlexec v0.0.31 h1:0hRN7/DC6o9QAf3/yy32Vl0d0Z6+aQU58PBkQzi5khU=

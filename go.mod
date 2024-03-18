@@ -14,7 +14,7 @@ require (
 	github.com/suifengpiao14/httpraw v0.0.6
 	github.com/suifengpiao14/lineschema v0.0.35
 	github.com/suifengpiao14/packethandler v0.0.4
-	github.com/suifengpiao14/pathtransfer v0.0.4
+	github.com/suifengpiao14/pathtransfer v0.0.8
 	github.com/suifengpiao14/sdkgolib v0.0.22
 	github.com/suifengpiao14/sqlexec v0.0.31
 	github.com/suifengpiao14/sqlplus v0.0.19
@@ -69,7 +69,7 @@ require (
 	github.com/shopspring/decimal v1.2.0 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/suifengpiao14/ddl-executor v0.0.4 // indirect
-	github.com/suifengpiao14/gjsonmodifier v0.1.10 // indirect
+	github.com/suifengpiao14/gjsonmodifier v0.2.2 // indirect
 	github.com/suifengpiao14/kvstruct v0.0.14 // indirect
 	github.com/suifengpiao14/logchan/v2 v2.0.22 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
