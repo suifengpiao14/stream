@@ -3,8 +3,13 @@ package packet
 import (
 	"context"
 	"encoding/json"
+	"fmt"
+	"strings"
 
+	"github.com/pkg/errors"
 	"github.com/suifengpiao14/packethandler"
+	"github.com/suifengpiao14/pathtransfer"
+	"github.com/suifengpiao14/sqlexec"
 	"github.com/suifengpiao14/torm"
 )
 
@@ -70,4 +75,45 @@ func ConvertFloatsToInt(data map[string]interface{}) {
 			ConvertFloatsToInt(v)
 		}
 	}
+}
+
+//TormSQLDefaultPacketHandler sql torm 默认处理器
+func TormSQLPacketHandler(torm torm.Torm) (packetHandlers packethandler.PacketHandlers, err error) {
+	inputPathTransfers, outputPathTransfers := torm.Transfers.GetByNamespace(torm.Name).SplitInOut()
+	packetHandlers = make(packethandler.PacketHandlers, 0)
+	namespaceInput := fmt.Sprintf("%s%s", torm.Name, pathtransfer.Transfer_Direction_input)   //去除命名空间
+	namespaceOutput := fmt.Sprintf("%s%s", torm.Name, pathtransfer.Transfer_Direction_output) // 补充命名空间
+	inputGopath := inputPathTransfers.Reverse().ModifyDstPath(func(path string) (newPath string) {
+		newPath = strings.TrimPrefix(path, namespaceInput)
+		return newPath
+	}).GjsonPath()
+	outputGopath := outputPathTransfers.ModifySrcPath(func(path string) (newPath string) {
+		newPath = strings.TrimPrefix(path, namespaceOutput)
+		return newPath
+	}).GjsonPath()
+	//转换为代码中期望的数据格式
+	transferHandler := NewTransferPacketHandler(inputGopath, outputGopath)
+	packetHandlers.Append(transferHandler)
+	packetHandlers.Append(NewTormPackHandler(torm))
+
+	prov := torm.Source.Provider
+	dbProvider, ok := prov.(*sqlexec.ExecutorSQL)
+	if !ok {
+		err = errors.Errorf("ExecSQLTPL required sourceprovider.DBProvider source,got:%s", prov.TypeName())
+		return nil, err
+	}
+	db := dbProvider.GetDB()
+	if db == nil {
+		err = errors.Errorf("ExecSQLTPL sourceprovider.DBProvider.GetDB required,got nil (%s)", prov.TypeName())
+		return nil, err
+	}
+	databaseName, err := sqlexec.GetDatabaseName(db)
+	if err != nil {
+		return nil, err
+	}
+	cudeventPack := NewCUDEventPackHandler(db, databaseName)
+	packetHandlers.Append(cudeventPack)
+	mysqlPack := NewMysqlPacketHandler(db)
+	packetHandlers.Append(mysqlPack)
+	return packetHandlers, nil
 }
