@@ -2,7 +2,6 @@ package packet
 
 import (
 	"context"
-	"encoding/json"
 
 	jsonpatch "github.com/evanphx/json-patch/v5"
 	"github.com/suifengpiao14/packethandler"
@@ -27,8 +26,7 @@ func (pack *_JsonMergeInputPacket) Description() string {
 }
 
 func (pack *_JsonMergeInputPacket) String() string {
-	b, _ := json.Marshal(pack)
-	s := string(b)
+	s := string(pack.input)
 	return s
 }
 
@@ -38,6 +36,13 @@ func (pack *_JsonMergeInputPacket) Before(ctx context.Context, input []byte) (ne
 }
 
 func (pack *_JsonMergeInputPacket) After(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
+	if pack.input == nil {
+		return ctx, input, nil
+	}
+
+	if input == nil {
+		return ctx, pack.input, nil
+	}
 	out, err = jsonpatch.MergePatch(pack.input, input)
 	if err != nil {
 		return ctx, nil, err

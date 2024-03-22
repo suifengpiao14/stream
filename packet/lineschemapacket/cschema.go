@@ -54,17 +54,13 @@ func NewClineschame(identify string, lschema lineschema.Lineschema) (clineschema
 	return clineschema, nil
 }
 
-func RegisterLineschema(identify string, lschema lineschema.Lineschema) (err error) {
-	v, ok := clineschemaMap.Load(identify)
+func RegisterClineschema(clineschema Clineschema) (err error) {
+	v, ok := clineschemaMap.Load(clineschema.ID)
 	if ok {
-		err = errors.Errorf("id already registered,id:%s,value:%T", identify, v)
+		err = errors.Errorf("id already registered,id:%s,value:%T", clineschema.ID, v)
 		return err
 	}
-	cJsonschema, err := NewClineschame(identify, lschema)
-	if err != nil {
-		return err
-	}
-	clineschemaMap.Store(identify, cJsonschema)
+	clineschemaMap.Store(clineschema.ID, clineschema)
 	return nil
 }
 

@@ -41,7 +41,7 @@ func (packet *_TormPackHandler) Before(ctx context.Context, input []byte) (newCt
 	}
 	ConvertFloatsToInt(m) // 修改float64
 	volume := torm.VolumeMap(m)
-	sqls, _, _, err := torm.GetSQLFromTemplate(packet.torm.GetRootTemplate(), packet.torm.Name, &volume)
+	sqls, _, _, err := torm.GetSQLFromTemplate(packet.torm.GetRootTemplate(), packet.torm.TplName, &volume)
 	if err != nil {
 		return ctx, nil, err
 	}
@@ -79,10 +79,11 @@ func ConvertFloatsToInt(data map[string]interface{}) {
 
 //TormSQLDefaultPacketHandler sql torm 默认处理器
 func TormSQLPacketHandler(torm torm.Torm) (packetHandlers packethandler.PacketHandlers, err error) {
-	inputPathTransfers, outputPathTransfers := torm.Transfers.GetByNamespace(torm.Name).SplitInOut()
 	packetHandlers = make(packethandler.PacketHandlers, 0)
-	namespaceInput := fmt.Sprintf("%s%s", torm.Name, pathtransfer.Transfer_Direction_input)   //去除命名空间
-	namespaceOutput := fmt.Sprintf("%s%s", torm.Name, pathtransfer.Transfer_Direction_output) // 补充命名空间
+	tormName := torm.Name()
+	inputPathTransfers, outputPathTransfers := torm.Transfers.GetByNamespace(tormName).SplitInOut()
+	namespaceInput := fmt.Sprintf("%s%s", tormName, pathtransfer.Transfer_Direction_input)   //去除命名空间
+	namespaceOutput := fmt.Sprintf("%s%s", tormName, pathtransfer.Transfer_Direction_output) // 补充命名空间
 	inputGopath := inputPathTransfers.Reverse().ModifyDstPath(func(path string) (newPath string) {
 		newPath = strings.TrimPrefix(path, namespaceInput)
 		return newPath

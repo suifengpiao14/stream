@@ -14,83 +14,64 @@ type LineschemaPacketI interface {
 	PackSchema() (lineschema string)        // 封包配置 程序到网络
 }
 
-func RegisterLineschemaPacket(pack LineschemaPacketI) (err error) {
-	method, path := pack.GetRoute()
-	unpackId, packId := makeLineschemaPacketKey(method, path)
-	unpackSchema, packSchema := pack.UnpackSchema(), pack.PackSchema()
-	unpackLineschema, err := lineschema.ParseLineschema(unpackSchema)
+func RegisterClineschemaPacket(pack LineschemaPacketI) (err error) {
+	unpackCLineschema, packCLineschema, err := ParserLineschemaPacket2Clineschema(pack)
 	if err != nil {
 		return err
 	}
-	packLineschema, err := lineschema.ParseLineschema(packSchema)
+	err = RegisterClineschema(*unpackCLineschema)
 	if err != nil {
 		return err
 	}
-	err = RegisterLineschema(unpackId, *unpackLineschema)
-	if err != nil {
-		return err
-	}
-	err = RegisterLineschema(packId, *packLineschema)
+	err = RegisterClineschema(*packCLineschema)
 	if err != nil {
 		return err
 	}
 	return err
 }
 
-func ServerpacketHandlers(api LineschemaPacketI) (packetHandlers packethandler.PacketHandlers, err error) {
-	method, path := api.GetRoute()
+func ParserLineschemaPacket2Clineschema(pack LineschemaPacketI) (unpackCLineschema *Clineschema, packCLineschema *Clineschema, err error) {
+	method, path := pack.GetRoute()
 	unpackId, packId := makeLineschemaPacketKey(method, path)
-	unpackLineschema, err := GetClineschema(unpackId)
+	unpackSchema, packSchema := pack.UnpackSchema(), pack.PackSchema()
+	unpackLineschema, err := lineschema.ParseLineschema(unpackSchema)
 	if err != nil {
-		line, err := lineschema.ParseLineschema(api.UnpackSchema())
-		if err != nil {
-			return nil, err
-		}
-		err = RegisterLineschema(unpackId, *line)
-		if err != nil {
-			return nil, err
-		}
+		return nil, nil, err
 	}
+	unpackCLineschema, err = NewClineschame(unpackId, *unpackLineschema)
+	if err != nil {
+		return nil, nil, err
+	}
+	packLineschema, err := lineschema.ParseLineschema(packSchema)
+	if err != nil {
+		return nil, nil, err
+	}
+	packCLineschema, err = NewClineschame(packId, *packLineschema)
+	if err != nil {
+		return nil, nil, err
+	}
+	return unpackCLineschema, packCLineschema, nil
 
-	packLineschema, err := GetClineschema(packId)
-	if err != nil {
-		line, err := lineschema.ParseLineschema(api.PackSchema())
-		if err != nil {
-			return nil, err
-		}
-		err = RegisterLineschema(packId, *line)
-		if err != nil {
-			return nil, err
-		}
-	}
-	packetHandlers = make(packethandler.PacketHandlers, 0)
-	packetHandlers.Append(
-		NewValidatePacketHandler(string(unpackLineschema.Jsonschema), string(packLineschema.Jsonschema), unpackLineschema.validateLoader, packLineschema.validateLoader),
-		NewMergeDefaultHandler(string(unpackLineschema.DefaultJson), string(packLineschema.DefaultJson)),
-		NewTransferPacketHandler(unpackLineschema.transferToFormatGjsonPath, packLineschema.transferToTypeGjsonPath),
-	)
-	return packetHandlers, nil
 }
 
-func SDKpacketHandlers(api LineschemaPacketI) (packetHandlers packethandler.PacketHandlers, err error) {
-	method, path := api.GetRoute()
-	unpackId, packId := makeLineschemaPacketKey(method, path)
-	unpackLineschema, err := GetClineschema(unpackId)
-	if err != nil {
-		return nil, err
-	}
-
-	packLineschema, err := GetClineschema(packId)
-	if err != nil {
-		return nil, err
-	}
+func ServerpacketHandlers(requestClineschema Clineschema, responseClineschema Clineschema) (packetHandlers packethandler.PacketHandlers) {
 	packetHandlers = make(packethandler.PacketHandlers, 0)
 	packetHandlers.Append(
-		NewTransferPacketHandler(packLineschema.transferToTypeGjsonPath, unpackLineschema.transferToFormatGjsonPath),
-		NewMergeDefaultHandler(string(packLineschema.DefaultJson), string(unpackLineschema.DefaultJson)),
-		NewValidatePacketHandler(string(packLineschema.Jsonschema), string(unpackLineschema.Jsonschema), packLineschema.validateLoader, unpackLineschema.validateLoader),
+		NewValidatePacketHandler(string(requestClineschema.Jsonschema), string(responseClineschema.Jsonschema), requestClineschema.validateLoader, responseClineschema.validateLoader),
+		NewMergeDefaultHandler(string(requestClineschema.DefaultJson), string(responseClineschema.DefaultJson)),
+		NewTransferPacketHandler(requestClineschema.transferToFormatGjsonPath, responseClineschema.transferToTypeGjsonPath),
 	)
-	return packetHandlers, nil
+	return packetHandlers
+}
+
+func SDKpacketHandlers(requestClineschema Clineschema, responseClineschema Clineschema) (packetHandlers packethandler.PacketHandlers) {
+	packetHandlers = make(packethandler.PacketHandlers, 0)
+	packetHandlers.Append(
+		NewTransferPacketHandler(responseClineschema.transferToTypeGjsonPath, responseClineschema.transferToFormatGjsonPath),
+		NewMergeDefaultHandler(string(responseClineschema.DefaultJson), string(responseClineschema.DefaultJson)),
+		NewValidatePacketHandler(string(responseClineschema.Jsonschema), string(responseClineschema.Jsonschema), responseClineschema.validateLoader, responseClineschema.validateLoader),
+	)
+	return packetHandlers
 }
 
 func makeLineschemaPacketKey(method string, path string) (unpackId string, packId string) {
