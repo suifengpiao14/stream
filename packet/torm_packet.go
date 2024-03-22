@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"strings"
 
 	"github.com/pkg/errors"
 	"github.com/suifengpiao14/packethandler"
@@ -84,13 +83,11 @@ func TormSQLPacketHandler(torm torm.Torm) (packetHandlers packethandler.PacketHa
 	inputPathTransfers, outputPathTransfers := torm.Transfers.GetByNamespace(tormName).SplitInOut()
 	namespaceInput := fmt.Sprintf("%s%s", tormName, pathtransfer.Transfer_Direction_input)   //去除命名空间
 	namespaceOutput := fmt.Sprintf("%s%s", tormName, pathtransfer.Transfer_Direction_output) // 补充命名空间
-	inputGopath := inputPathTransfers.Reverse().ModifyDstPath(func(path string) (newPath string) {
-		newPath = strings.TrimPrefix(path, namespaceInput)
-		return newPath
+	inputGopath := inputPathTransfers.Reverse().ModifyDstPath(func(path pathtransfer.Path) (newPath pathtransfer.Path) {
+		return pathtransfer.TrimNamespace(path, namespaceInput)
 	}).GjsonPath()
-	outputGopath := outputPathTransfers.ModifySrcPath(func(path string) (newPath string) {
-		newPath = strings.TrimPrefix(path, namespaceOutput)
-		return newPath
+	outputGopath := outputPathTransfers.ModifySrcPath(func(path pathtransfer.Path) (newPath pathtransfer.Path) {
+		return pathtransfer.TrimNamespace(path, namespaceOutput)
 	}).GjsonPath()
 	//转换为代码中期望的数据格式
 	transferHandler := NewTransferPacketHandler(inputGopath, outputGopath)
