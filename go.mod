@@ -12,14 +12,14 @@ require (
 	github.com/suifengpiao14/cudevent v0.0.18
 	github.com/suifengpiao14/funcs v0.0.18
 	github.com/suifengpiao14/httpraw v0.0.6
-	github.com/suifengpiao14/lineschema v0.0.35
+	github.com/suifengpiao14/lineschema v0.0.36
 	github.com/suifengpiao14/packethandler v0.0.4
-	github.com/suifengpiao14/pathtransfer v0.0.8
+	github.com/suifengpiao14/pathtransfer v0.0.10
 	github.com/suifengpiao14/sdkgolib v0.0.22
 	github.com/suifengpiao14/sqlexec v0.0.31
 	github.com/suifengpiao14/sqlplus v0.0.19
 	github.com/suifengpiao14/sshmysql v0.0.5
-	github.com/suifengpiao14/torm v0.0.33
+	github.com/suifengpiao14/torm v0.0.35
 	github.com/tidwall/gjson v1.17.1
 	github.com/tidwall/sjson v1.2.5
 	github.com/traefik/yaegi v0.15.1
