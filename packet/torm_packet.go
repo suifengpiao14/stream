@@ -76,7 +76,7 @@ func ConvertFloatsToInt(data map[string]interface{}) {
 	}
 }
 
-//TormSQLDefaultPacketHandler sql torm 默认处理器
+// TormSQLDefaultPacketHandler sql torm 默认处理器
 func TormSQLPacketHandler(torm torm.Torm) (packetHandlers packethandler.PacketHandlers, err error) {
 	packetHandlers = make(packethandler.PacketHandlers, 0)
 	tormName := torm.Name()
@@ -84,10 +84,10 @@ func TormSQLPacketHandler(torm torm.Torm) (packetHandlers packethandler.PacketHa
 	namespaceInput := fmt.Sprintf("%s%s", tormName, pathtransfer.Transfer_Direction_input)   //去除命名空间
 	namespaceOutput := fmt.Sprintf("%s%s", tormName, pathtransfer.Transfer_Direction_output) // 补充命名空间
 	inputGopath := inputPathTransfers.Reverse().ModifyDstPath(func(path pathtransfer.Path) (newPath pathtransfer.Path) {
-		return pathtransfer.TrimNamespace(path, namespaceInput)
+		return path.TrimNamespace(namespaceInput)
 	}).GjsonPath()
 	outputGopath := outputPathTransfers.ModifySrcPath(func(path pathtransfer.Path) (newPath pathtransfer.Path) {
-		return pathtransfer.TrimNamespace(path, namespaceOutput)
+		return path.TrimNamespace(namespaceOutput)
 	}).GjsonPath()
 	//转换为代码中期望的数据格式
 	transferHandler := NewTransferPacketHandler(inputGopath, outputGopath)

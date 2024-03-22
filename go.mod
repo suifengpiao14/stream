@@ -13,13 +13,13 @@ require (
 	github.com/suifengpiao14/funcs v0.0.18
 	github.com/suifengpiao14/httpraw v0.0.6
 	github.com/suifengpiao14/lineschema v0.0.36
-	github.com/suifengpiao14/packethandler v0.0.4
-	github.com/suifengpiao14/pathtransfer v0.0.10
+	github.com/suifengpiao14/packethandler v0.0.5
+	github.com/suifengpiao14/pathtransfer v0.0.12
 	github.com/suifengpiao14/sdkgolib v0.0.22
 	github.com/suifengpiao14/sqlexec v0.0.31
 	github.com/suifengpiao14/sqlplus v0.0.19
 	github.com/suifengpiao14/sshmysql v0.0.5
-	github.com/suifengpiao14/torm v0.0.35
+	github.com/suifengpiao14/torm v0.0.37
 	github.com/tidwall/gjson v1.17.1
 	github.com/tidwall/sjson v1.2.5
 	github.com/traefik/yaegi v0.15.1
@@ -71,7 +71,7 @@ require (
 	github.com/suifengpiao14/ddl-executor v0.0.4 // indirect
 	github.com/suifengpiao14/gjsonmodifier v0.2.2 // indirect
 	github.com/suifengpiao14/kvstruct v0.0.14 // indirect
-	github.com/suifengpiao14/logchan/v2 v2.0.22 // indirect
+	github.com/suifengpiao14/logchan/v2 v2.0.24 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.1 // indirect
 	github.com/xeipuuv/gojsonpointer v0.0.0-20180127040702-4e3ac2762d5f // indirect
