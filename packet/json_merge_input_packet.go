@@ -7,35 +7,35 @@ import (
 	"github.com/suifengpiao14/packethandler"
 )
 
-type _JsonMergeInputPacket struct {
+type _JsonMergeInputToOutputPacket struct {
 	input []byte
 }
 
-const PACKETHANDLER_NAME_JsonMergeInputPacket = "github.com/suifengpiao14/stream/packet/_JsonMergeInputPacket"
+const PACKETHANDLER_NAME_JsonMergeInputToOutputPacket = "github.com/suifengpiao14/stream/packet/_JsonMergeInputToOutputPacket"
 
 // NewJsonMergeInputPacket 输出数据中合并输入数据
 func NewJsonMergeInputPacket() (pack packethandler.PacketHandlerI) {
-	return &_JsonMergeInputPacket{}
+	return &_JsonMergeInputToOutputPacket{}
 }
 
-func (pack *_JsonMergeInputPacket) Name() string {
-	return PACKETHANDLER_NAME_JsonMergeInputPacket
+func (pack *_JsonMergeInputToOutputPacket) Name() string {
+	return PACKETHANDLER_NAME_JsonMergeInputToOutputPacket
 }
-func (pack *_JsonMergeInputPacket) Description() string {
+func (pack *_JsonMergeInputToOutputPacket) Description() string {
 	return "输出数据前,合并输入数据"
 }
 
-func (pack *_JsonMergeInputPacket) String() string {
+func (pack *_JsonMergeInputToOutputPacket) String() string {
 	s := string(pack.input)
 	return s
 }
 
-func (pack *_JsonMergeInputPacket) Before(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
+func (pack *_JsonMergeInputToOutputPacket) Before(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
 	pack.input = input
 	return ctx, input, nil
 }
 
-func (pack *_JsonMergeInputPacket) After(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
+func (pack *_JsonMergeInputToOutputPacket) After(ctx context.Context, input []byte) (newCtx context.Context, out []byte, err error) {
 	if pack.input == nil {
 		return ctx, input, nil
 	}
